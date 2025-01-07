@@ -41,17 +41,17 @@ export function PokemonCard({
 }: PokemonCardProps) {
   return (
     <Card className="overflow-hidden w-full max-w-[280px] group">
-      <CardHeader className="p-4 flex items-center space-x-2">
-        <span className="text-sm text-gray-500">
-          #{number.toString().padStart(3, '0')}
-        </span>
-        <CardTitle className="text-base capitalize">{name}</CardTitle>
+      <CardHeader className="p-4 ">
+        <CardTitle className="flex justify-between items-center">
+          <span className="text-base capitalize">{name}</span>
+          <span className="text-sm text-gray-500">#{number.toString()}</span>
+        </CardTitle>
       </CardHeader>
       <CardContent className="p-3 space-y-3">
         <div className="relative flex justify-center items-center bg-gray-100 rounded-lg overflow-hidden h-[180px] group">
           <div className="absolute inset-0 bg-gradient-to-br from-transparent to-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <Image
-            src={imageUrl}
+            src={imageUrl || '/placeholder-image.jpg'}
             alt={`${name} sprite`}
             width={150}
             height={150}
@@ -73,16 +73,14 @@ export function PokemonCard({
           ))}
         </div>
         <div className="flex flex-wrap items-start text-xs">
-          <div className="w-full">
-            <h3 className="font-semibold">Abilities:</h3>
-            <div className="flex flex-wrap">
-              {abilities.map((ability, index) => (
-                <Fragment key={ability}>
-                  {index > 0 && <span className="mx-1">/</span>}
-                  <span className="capitalize">{ability}</span>
-                </Fragment>
-              ))}
-            </div>
+          <h3 className="font-semibold mr-1">Abilities:</h3>
+          <div className="flex flex-wrap">
+            {abilities.map((ability, index) => (
+              <Fragment key={ability}>
+                {index > 0 && <span className="mx-1">/</span>}
+                <span className="capitalize">{ability}</span>
+              </Fragment>
+            ))}
           </div>
         </div>
       </CardContent>
