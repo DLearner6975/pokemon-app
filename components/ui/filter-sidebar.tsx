@@ -8,111 +8,54 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-
-export interface Filters {
-  types: string[];
-  generation: string[];
-  abilities: string[];
-  // stats: {
-  //   hp: { min: number; max: number };
-  //   attack: { min: number; max: number };
-  //   defense: { min: number; max: number };
-  //   speed: { min: number; max: number };
-  // };
-  habitat: string[];
-  shape: string[];
-  color: string[];
-  baseExperience: { min: number; max: number };
-  legendary: boolean;
-  mythical: boolean;
-}
-
-interface FilterSidebarProps {
-  onFilterChange: (filters: Filters) => void;
-  initialFilters: Filters;
-}
-
-const types = [
-  'normal',
-  'fire',
-  'water',
-  'electric',
-  'grass',
-  'ice',
-  'fighting',
-  'poison',
-  'ground',
-  'flying',
-  'psychic',
-  'bug',
-  'rock',
-  'ghost',
-  'dragon',
-  'dark',
-  'steel',
-  'fairy',
-];
-const generations = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
-const habitats = [
-  'cave',
-  'forest',
-  'grassland',
-  'mountain',
-  'rare',
-  'rough-terrain',
-  'sea',
-  'urban',
-  'waters-edge',
-];
-const shapes = [
-  'ball',
-  'squiggle',
-  'fish',
-  'arms',
-  'blob',
-  'upright',
-  'legs',
-  'quadruped',
-  'wings',
-  'tentacles',
-  'heads',
-  'humanoid',
-  'bug-wings',
-  'armor',
-];
-const colors = [
-  'black',
-  'blue',
-  'brown',
-  'gray',
-  'green',
-  'pink',
-  'purple',
-  'red',
-  'white',
-  'yellow',
-];
+import { Filters, FilterSidebarProps } from '../types';
+import {
+  types,
+  generations,
+  habitats,
+  shapes,
+  colors,
+} from '../utils/filter-utils';
 
 export function FilterSidebar({
   onFilterChange,
   initialFilters,
 }: FilterSidebarProps) {
   const [filters, setFilters] = useState<Filters>(initialFilters);
-
-  const handleFilterChange = (category: keyof Filters, value: any) => {
+  //TODO: look into the difference between the two handleFilterChange functions
+  // const handleFilterChange = (category: keyof Filters, value: any) => {
+  //   setFilters((prevFilters) => {
+  //     let newValue = value;
+  //     if (['types', 'habitat', 'shape', 'color'].includes(category)) {
+  //       newValue = Array.isArray(value)
+  //         ? value.map((v) => v.toLowerCase())
+  //         : value.toLowerCase();
+  //     }
+  //     const newFilters = { ...prevFilters, [category]: newValue };
+  //     onFilterChange(newFilters);
+  //     return newFilters;
+  //   });
+  // };
+  const handleFilterChange = (category: keyof Filters, value: unknown) => {
     setFilters((prevFilters) => {
       let newValue = value;
       if (['types', 'habitat', 'shape', 'color'].includes(category)) {
-        newValue = Array.isArray(value)
-          ? value.map((v) => v.toLowerCase())
-          : value.toLowerCase();
+        if (Array.isArray(value)) {
+          newValue = value.map((v) => {
+            if (typeof v === 'string') {
+              return v.toLowerCase();
+            }
+            return v;
+          });
+        } else if (typeof value === 'string') {
+          newValue = value.toLowerCase();
+        }
       }
       const newFilters = { ...prevFilters, [category]: newValue };
       onFilterChange(newFilters);
       return newFilters;
     });
   };
-
   return (
     <div className="w-64 bg-white p-4 border-r overflow-y-auto h-[calc(100vh-4rem)]">
       <h2 className="text-lg font-semibold mb-4">Filters</h2>
@@ -157,6 +100,7 @@ export function FilterSidebar({
             ))}
           </AccordionContent>
         </AccordionItem>
+        {/* TODO: Do I want to add this back into search.  Thinking of only showing filters that are selected on url bar */}
         {/* <AccordionItem value="stats">
           <AccordionTrigger>Stats</AccordionTrigger>
           <AccordionContent>

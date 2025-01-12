@@ -1,8 +1,9 @@
 import { Suspense } from 'react';
 import ProjectDashboard from '@/components/ui/project-dashboard';
+import { Pokemon, SimplePokemon } from '@/components/types';
 
 async function fetchAllPokemon() {
-  let allPokemon = [];
+  let allPokemon: SimplePokemon[] = [];
   let url = 'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0';
 
   while (url) {
@@ -15,7 +16,7 @@ async function fetchAllPokemon() {
   return allPokemon;
 }
 
-async function fetchPokemonDetails(pokemon) {
+async function fetchPokemonDetails(pokemon: SimplePokemon): Promise<Pokemon> {
   const response = await fetch(pokemon.url);
   return response.json();
 }

@@ -3,19 +3,19 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
-import { FilterSidebar, Filters } from './filter-sidebar';
-import { LoginModal, User } from './login-modal';
-import { PokemonPagination } from './pokemon-pagination';
-import { PokemonGrid } from './pokemon-grid';
-import { LoginHeader } from './login-header';
+import { FilterSidebar } from './filter-sidebar';
+
 import { SearchBar } from './search-bar';
-import { Pokemon, SimplePokemon } from '../types';
+import { Filters, Pokemon, SimplePokemon } from '../types';
 import {
   getInitialFilters,
   filterPokemon,
   handleFilterChange,
 } from '../utils/filter-utils';
 import { fetchPokemonDetails } from '../utils/pokemon-utils';
+import { LoginManager } from './login/login-manager';
+import { PokemonGrid } from './pokemon-items/pokemon-grid';
+import { PokemonPagination } from './pokemon-items/pokemon-pagination';
 
 interface ProjectDashboardProps {
   initialPokemon: Pokemon[];
@@ -34,8 +34,6 @@ export default function ProjectDashboard({
   const [filters, setFilters] = useState<Filters>(
     getInitialFilters(searchParams)
   );
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPagePokemon, setCurrentPagePokemon] = useState<SimplePokemon[]>(
     []
@@ -87,14 +85,6 @@ export default function ProjectDashboard({
     [searchParams, router, pathname]
   );
 
-  const handleLogin = useCallback((user: User) => {
-    setUser(user);
-  }, []);
-
-  const handleLogout = useCallback(() => {
-    setUser(null);
-  }, []);
-
   const handleSearch = useCallback((query: string) => {
     setSearchQuery(query);
   }, []);
@@ -117,20 +107,15 @@ export default function ProjectDashboard({
         onFilterChange={handleFilterChangeWrapper}
         initialFilters={filters}
       />
-
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="flex items-center justify-between border-b bg-white px-6 py-4">
           <SearchBar onSearch={handleSearch} />
-          <LoginHeader
-            user={user}
-            onLoginClick={() => setIsLoginModalOpen(true)}
-            onLogout={handleLogout}
-          />
+          <LoginManager />
         </header>
 
         <div className="flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-semibold">Shannon's Pokemon</h1>
+            <h1 className="text-3xl font-semibold">Shannon&apos;s Pokemon</h1>
           </div>
         </div>
 
@@ -147,11 +132,6 @@ export default function ProjectDashboard({
           onPageChange={handlePageChange}
         />
       </div>
-      <LoginModal
-        isOpen={isLoginModalOpen}
-        onClose={() => setIsLoginModalOpen(false)}
-        onLoginSuccess={handleLogin}
-      />
     </div>
   );
 }

@@ -1,5 +1,77 @@
-import { Filters } from '@/components/ui/filter-sidebar';
-import { Pokemon, SimplePokemon } from '@/types/pokemon';
+import { Filters, Pokemon, SimplePokemon } from '../types';
+
+export const types = [
+  'normal',
+  'fire',
+  'water',
+  'electric',
+  'grass',
+  'ice',
+  'fighting',
+  'poison',
+  'ground',
+  'flying',
+  'psychic',
+  'bug',
+  'rock',
+  'ghost',
+  'dragon',
+  'dark',
+  'steel',
+  'fairy',
+];
+export const generations = [
+  'I',
+  'II',
+  'III',
+  'IV',
+  'V',
+  'VI',
+  'VII',
+  'VIII',
+  'IX',
+];
+export const habitats = [
+  'cave',
+  'forest',
+  'grassland',
+  'mountain',
+  'rare',
+  'rough-terrain',
+  'sea',
+  'urban',
+  'waters-edge',
+];
+
+export const shapes = [
+  'ball',
+  'squiggle',
+  'fish',
+  'arms',
+  'blob',
+  'upright',
+  'legs',
+  'quadruped',
+  'wings',
+  'tentacles',
+  'heads',
+  'humanoid',
+  'bug-wings',
+  'armor',
+];
+
+export const colors = [
+  'black',
+  'blue',
+  'brown',
+  'gray',
+  'green',
+  'pink',
+  'purple',
+  'red',
+  'white',
+  'yellow',
+];
 
 export function getInitialFilters(searchParams: URLSearchParams): Filters {
   return {
@@ -83,8 +155,6 @@ export function filterPokemon(
     return matchesSearch && matchesFilters();
   });
 }
-
-import { Filters } from '@/components/ui/filter-sidebar';
 
 export function handleFilterChange(
   newFilters: Filters,
