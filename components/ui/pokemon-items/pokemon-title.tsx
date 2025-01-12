@@ -19,8 +19,8 @@ export const PokemonTitle = ({ width, height }: SVGProps<SVGSVGElement>) => {
         y2="-614.042"
         gradientTransform="matrix(1 0 0 -1 -413.451 -579.186)"
       >
-        <stop offset="0" stop-color="#0070b6" />
-        <stop offset="1" stop-color="#1d2c5e" />
+        <stop offset="0" stopColor="#0070b6" />
+        <stop offset="1" stopColor="#1d2c5e" />
       </linearGradient>
       <path
         id="polygon16"
@@ -41,8 +41,8 @@ export const PokemonTitle = ({ width, height }: SVGProps<SVGSVGElement>) => {
         y2="-580.948"
         gradientTransform="matrix(1 0 0 -1 -413.451 -579.186)"
       >
-        <stop offset="0" stop-color="#0070b6" />
-        <stop offset="1" stop-color="#1d2c5e" />
+        <stop offset="0" stopColor="#0070b6" />
+        <stop offset="1" stopColor="#1d2c5e" />
       </linearGradient>
       <path
         id="polygon25"
@@ -64,8 +64,8 @@ export const PokemonTitle = ({ width, height }: SVGProps<SVGSVGElement>) => {
         y2="-604.548"
         gradientTransform="matrix(1 0 0 -1 -413.451 -579.186)"
       >
-        <stop offset="0" stop-color="#0070b6" />
-        <stop offset="1" stop-color="#1d2c5e" />
+        <stop offset="0" stopColor="#0070b6" />
+        <stop offset="1" stopColor="#1d2c5e" />
       </linearGradient>
       <path
         id="polygon36"
@@ -81,8 +81,8 @@ export const PokemonTitle = ({ width, height }: SVGProps<SVGSVGElement>) => {
         y2="-603.336"
         gradientTransform="matrix(1 0 0 -1 -413.451 -579.186)"
       >
-        <stop offset="0" stop-color="#125d9e" />
-        <stop offset="1" stop-color="#1d2c5e" />
+        <stop offset="0" stopColor="#125d9e" />
+        <stop offset="1" stopColor="#1d2c5e" />
       </linearGradient>
       <path
         id="polygon43"
@@ -113,8 +113,8 @@ export const PokemonTitle = ({ width, height }: SVGProps<SVGSVGElement>) => {
         y2="-619.489"
         gradientTransform="matrix(1 0 0 -1 -413.451 -579.186)"
       >
-        <stop offset="0" stop-color="#125d9e" />
-        <stop offset="1" stop-color="#1d2c5e" />
+        <stop offset="0" stopColor="#125d9e" />
+        <stop offset="1" stopColor="#1d2c5e" />
       </linearGradient>
       <path
         id="polygon56"
@@ -145,8 +145,8 @@ export const PokemonTitle = ({ width, height }: SVGProps<SVGSVGElement>) => {
         y2="-650.202"
         gradientTransform="matrix(1 0 0 -1 -413.451 -579.186)"
       >
-        <stop offset="0" stop-color="#105fa1" />
-        <stop offset="1" stop-color="#1d2c5e" />
+        <stop offset="0" stopColor="#105fa1" />
+        <stop offset="1" stopColor="#1d2c5e" />
       </linearGradient>
       <path
         id="path69"
@@ -167,8 +167,8 @@ export const PokemonTitle = ({ width, height }: SVGProps<SVGSVGElement>) => {
         y2="-650.612"
         gradientTransform="matrix(1 0 0 -1 -413.451 -579.186)"
       >
-        <stop offset="0" stop-color="#105fa1" />
-        <stop offset="1" stop-color="#1d2c5e" />
+        <stop offset="0" stopColor="#105fa1" />
+        <stop offset="1" stopColor="#1d2c5e" />
       </linearGradient>
       <path
         id="polygon78"
@@ -397,9 +397,9 @@ export const PokemonTitle = ({ width, height }: SVGProps<SVGSVGElement>) => {
         y2="2062.77"
         gradientTransform="translate(-569.451 -2006.686)"
       >
-        <stop offset="0" stop-color="#3c5aa6" />
-        <stop offset=".933" stop-color="#2b73b9" />
-        <stop offset="1" stop-color="#2a75bb" />
+        <stop offset="0" stopColor="#3c5aa6" />
+        <stop offset=".933" stopColor="#2b73b9" />
+        <stop offset="1" stopColor="#2a75bb" />
       </linearGradient>
       <path
         id="path183"
@@ -417,9 +417,9 @@ export const PokemonTitle = ({ width, height }: SVGProps<SVGSVGElement>) => {
             y2="2056.257"
             gradientTransform="translate(-569.451 -2006.686)"
           >
-            <stop offset="0" stop-color="#3c5aa6" />
-            <stop offset=".933" stop-color="#2b73b9" />
-            <stop offset="1" stop-color="#2a75bb" />
+            <stop offset="0" stopColor="#3c5aa6" />
+            <stop offset=".933" stopColor="#2b73b9" />
+            <stop offset="1" stopColor="#2a75bb" />
           </linearGradient>
           <path
             id="path196"
