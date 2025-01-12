@@ -23,9 +23,9 @@ async function fetchPokemonDetails(pokemon) {
 export default async function Page() {
   const allPokemon = await fetchAllPokemon();
 
-  // Fetch details for the first 151 Pokemon (for performance reason)
+  // Fetch details for the first 151 Pokemon (for performance reasons)
   const initialPokemonDetails = await Promise.all(
-    allPokemon.slice(0, 151).map(fetchPokemonDetails)
+    allPokemon.slice(0, 12).map(fetchPokemonDetails)
   );
 
   return (

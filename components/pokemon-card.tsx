@@ -41,10 +41,12 @@ export function PokemonCard({
 }: PokemonCardProps) {
   return (
     <Card className="overflow-hidden w-full max-w-[280px] group">
-      <CardHeader className="p-4 ">
+      <CardHeader className="p-4">
         <CardTitle className="flex justify-between items-center">
           <span className="text-base capitalize">{name}</span>
-          <span className="text-sm text-gray-500">#{number.toString()}</span>
+          <span className="text-sm text-gray-500">
+            #{number.toString().padStart(3, '0')}
+          </span>
         </CardTitle>
       </CardHeader>
       <CardContent className="p-3 space-y-3">
@@ -73,7 +75,7 @@ export function PokemonCard({
           ))}
         </div>
         <div className="flex flex-wrap items-start text-xs">
-          <h3 className="font-semibold mr-1">Abilities:</h3>
+          <h3 className="font-semibold  mr-1">Abilities:</h3>
           <div className="flex flex-wrap">
             {abilities.map((ability, index) => (
               <Fragment key={ability}>
