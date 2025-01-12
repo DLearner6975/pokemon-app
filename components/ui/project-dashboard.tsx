@@ -39,7 +39,7 @@ export default function ProjectDashboard({
     []
   );
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 24;
   const filteredPokemon = filterPokemon(
     allPokemon,
     pokemonDetails,
@@ -113,11 +113,11 @@ export default function ProjectDashboard({
           <LoginManager />
         </header>
 
-        <div className="flex items-center justify-between px-6 py-4">
+        {/* <div className="flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-4">
             <h1 className="text-3xl font-semibold">Shannon&apos;s Pokemon</h1>
           </div>
-        </div>
+        </div> */}
 
         <div className="flex-1 overflow-auto">
           <PokemonGrid

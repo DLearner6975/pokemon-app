@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, Calendar, ChevronDown, LogOut } from 'lucide-react';
+import { ChevronDown, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -24,12 +24,6 @@ export function LoginHeader({
 }: LoginHeaderProps) {
   return (
     <div className="flex items-center gap-6">
-      <Button variant="ghost" size="icon">
-        <Calendar className="h-5 w-5 text-[#787486]" />
-      </Button>
-      <Button variant="ghost" size="icon">
-        <Bell className="h-5 w-5 text-[#787486]" />
-      </Button>
       <Separator orientation="vertical" className="h-6" />
       {user ? (
         <DropdownMenu>
