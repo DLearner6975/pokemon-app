@@ -1,4 +1,4 @@
-import { Filters } from '@/components/filter-sidebar';
+import { Filters } from '@/components/ui/filter-sidebar';
 import { Pokemon, SimplePokemon } from '@/types/pokemon';
 
 export function getInitialFilters(searchParams: URLSearchParams): Filters {
@@ -84,7 +84,7 @@ export function filterPokemon(
   });
 }
 
-import { Filters } from '@/components/filter-sidebar';
+import { Filters } from '@/components/ui/filter-sidebar';
 
 export function handleFilterChange(
   newFilters: Filters,

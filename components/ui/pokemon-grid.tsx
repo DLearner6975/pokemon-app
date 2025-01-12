@@ -1,7 +1,7 @@
 import React from 'react';
 import { PokemonCard } from './pokemon-card';
 import { PokemonCardSkeleton } from './pokemon-card-skeleton';
-import { SimplePokemon, Pokemon } from './types';
+import { SimplePokemon, Pokemon } from '../types';
 
 interface PokemonGridProps {
   currentPagePokemon: SimplePokemon[];

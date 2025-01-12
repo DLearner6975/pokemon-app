@@ -9,13 +9,13 @@ import { PokemonPagination } from './pokemon-pagination';
 import { PokemonGrid } from './pokemon-grid';
 import { LoginHeader } from './login-header';
 import { SearchBar } from './search-bar';
-import { Pokemon, SimplePokemon } from './types';
+import { Pokemon, SimplePokemon } from '../types';
 import {
   getInitialFilters,
   filterPokemon,
   handleFilterChange,
-} from './utils/filter-utils';
-import { fetchPokemonDetails } from './utils/pokemon-utils';
+} from '../utils/filter-utils';
+import { fetchPokemonDetails } from '../utils/pokemon-utils';
 
 interface ProjectDashboardProps {
   initialPokemon: Pokemon[];

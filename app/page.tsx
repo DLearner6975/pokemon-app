@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import ProjectDashboard from '@/components/project-dashboard';
+import ProjectDashboard from '@/components/ui/project-dashboard';
 
 async function fetchAllPokemon() {
   let allPokemon = [];
