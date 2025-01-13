@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Dialog,
   DialogContent,
@@ -9,24 +9,41 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+} from '@/components/ui/dialog';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-interface LoginModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onLogin: (username: string, password: string, avatarUrl: string) => void
+export interface User {
+  name: string;
+  location: string;
+  avatarUrl: string;
 }
 
-export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [avatarUrl, setAvatarUrl] = useState('/placeholder.svg')
+interface LoginModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onLoginSuccess: (user: User) => void;
+}
+
+export function LoginModal({
+  isOpen,
+  onClose,
+  onLoginSuccess,
+}: LoginModalProps) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('/placeholder.svg');
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onLogin(username, password, avatarUrl)
-  }
+    e.preventDefault();
+    // In a real application, you would validate the credentials here
+    // For this example, we'll just set the user as logged in
+    onLoginSuccess({
+      name: 'Anima Agrawal',
+      location: 'U.P, India',
+      avatarUrl: avatarUrl,
+    });
+    onClose();
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -42,7 +59,12 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
             <div className="flex justify-center">
               <Avatar className="w-24 h-24">
                 <AvatarImage src={avatarUrl} alt="User avatar" />
-                <AvatarFallback>{username.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                <AvatarFallback>
+                  {username
+                    .split(' ')
+                    .map((n) => n[0])
+                    .join('')}
+                </AvatarFallback>
               </Avatar>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -86,6 +108,5 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
-
