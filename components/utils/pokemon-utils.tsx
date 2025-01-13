@@ -1,4 +1,4 @@
-import { Pokemon, SimplePokemon } from '@/types/pokemon';
+import { SimplePokemon, Pokemon } from '../types';
 
 export async function fetchPokemonDetails(
   pokemon: SimplePokemon

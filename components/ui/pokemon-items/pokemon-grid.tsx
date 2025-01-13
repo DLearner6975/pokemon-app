@@ -22,16 +22,18 @@ export function PokemonGrid({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-6">
-      {currentPagePokemon.map((pokemon) => {
+      {currentPagePokemon.map((pokemon, index) => {
         const details = pokemonDetails.find(
           (detail) => detail.name === pokemon.name
         );
+
         const displayImageUrl =
+          // @ts-expect-error The other property is not recognized by TypeScript
           details?.sprites?.other?.dream_world?.front_default ||
           details?.sprites?.front_default;
         return details ? (
           <PokemonCard
-            key={details.id}
+            key={details.id - index}
             name={details.name}
             number={details.id}
             imageUrl={displayImageUrl}

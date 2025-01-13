@@ -1,4 +1,5 @@
 import { Filters, Pokemon, SimplePokemon } from '../types';
+import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 export const types = [
   'normal',
@@ -161,7 +162,7 @@ export function handleFilterChange(
   searchParams: URLSearchParams,
   setFilters: (filters: Filters) => void,
   setCurrentPage: (page: number) => void,
-  router: any,
+  router: AppRouterInstance,
   pathname: string
 ) {
   setFilters(newFilters);
