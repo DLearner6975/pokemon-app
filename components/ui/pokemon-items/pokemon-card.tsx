@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState } from 'react';
-import { Pokemon, PokemonCardProps, shadowColorMap } from '@/components/types';
+import { PokemonCardProps, shadowColorMap } from '@/components/types';
 import PokemonBackCard from './pokemon-back-card';
 import { PokemonFrontCard } from './pokemon-front-card';
 
 export function PokemonCard({ details }: PokemonCardProps) {
-  const { name, id, imageUrl, color, types, abilities } = details;
+  const { name, id, color } = details;
   const [isFlipped, setIsFlipped] = useState<boolean[]>([]);
   const handleCardClick = (id: number) => {
     setIsFlipped((prev) => {
@@ -35,12 +35,8 @@ export function PokemonCard({ details }: PokemonCardProps) {
         }`}
       >
         <PokemonFrontCard details={details} />
-
-        {/* <PokemonBackCard
-       details={details}
-        /> */}
+        <PokemonBackCard details={details} />
       </CardContent>
-      {/* </div> */}
     </Card>
   );
 }
