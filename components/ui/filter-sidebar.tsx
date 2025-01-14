@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Input } from '@/components/ui/input';
+import { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -24,20 +23,6 @@ export function FilterSidebar({
   initialFilters,
 }: FilterSidebarProps) {
   const [filters, setFilters] = useState<Filters>(initialFilters);
-  //TODO: look into the difference between the two handleFilterChange functions
-  // const handleFilterChange = (category: keyof Filters, value: any) => {
-  //   setFilters((prevFilters) => {
-  //     let newValue = value;
-  //     if (['types', 'habitat', 'shape', 'color'].includes(category)) {
-  //       newValue = Array.isArray(value)
-  //         ? value.map((v) => v.toLowerCase())
-  //         : value.toLowerCase();
-  //     }
-  //     const newFilters = { ...prevFilters, [category]: newValue };
-  //     onFilterChange(newFilters);
-  //     return newFilters;
-  //   });
-  // };
   const handleFilterChange = (category: keyof Filters, value: unknown) => {
     setFilters((prevFilters) => {
       let newValue = value;
@@ -107,38 +92,6 @@ export function FilterSidebar({
               ))}
             </AccordionContent>
           </AccordionItem>
-          {/* TODO: Do I want to add this back into search.  Thinking of only showing filters that are selected on url bar */}
-          {/* <AccordionItem value="stats">
-          <AccordionTrigger>Stats</AccordionTrigger>
-          <AccordionContent>
-            {Object.entries(filters.stats).map(([stat, range]) => (
-              <div key={stat} className="mb-2">
-                <Label htmlFor={`${stat}-min`} className="block mb-1 capitalize">{stat}</Label>
-                <div className="flex items-center space-x-2">
-                  <Input
-                    id={`${stat}-min`}
-                    type="number"
-                    min="0"
-                    max="255"
-                    value={range.min}
-                    onChange={(e) => handleFilterChange('stats', { ...filters.stats, [stat]: { ...range, min: parseInt(e.target.value) } })}
-                    className="w-20"
-                  />
-                  <span>to</span>
-                  <Input
-                    id={`${stat}-max`}
-                    type="number"
-                    min="0"
-                    max="255"
-                    value={range.max}
-                    onChange={(e) => handleFilterChange('stats', { ...filters.stats, [stat]: { ...range, max: parseInt(e.target.value) } })}
-                    className="w-20"
-                  />
-                </div>
-              </div>
-            ))}
-          </AccordionContent>
-        </AccordionItem> */}
           <AccordionItem value="habitat">
             <AccordionTrigger>Habitat</AccordionTrigger>
             <AccordionContent>
@@ -197,42 +150,6 @@ export function FilterSidebar({
                   <Label htmlFor={`color-${color}`}>{color}</Label>
                 </div>
               ))}
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="baseExperience">
-            <AccordionTrigger>Base Experience</AccordionTrigger>
-            <AccordionContent>
-              <div className="flex items-center space-x-2">
-                <Input
-                  id="base-exp-min"
-                  type="number"
-                  min="0"
-                  max="1000"
-                  value={filters.baseExperience.min}
-                  onChange={(e) =>
-                    handleFilterChange('baseExperience', {
-                      ...filters.baseExperience,
-                      min: parseInt(e.target.value),
-                    })
-                  }
-                  className="w-20"
-                />
-                <span>to</span>
-                <Input
-                  id="base-exp-max"
-                  type="number"
-                  min="0"
-                  max="1000"
-                  value={filters.baseExperience.max}
-                  onChange={(e) =>
-                    handleFilterChange('baseExperience', {
-                      ...filters.baseExperience,
-                      max: parseInt(e.target.value),
-                    })
-                  }
-                  className="w-20"
-                />
-              </div>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
