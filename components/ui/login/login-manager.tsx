@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { LoginHeader } from './login-header';
 import { LoginModal, User } from './login-modal';
 

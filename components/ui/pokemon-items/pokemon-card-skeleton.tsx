@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function PokemonCardSkeleton() {
   return (
@@ -26,6 +26,5 @@ export function PokemonCardSkeleton() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-
