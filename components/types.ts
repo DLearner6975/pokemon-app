@@ -46,11 +46,7 @@ export interface FilterSidebarProps {
 }
 
 export interface PokemonCardProps {
-  name: string;
-  number: number;
-  imageUrl: string;
-  types: string[];
-  abilities: string[];
+  details: Pokemon;
 }
 
 export const typeColors: { [key: string]: string } = {

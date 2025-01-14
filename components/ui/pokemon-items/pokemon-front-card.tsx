@@ -1,24 +1,28 @@
-import { shadowColorMap, typeColors } from '@/components/types';
+import {
+  PokemonCardProps,
+  shadowColorMap,
+  typeColors,
+} from '@/components/types';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Fragment } from 'react';
 
-export const PokemonFrontCard = ({
-  color,
-  imageUrl,
-  name,
-  types,
-  abilities,
-}) => {
-  const shadowClass = shadowColorMap[color?.name] || 'shadow-gray-500';
+export const PokemonFrontCard = ({ details }: PokemonCardProps) => {
+  const { name, color, types, abilities, sprites } = details;
+  const shadowClass = shadowColorMap[color?.name ?? 'shadow-gray-500'];
+  const displayImageUrl =
+    // @ts-expect-error The other property is not recognized by TypeScript
+    sprites?.other?.home?.front_default ||
+    // @ts-expect-error The other property is not recognized by TypeScript
+    sprites?.other?.dream_world?.front_default ||
+    sprites?.front_default;
   return (
     <div className="backface-hidden">
       <div
         className={`relative flex justify-center items-center ${shadowClass} rounded-lg overflow-hidden h-[180px] group`}
       >
-        {/* <div className="absolute inset-0 bg-gradient-to-br from-transparent to-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div> */}
         <Image
-          src={imageUrl || '/placeholder-image.jpg'}
+          src={displayImageUrl || '/placeholder-image.jpg'}
           alt={`${name} sprite`}
           width={150}
           height={150}
@@ -29,14 +33,14 @@ export const PokemonFrontCard = ({
       </div>
       <div className="flex items-center flex-wrap gap-0.5">
         <h3 className="font-semibold text-xs mr-1">Types:</h3>
-        {types.map((type) => (
+        {types.map((type, index) => (
           <Badge
-            key={type}
+            key={index}
             className={`capitalize text-white text-xs ${
-              typeColors[type] || 'bg-gray-500'
+              typeColors[type?.type?.name] || 'bg-gray-500'
             }`}
           >
-            {type}
+            {type?.type?.name}
           </Badge>
         ))}
       </div>
@@ -44,9 +48,9 @@ export const PokemonFrontCard = ({
         <h3 className="font-semibold  mr-1">Abilities:</h3>
         <div className="flex flex-wrap">
           {abilities.map((ability, index) => (
-            <Fragment key={ability}>
+            <Fragment key={index}>
               {index > 0 && <span className="mx-1">/</span>}
-              <span className="capitalize">{ability}</span>
+              <span className="capitalize">{ability?.ability?.name}</span>
             </Fragment>
           ))}
         </div>
