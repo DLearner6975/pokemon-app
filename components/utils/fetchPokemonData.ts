@@ -52,6 +52,7 @@ export async function fetchPokemonData(id: string) {
   const pokemonList = await getPokemonList();
 
   // Fetch damage relations for each type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const typePromises = pokemon.types.map((type: any) =>
     getTypeData(type.type.url)
   );
@@ -61,6 +62,7 @@ export async function fetchPokemonData(id: string) {
   const evolutions = formatEvolutionData(evolutionChain);
 
   const currentIndex = pokemonList.findIndex(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (p: any) => p.name === pokemon.name
   );
   const headerData = formatHeaderData(

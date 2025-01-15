@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { notFound } from 'next/navigation';
 import { fetchPokemonData } from '@/components/utils/fetchPokemonData';
 import PokemonById from '@/components/ui/pokemon-by-id/pokemon-by-id';
