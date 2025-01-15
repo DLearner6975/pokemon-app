@@ -43,7 +43,7 @@ export default function PokemonBackCard({ details }: PokemonCardProps) {
       <CardFooter className="justify-center p-4 pt-0">
         <Link
           className="text-white/90 hover:text-white hover:bg-white/10 flex"
-          href="#"
+          href={`/${details?.order}`}
         >
           More details
           <ChevronsDown className="ml-2 h-4 w-4 animate-bounce" />
