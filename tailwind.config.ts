@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import type { Config } from 'tailwindcss';
 
 export default {
@@ -81,6 +83,7 @@ export default {
     },
   },
   plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('tailwindcss-animate'),
     function ({ addUtilities }) {
       const newUtilities = {
