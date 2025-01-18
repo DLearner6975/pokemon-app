@@ -27,17 +27,7 @@ export function PokemonGrid({
         );
 
         return details ? (
-          <PokemonCard
-            details={details}
-            // key={details.id}
-            // index={index}
-            // name={details.name}
-            // number={details.id}
-            // imageUrl={displayImageUrl}
-            // color={details.color}
-            // types={details.types.map((type) => type.type.name)}
-            // abilities={details.abilities.map((ability) => ability.ability.name)}
-          />
+          <PokemonCard key={details.id} details={details} />
         ) : (
           <PokemonCardSkeleton key={pokemon.name} />
         );
