@@ -16,6 +16,7 @@ import { fetchPokemonDetails } from '../utils/pokemon-utils';
 import { LoginManager } from './login/login-manager';
 import { PokemonGrid } from './pokemon-items/pokemon-grid';
 import { PokemonPagination } from './pokemon-items/pokemon-pagination';
+import { useWindowSize } from '@/hooks/useWindow';
 
 interface ProjectDashboardProps {
   initialPokemon: Pokemon[];
@@ -38,6 +39,8 @@ export default function ProjectDashboard({
   const [currentPagePokemon, setCurrentPagePokemon] = useState<SimplePokemon[]>(
     []
   );
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const windowSize = useWindowSize();
 
   const itemsPerPage = 24;
   const filteredPokemon = filterPokemon(
@@ -71,6 +74,12 @@ export default function ProjectDashboard({
     fetchMissingDetails(currentPagePokemon);
   }, [currentPagePokemon, fetchMissingDetails]);
 
+  useEffect(() => {
+    if (windowSize.width !== undefined) {
+      setIsSidebarOpen(windowSize.width >= 768); // 768px is typically considered a breakpoint for medium screens
+    }
+  }, [windowSize.width]);
+
   const handleFilterChangeWrapper = useCallback(
     (newFilters: Filters) => {
       handleFilterChange(
@@ -101,11 +110,16 @@ export default function ProjectDashboard({
     [filteredPokemon, currentPagePokemon]
   );
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
   return (
     <div className="flex h-screen overflow-hidden bg-[#f5f5f5]">
       <FilterSidebar
         onFilterChange={handleFilterChangeWrapper}
         initialFilters={filters}
+        isOpen={isSidebarOpen}
+        onToggle={toggleSidebar}
       />
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="flex items-center justify-between border-b bg-white px-6 py-4">

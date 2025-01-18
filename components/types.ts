@@ -36,6 +36,8 @@ export interface Filters {
 export interface FilterSidebarProps {
   onFilterChange: (filters: Filters) => void;
   initialFilters: Filters;
+  isOpen: boolean;
+  onToggle: () => void;
 }
 
 export interface PokemonCardProps {

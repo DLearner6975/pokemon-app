@@ -16,11 +16,14 @@ import {
   colors,
 } from '../utils/filter-utils';
 import { PokemonTitle } from './pokemon-items/pokemon-title';
-import { FilterX } from 'lucide-react';
+import { ChevronsLeft, ChevronsRight, FilterX } from 'lucide-react';
+import { Button } from './button';
 
 export function FilterSidebar({
   onFilterChange,
   initialFilters,
+  isOpen,
+  onToggle,
 }: FilterSidebarProps) {
   const [filters, setFilters] = useState<Filters>(initialFilters);
   const handleFilterChange = (category: keyof Filters, value: unknown) => {
@@ -44,9 +47,17 @@ export function FilterSidebar({
     });
   };
   return (
-    <div className="w-64 bg-white p-4 border-r overflow-y-auto h-screen flex flex-col gap-12">
+    <div
+      className={`w-64 bg-white p-4 border-r overflow-y-auto h-screen flex flex-col gap-12 relative ${
+        isOpen ? 'w-64' : 'w-0 md:w-12'
+      } transition-all duration-300 ease-in-out`}
+    >
       <PokemonTitle width={150} height={75} />
-      <div>
+      <div
+        className={`top-0 left-0 h-full ${
+          isOpen ? 'w-64' : 'w-0'
+        } bg-white border-r overflow-y-auto transition-all duration-300 ease-in-out`}
+      >
         <h2 className="text-lg font-semibold mb-4">
           <FilterX className="w-6 h-6 inline-block mr-2" />
           Filters
@@ -176,6 +187,19 @@ export function FilterSidebar({
           </div>
         </div>
       </div>
+      <Button
+        variant="ghost"
+        size="icon"
+        // className="absolute top-4 -right-6 z-10 md:hidden"
+        className="absolute top-4 -right-2 z-10 "
+        onClick={onToggle}
+      >
+        {isOpen ? (
+          <ChevronsLeft className="h-4 w-4" />
+        ) : (
+          <ChevronsRight className="h-4 w-4" />
+        )}
+      </Button>
     </div>
   );
 }
