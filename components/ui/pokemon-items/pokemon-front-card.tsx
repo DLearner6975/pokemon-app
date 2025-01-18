@@ -26,7 +26,7 @@ export const PokemonFrontCard = ({ details }: PokemonCardProps) => {
           alt={`${name} sprite`}
           width={150}
           height={150}
-          className={`w-[150px] h-[150px] object-contain p-4 transition-all duration-300 ease-in-out transform group-hover:scale-125 group-hover:-translate-y-2 group-hover:rotate-3 z-10 shadow-lg rounded-lg ${shadowClass} sm:block hidden`}
+          className={`w-[150px] h-[150px] object-contain p-4 transition-all duration-300 ease-in-out transform group-hover:scale-125 group-hover:-translate-y-2 group-hover:rotate-3 z-10 shadow-lg rounded-lg ${shadowClass} md:backface-hidden`}
           aria-label={`${name} image. Hover to enlarge.`}
           priority
         />
