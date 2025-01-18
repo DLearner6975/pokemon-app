@@ -20,7 +20,7 @@ export function PokemonGrid({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-6">
+    <div className="grid grid-cols-1 justify-items-center md:grid-cols-2 lg:grid-cols-4 gap-4 p-6">
       {currentPagePokemon.map((pokemon) => {
         const details = pokemonDetails.find(
           (detail) => detail.name === pokemon.name
