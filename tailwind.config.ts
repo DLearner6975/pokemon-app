@@ -94,10 +94,14 @@ export default {
           transform: 'rotateY(180deg)',
         },
         '.backface-hidden': {
+          '-webkit-backface-visibility': 'hidden',
           backfaceVisibility: 'hidden',
         },
         '.transform-style-preserve-3d': {
           transformStyle: 'preserve-3d',
+        },
+        '.group:hover .backface-hidden': {
+          willChange: 'transform',
         },
       };
       addUtilities(newUtilities, ['responsive', 'hover']);
