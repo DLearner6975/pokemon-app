@@ -48,7 +48,7 @@ export function FilterSidebar({
   };
   return (
     <div
-      className={`w-64 bg-white border-r overflow-y-auto h-screen flex flex-col gap-12 relative ${
+      className={`hidden md:flex w-64 bg-white border-r overflow-y-auto h-screen flex-col gap-12 relative ${
         isOpen ? 'w-64' : 'w-0 md:w-12'
       } transition-all duration-300 ease-in-out`}
     >
@@ -200,8 +200,7 @@ export function FilterSidebar({
       <Button
         variant="ghost"
         size="icon"
-        // className="absolute top-4 -right-6 z-10 md:hidden"
-        className="absolute top-4 -right-2 z-10 "
+        className="absolute top-4 -right-2 z-10"
         onClick={onToggle}
       >
         {isOpen ? (
