@@ -32,11 +32,11 @@ export default function PokemonById({
           {formattedPokemon.name} #{formattedPokemon.id}
         </h1>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <div className="bg-white p-8 rounded-lg shadow-sm h-[400px]">
-              <PokemonCarousel images={formattedPokemon.images} />
-            </div>
+            {/* <div className="bg-white p-8 rounded-lg shadow-sm h-[400px]"> */}
+            <PokemonCarousel images={formattedPokemon.images} />
+            {/* </div> */}
             <div className="mt-8">
               {formattedPokemon.damageRelations ? (
                 <PokemonDamageRelations
