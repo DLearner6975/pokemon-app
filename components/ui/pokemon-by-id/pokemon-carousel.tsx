@@ -1,73 +1,43 @@
-'use client'
-
-import { useState } from 'react'
-import Image from 'next/image'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Image from 'next/image';
+import { Card, CardContent } from '../card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from '../carousel';
 
 interface PokemonCarouselProps {
-  images: string[]
+  images: string[];
 }
 
 export function PokemonCarousel({ images }: PokemonCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const nextImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-  }
-
-  const prevImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
-  }
-
   return (
-    <div className="relative w-full h-full">
-      <div className="absolute inset-0 flex items-center justify-between z-10">
-        <button
-          onClick={prevImage}
-          className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-opacity"
-          aria-label="Previous image"
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-        <button
-          onClick={nextImage}
-          className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-opacity"
-          aria-label="Next image"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </button>
-      </div>
-      <div className="w-full h-full overflow-hidden">
-        <div
-          className="flex transition-transform duration-300 ease-in-out h-full"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {images.map((src, index) => (
-            <div key={index} className="w-full h-full flex-shrink-0">
-              <Image
-                src={src || "/placeholder.svg"}
-                alt={`Pokemon image ${index + 1}`}
-                layout="fill"
-                objectFit="contain"
-                priority={index === 0}
-              />
+    <Carousel className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto">
+      <CarouselContent>
+        {images.map((src, index) => (
+          <CarouselItem key={index}>
+            <div className="p-1">
+              <Card>
+                <CardContent className="flex aspect-square items-center justify-center p-6">
+                  <Image
+                    src={src || '/placeholder.svg'}
+                    alt={`Carousel image ${index + 1}`}
+                    width={400}
+                    height={400}
+                    className="object-cover rounded-md"
+                  />
+                </CardContent>
+              </Card>
             </div>
-          ))}
-        </div>
-      </div>
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            className={`w-3 h-3 rounded-full ${
-              index === currentIndex ? 'bg-white' : 'bg-white/50'
-            }`}
-            onClick={() => setCurrentIndex(index)}
-            aria-label={`Go to image ${index + 1}`}
-          />
+          </CarouselItem>
         ))}
+      </CarouselContent>
+      <div className="absolute inset-0 flex items-center justify-between p-4">
+        <CarouselPrevious className="relative left-0 translate-x-0" />
+        <CarouselNext className="relative right-0 translate-x-0" />
       </div>
-    </div>
-  )
+    </Carousel>
+  );
 }
-

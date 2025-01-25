@@ -59,7 +59,15 @@ export async function fetchPokemonData(id: string) {
   const typeData = await Promise.all(typePromises);
 
   const formattedPokemon = formatPokemonData(pokemon, species, typeData);
-  const evolutions = formatEvolutionData(evolutionChain);
+  // const evolutions = formatEvolutionData(evolutionChain);
+  const evolutions = formatEvolutionData(evolutionChain).map((evolution) => ({
+    ...evolution,
+    images: {
+      default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evolution.id}.png`,
+      shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${evolution.id}.png`,
+      officialArtwork: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evolution.id}.png`,
+    },
+  }));
 
   const currentIndex = pokemonList.findIndex(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
