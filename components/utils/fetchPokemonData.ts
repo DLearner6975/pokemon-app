@@ -59,7 +59,6 @@ export async function fetchPokemonData(id: string) {
   const typeData = await Promise.all(typePromises);
 
   const formattedPokemon = formatPokemonData(pokemon, species, typeData);
-  // const evolutions = formatEvolutionData(evolutionChain);
   const evolutions = formatEvolutionData(evolutionChain).map((evolution) => ({
     ...evolution,
     images: {
