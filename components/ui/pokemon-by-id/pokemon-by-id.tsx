@@ -38,16 +38,10 @@ export default function PokemonById({
             <PokemonCarousel images={formattedPokemon.images} />
             {/* </div> */}
             <div className="mt-8">
-              {formattedPokemon.damageRelations ? (
-                <PokemonDamageRelations
-                  damageRelations={formattedPokemon.damageRelations}
-                  backgroundColorClass={backgroundColorClass}
-                />
-              ) : (
-                <p className="text-red-500">
-                  Error: Damage relations data is missing
-                </p>
-              )}
+              <PokemonStats
+                stats={formattedPokemon.stats}
+                backgroundColorClass={backgroundColorClass}
+              />
             </div>
           </div>
           <div className="space-y-6">
@@ -94,16 +88,25 @@ export default function PokemonById({
                 ))}
               </div>
             </div>
-            <PokemonEvolution
-              evolutions={evolutions}
-              backgroundColorClass={backgroundColorClass}
-            />
 
-            <PokemonStats
-              stats={formattedPokemon.stats}
-              backgroundColorClass={backgroundColorClass}
-            />
+            {formattedPokemon.damageRelations ? (
+              <PokemonDamageRelations
+                damageRelations={formattedPokemon.damageRelations}
+                backgroundColorClass={backgroundColorClass}
+              />
+            ) : (
+              <p className="text-red-500">
+                Error: Damage relations data is missing
+              </p>
+            )}
           </div>
+        </div>
+
+        <div className="mt-12">
+          <PokemonEvolution
+            evolutions={evolutions}
+            backgroundColorClass={backgroundColorClass}
+          />
         </div>
 
         <div className="text-center mt-8">
