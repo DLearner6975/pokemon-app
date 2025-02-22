@@ -1,4 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
+import { Star } from 'lucide-react';
+
 // @ts-nocheck
 interface StatBarProps {
   value: number;
@@ -24,7 +27,7 @@ function StatBar({
       </div>
       {isOverMaxValue && (
         <div className="absolute -right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-white">
-          ★
+          <Star className="w-4 h-4" />
         </div>
       )}
     </div>
@@ -70,7 +73,9 @@ export function PokemonStats({
       </div>
       {hasAnyStatOverMax && (
         <div className="mt-3 text-xs text-white flex items-center gap-1">
-          <span>★</span>
+          <span>
+            <Star className="w-4 h-4" />
+          </span>
           <span>indicates stat exceeds base maximum</span>
         </div>
       )}
