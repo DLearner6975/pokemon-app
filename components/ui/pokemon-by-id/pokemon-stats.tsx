@@ -23,7 +23,7 @@ function StatBar({
         />
       </div>
       {isOverMaxValue && (
-        <div className="absolute -right-5 top-1/2 -translate-y-1/2 text-xs font-bold text-red-500">
+        <div className="absolute -right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-white">
           ★
         </div>
       )}
@@ -50,54 +50,54 @@ export function PokemonStats({
   const hasAnyStatOverMax = Object.values(stats).some((stat) => stat > 100);
 
   return (
-    <div className="bg-gray-300 p-4 rounded-lg">
+    <div className={`${backgroundColorClass ?? 'bg-gray-500'} p-4 rounded-lg`}>
       <div className="space-y-2">
         <div>
           <div className="text-sm">HP</div>
           <StatBar
             value={stats.hp}
-            backgroundColorClass={backgroundColorClass}
-          />{' '}
+            // backgroundColorClass={backgroundColorClass}
+          />
         </div>
         <div>
           <div className="text-sm">Attack</div>
           <StatBar
             value={stats.attack}
-            backgroundColorClass={backgroundColorClass}
+            // backgroundColorClass={backgroundColorClass}
           />
         </div>
         <div>
           <div className="text-sm">Defense</div>
           <StatBar
             value={stats.defense}
-            backgroundColorClass={backgroundColorClass}
+            // backgroundColorClass={backgroundColorClass}
           />
         </div>
         <div>
           <div className="text-sm">Special Attack</div>
           <StatBar
             value={stats.specialAttack}
-            backgroundColorClass={backgroundColorClass}
+            // backgroundColorClass={backgroundColorClass}
           />
         </div>
         <div>
           <div className="text-sm">Special Defense</div>
           <StatBar
             value={stats.specialDefense}
-            backgroundColorClass={backgroundColorClass}
+            // backgroundColorClass={backgroundColorClass}
           />
         </div>
         <div>
           <div className="text-sm">Speed</div>
           <StatBar
             value={stats.speed}
-            backgroundColorClass={backgroundColorClass}
+            // backgroundColorClass={backgroundColorClass}
           />
         </div>
       </div>
       {hasAnyStatOverMax && (
         <div className="mt-3 text-xs text-gray-600 flex items-center gap-1">
-          <span className="text-red-500 font-bold">★</span>
+          <span className="text-white font-bold">★</span>
           <span>indicates stat exceeds base maximum</span>
         </div>
       )}
