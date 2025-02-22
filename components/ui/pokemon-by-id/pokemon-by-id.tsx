@@ -7,7 +7,7 @@ import { PokemonCarousel } from '@/components/ui/pokemon-by-id/pokemon-carousel'
 import { PokemonEvolution } from '@/components/ui/pokemon-by-id/pokemon-evolution';
 import { PokemonHeader } from '@/components/ui/pokemon-by-id/pokemon-header';
 import { PokemonStats } from '@/components/ui/pokemon-by-id/pokemon-stats';
-import { PokemonDamageRelations } from './pokemon-danage-relations';
+import { PokemonDamageRelations } from './damage-relation/pokemon-damage-relations';
 import Link from 'next/link';
 
 export default function PokemonById({
