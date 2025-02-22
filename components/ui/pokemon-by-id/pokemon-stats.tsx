@@ -52,52 +52,25 @@ export function PokemonStats({
   return (
     <div className={`${backgroundColorClass ?? 'bg-gray-500'} p-4 rounded-lg`}>
       <div className="space-y-2">
-        <div>
-          <div className="text-sm">HP</div>
-          <StatBar
-            value={stats.hp}
-            // backgroundColorClass={backgroundColorClass}
-          />
-        </div>
-        <div>
-          <div className="text-sm">Attack</div>
-          <StatBar
-            value={stats.attack}
-            // backgroundColorClass={backgroundColorClass}
-          />
-        </div>
-        <div>
-          <div className="text-sm">Defense</div>
-          <StatBar
-            value={stats.defense}
-            // backgroundColorClass={backgroundColorClass}
-          />
-        </div>
-        <div>
-          <div className="text-sm">Special Attack</div>
-          <StatBar
-            value={stats.specialAttack}
-            // backgroundColorClass={backgroundColorClass}
-          />
-        </div>
-        <div>
-          <div className="text-sm">Special Defense</div>
-          <StatBar
-            value={stats.specialDefense}
-            // backgroundColorClass={backgroundColorClass}
-          />
-        </div>
-        <div>
-          <div className="text-sm">Speed</div>
-          <StatBar
-            value={stats.speed}
-            // backgroundColorClass={backgroundColorClass}
-          />
-        </div>
+        {Object.entries(stats).map(([statName, value]) => (
+          <div key={statName}>
+            <div className="text-sm">
+              {statName
+                .replace(/([A-Z])/g, ' $1')
+                .split(' ')
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ')}
+            </div>
+            <StatBar
+              value={value}
+              // backgroundColorClass={backgroundColorClass}
+            />
+          </div>
+        ))}
       </div>
       {hasAnyStatOverMax && (
-        <div className="mt-3 text-xs text-gray-600 flex items-center gap-1">
-          <span className="text-white font-bold">★</span>
+        <div className="mt-3 text-xs text-white flex items-center gap-1">
+          <span>★</span>
           <span>indicates stat exceeds base maximum</span>
         </div>
       )}
