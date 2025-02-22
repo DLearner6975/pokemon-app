@@ -14,13 +14,13 @@ interface PokemonCarouselProps {
 
 export function PokemonCarousel({ images }: PokemonCarouselProps) {
   return (
-    <Carousel className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto">
+    <Carousel className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto relative">
       <CarouselContent>
         {images.map((src, index) => (
           <CarouselItem key={index}>
             <div className="p-1">
               <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
+                <CardContent className="flex aspect-square items-center justify-center p-6 relative">
                   <Image
                     src={src || '/placeholder.svg'}
                     alt={`Carousel image ${index + 1}`}
@@ -28,16 +28,16 @@ export function PokemonCarousel({ images }: PokemonCarouselProps) {
                     height={400}
                     className="object-cover rounded-md"
                   />
+                  <div className="absolute inset-12 flex items-center justify-between">
+                    <CarouselPrevious className="h-8 w-8" />
+                    <CarouselNext className="h-8 w-8" />
+                  </div>
                 </CardContent>
               </Card>
             </div>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="absolute inset-0 flex items-center justify-between p-4">
-        <CarouselPrevious className="relative left-0 translate-x-0" />
-        <CarouselNext className="relative right-0 translate-x-0" />
-      </div>
     </Carousel>
   );
 }
