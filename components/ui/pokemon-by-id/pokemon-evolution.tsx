@@ -31,7 +31,7 @@ export function PokemonEvolution({
         {evolutions.map((evolution, index) => {
           return (
             <div key={evolution.id} className="flex items-center">
-              <Link href={`/${evolution.id}`} className="group">
+              <Link href={`/pokemon/${evolution.id}`} className="group">
                 <div className="relative transition-transform transform group-hover:scale-105">
                   <div className="bg-white rounded-full p-2 w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center">
                     <Image

@@ -35,14 +35,16 @@ export function PokemonHeader({
       } text-white px-4 py-2`}
     >
       <Link
-        href={`/${prevPokemon?.id}`}
+        href={`/pokemon/${prevPokemon?.id}`}
         className="flex items-center gap-2 hover:underline"
       >
         <ChevronLeft className="h-4 w-4" />
         <span>#{prevPokemon?.id}</span>
         <span>{prevPokemon?.name}</span>
       </Link>
-      <Select onValueChange={(value) => (window.location.href = `/${value}`)}>
+      <Select
+        onValueChange={(value) => (window.location.href = `/pokemon/${value}`)}
+      >
         <SelectTrigger className="w-[180px] bg-white text-gray-800">
           <SelectValue
             placeholder={`#${currentPokemon.id} ${currentPokemon.name}`}
@@ -57,7 +59,7 @@ export function PokemonHeader({
         </SelectContent>
       </Select>
       <Link
-        href={`/${nextPokemon?.id}`}
+        href={`/pokemon/${nextPokemon?.id}`}
         className="flex items-center gap-2 hover:underline"
       >
         <span>{nextPokemon?.name}</span>
