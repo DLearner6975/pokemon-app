@@ -1,8 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-
 import { Star } from 'lucide-react';
 
-// @ts-nocheck
 interface StatBarProps {
   value: number;
   maxValue?: number;
@@ -42,15 +39,17 @@ interface PokemonStatsProps {
     specialAttack: number;
     specialDefense: number;
     speed: number;
-    backgroundColorClass?: string;
   };
+  backgroundColorClass?: string;
 }
 
 export function PokemonStats({
   stats,
   backgroundColorClass,
 }: PokemonStatsProps) {
-  const hasAnyStatOverMax = Object.values(stats).some((stat) => stat > 100);
+  const hasAnyStatOverMax = Object.values(stats)
+    .filter((stat): stat is number => typeof stat === 'number')
+    .some((stat) => stat > 100);
 
   return (
     <div className={`${backgroundColorClass ?? 'bg-gray-500'} p-4 rounded-lg`}>
@@ -64,10 +63,7 @@ export function PokemonStats({
                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' ')}
             </div>
-            <StatBar
-              value={value}
-              // backgroundColorClass={backgroundColorClass}
-            />
+            <StatBar value={value} />
           </div>
         ))}
       </div>
@@ -76,7 +72,7 @@ export function PokemonStats({
           <span>
             <Star className="w-4 h-4" />
           </span>
-          <span>indicates stat exceeds base maximum</span>
+          <span>indicates stat over 100%</span>
         </div>
       )}
     </div>
