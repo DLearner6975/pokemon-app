@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button';
 import { PokemonCarousel } from '@/components/ui/pokemon-by-id/pokemon-carousel';
 import { PokemonEvolution } from '@/components/ui/pokemon-by-id/pokemon-evolution';
 import { PokemonHeader } from '@/components/ui/pokemon-by-id/pokemon-header';
-import { PokemonStats } from '@/components/ui/pokemon-by-id/pokemon-stats';
+
 import { PokemonDamageRelations } from './damage-relation/pokemon-damage-relations';
 import Link from 'next/link';
+import { PokemonStats } from './stats/pokemon-stats';
 
 export default function PokemonById({
   formattedPokemon,
@@ -34,9 +35,7 @@ export default function PokemonById({
 
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            {/* <div className="bg-white p-8 rounded-lg shadow-sm h-[400px]"> */}
             <PokemonCarousel images={formattedPokemon.images} />
-            {/* </div> */}
             <div className="mt-8">
               <PokemonStats
                 stats={formattedPokemon.stats}
