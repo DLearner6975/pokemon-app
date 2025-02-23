@@ -24,9 +24,9 @@ export function PokemonCarousel({ images }: PokemonCarouselProps) {
                   <Image
                     src={src || '/placeholder.svg'}
                     alt={`Carousel image ${index + 1}`}
-                    width={400}
-                    height={400}
-                    className="object-cover rounded-md"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute inset-12 flex items-center justify-between">
                     <CarouselPrevious className="h-8 w-8" />

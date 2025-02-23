@@ -117,9 +117,10 @@ export function formatPokemonData(
           ?.base_stat || 0,
     },
     images: [
-      pokemon.sprites.other['official-artwork'].front_default,
-      pokemon.sprites.front_default,
-      pokemon.sprites.back_default,
+      pokemon?.sprites.other?.home?.front_default,
+
+      pokemon?.sprites.other?.dream_world?.front_default,
+      pokemon?.sprites.other['official-artwork'].front_default,
     ].filter(Boolean),
     color: species?.color.name,
     damageRelations,

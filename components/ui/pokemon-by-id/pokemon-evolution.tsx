@@ -6,9 +6,7 @@ interface Evolution {
   id: string;
   name: string;
   types: string[];
-  images: {
-    default: string;
-  };
+  image: string;
 }
 
 interface PokemonEvolutionProps {
@@ -37,9 +35,8 @@ export function PokemonEvolution({
                 <div className="relative transition-transform transform group-hover:scale-105">
                   <div className="bg-white rounded-full p-2 w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center">
                     <Image
-                      // src={`/placeholder.svg?height=100&width=100`}
                       src={
-                        evolution?.images?.default ||
+                        evolution?.image ||
                         `/placeholder.svg?height=100&width=100`
                       }
                       alt={evolution.name}
