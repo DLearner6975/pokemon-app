@@ -26,14 +26,7 @@ export function PokemonParticles() {
     },
     particles: {
       color: {
-        value: [
-          '#FFFFFF',
-          '#FF0000',
-          '#00FF00',
-          '#0000FF',
-          '#FFFF00',
-          '#FF00FF',
-        ],
+        value: '#FFFFFF',
       },
       move: {
         direction: 'bottom',
@@ -42,7 +35,7 @@ export function PokemonParticles() {
         outModes: 'out',
       },
       number: {
-        value: 30,
+        value: 20,
         density: {
           enable: true,
           width: 800,
@@ -50,7 +43,7 @@ export function PokemonParticles() {
         },
       },
       opacity: {
-        value: 0.7,
+        value: 1,
         animation: {
           enable: true,
           speed: 1,
@@ -59,10 +52,39 @@ export function PokemonParticles() {
         },
       },
       shape: {
-        type: ['circle', 'square'],
+        type: ['image'],
+        options: {
+          image: [
+            {
+              src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png',
+              width: 32,
+              height: 32,
+            },
+            {
+              src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+              width: 32,
+              height: 32,
+            },
+            {
+              src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
+              width: 32,
+              height: 32,
+            },
+            {
+              src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png',
+              width: 32,
+              height: 32,
+            },
+            {
+              src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png',
+              width: 32,
+              height: 32,
+            },
+          ],
+        },
       },
       size: {
-        value: { min: 3, max: 7 },
+        value: { min: 20, max: 30 },
       },
       zIndex: {
         value: 1,
