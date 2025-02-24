@@ -41,13 +41,13 @@ export function PokemonPagination({
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <Button
+            <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage <= 1}
               className="cursor-pointer"
             >
               <PaginationPrevious />
-            </Button>
+            </button>
           </PaginationItem>
           {[...Array(Math.min(5, totalPages))].map((_, index) => {
             let pageNumber;
@@ -81,23 +81,23 @@ export function PokemonPagination({
                 <PaginationEllipsis />
               </PaginationItem>
               <PaginationItem>
-                <Button
+                <button
                   onClick={() => handlePageChange(totalPages)}
                   className="cursor-pointer"
                 >
                   <PaginationLink>{totalPages}</PaginationLink>
-                </Button>
+                </button>
               </PaginationItem>
             </>
           )}
           <PaginationItem>
-            <Button
+            <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage >= totalPages}
               className="cursor-pointer"
             >
               <PaginationNext />
-            </Button>
+            </button>
           </PaginationItem>
         </PaginationContent>
       </Pagination>
