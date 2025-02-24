@@ -45,7 +45,7 @@ export function PokemonHeader({
           >
             <ChevronLeft className="h-4 w-4" />
             <span>#{prevPokemon.id}</span>
-            <span>{prevPokemon.name}</span>
+            <span className="hidden sm:inline">{prevPokemon.name}</span>
           </Link>
         )}
       </div>
@@ -53,13 +53,23 @@ export function PokemonHeader({
         <Select onValueChange={(value) => router.push(`/pokemon/${value}`)}>
           <SelectTrigger className="w-[180px] bg-white text-gray-800">
             <SelectValue
-              placeholder={`#${currentPokemon.id} ${currentPokemon.name}`}
+              placeholder={
+                <div>
+                  <span className="text-center sm:hidden">
+                    #{currentPokemon.id}
+                  </span>
+                  <span className="hidden sm:inline">
+                    #{currentPokemon.id} {currentPokemon.name}
+                  </span>
+                </div>
+              }
             />
           </SelectTrigger>
           <SelectContent>
             {allPokemon?.map((pokemon) => (
               <SelectItem key={pokemon.id} value={pokemon.id}>
-                #{pokemon.id} {pokemon.name}
+                #{pokemon.id}
+                <span className="hidden sm:inline">{pokemon.name}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -71,7 +81,7 @@ export function PokemonHeader({
             href={`/pokemon/${nextPokemon.id}`}
             className="flex items-center gap-2 hover:underline"
           >
-            <span>{nextPokemon.name}</span>
+            <span className="hidden sm:inline">{nextPokemon.name}</span>
             <span>#{nextPokemon.id}</span>
             <ChevronRight className="h-4 w-4" />
           </Link>
