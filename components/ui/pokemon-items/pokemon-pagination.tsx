@@ -8,7 +8,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { Button } from '../button';
 
 interface PokemonPaginationProps {
   totalItems: number;
