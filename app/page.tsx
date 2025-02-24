@@ -1,22 +1,7 @@
 import { Suspense } from 'react';
 import ProjectDashboard from '@/components/ui/project-dashboard';
 import { Pokemon, SimplePokemon } from '@/components/types';
-
-async function fetchAllPokemon() {
-  // TODO: THERE IS DUPLICATE POKEMON DATA IN THE API, SO WE NEED TO GET ALL THE POKEMON DATA
-
-  let allPokemon: SimplePokemon[] = [];
-  let url = 'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0';
-
-  while (url) {
-    const response = await fetch(url);
-    const data = await response.json();
-    allPokemon = [...allPokemon, ...data.results];
-    url = data.next;
-  }
-
-  return allPokemon;
-}
+import { getPokemonList } from '@/components/utils/fetchPokemonData';
 
 async function fetchPokemonDetails(pokemon: SimplePokemon): Promise<Pokemon> {
   const response = await fetch(pokemon.url);
@@ -24,7 +9,7 @@ async function fetchPokemonDetails(pokemon: SimplePokemon): Promise<Pokemon> {
 }
 
 export default async function Page() {
-  const allPokemon = await fetchAllPokemon();
+  const allPokemon = await getPokemonList();
 
   // Fetch details for the first 151 Pokemon (for performance reasons)
   const initialPokemonDetails = await Promise.all(

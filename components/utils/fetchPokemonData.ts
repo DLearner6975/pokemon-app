@@ -28,10 +28,9 @@ async function getEvolutionChain(url: string) {
   return res.json();
 }
 
-async function getPokemonList() {
-  // TODO: THERE IS DUPLICATE POKEMON DATA IN THE API, SO WE NEED TO GET ALL THE POKEMON DATA
+export async function getPokemonList() {
   const res = await fetch(
-    'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0'
+    'https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0'
   );
   if (!res.ok) {
     throw new Error('Failed to fetch pokemon list');
@@ -61,7 +60,7 @@ export async function fetchPokemonData(id: string) {
   );
   const typeData = await Promise.all(typePromises);
 
-  const formattedPokemon = await formatPokemonData(pokemon, species, typeData);
+  const formattedPokemon = formatPokemonData(pokemon, species, typeData);
   const evolutions = formatEvolutionData(evolutionChain).map((evolution) => ({
     ...evolution,
     // image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${evolution.id}.svg`,
