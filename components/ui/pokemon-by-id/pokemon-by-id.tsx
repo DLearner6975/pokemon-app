@@ -21,10 +21,7 @@ export default function PokemonById({
   return (
     <div className="min-h-screen bg-gray-100">
       <PokemonHeader
-        prevPokemon={headerData.prevPokemon}
-        nextPokemon={headerData.nextPokemon}
-        currentPokemon={headerData.currentPokemon}
-        allPokemon={headerData.allPokemon}
+        headerData={headerData}
         backgroundColorClass={backgroundColorClass}
       />
 

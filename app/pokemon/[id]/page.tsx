@@ -12,6 +12,7 @@ export default async function Page({
     const { formattedPokemon, evolutions, headerData } = await fetchPokemonData(
       id
     );
+    console.log('🚀 ~ formattedPokemon:', formattedPokemon);
     return (
       <PokemonById
         formattedPokemon={formattedPokemon}

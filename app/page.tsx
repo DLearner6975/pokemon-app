@@ -3,6 +3,8 @@ import ProjectDashboard from '@/components/ui/project-dashboard';
 import { Pokemon, SimplePokemon } from '@/components/types';
 
 async function fetchAllPokemon() {
+  // TODO: THERE IS DUPLICATE POKEMON DATA IN THE API, SO WE NEED TO GET ALL THE POKEMON DATA
+
   let allPokemon: SimplePokemon[] = [];
   let url = 'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0';
 

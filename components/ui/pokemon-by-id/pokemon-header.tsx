@@ -15,20 +15,20 @@ interface Pokemon {
 }
 
 interface PokemonHeaderProps {
-  prevPokemon: Pokemon;
-  nextPokemon: Pokemon;
-  currentPokemon: Pokemon;
-  allPokemon: Pokemon[];
+  headerData: {
+    prevPokemon: Pokemon;
+    nextPokemon: Pokemon;
+    currentPokemon: Pokemon;
+    allPokemon: Pokemon[];
+  };
   backgroundColorClass?: string;
 }
 
 export function PokemonHeader({
-  prevPokemon,
-  nextPokemon,
-  currentPokemon,
-  allPokemon,
+  headerData,
   backgroundColorClass,
 }: PokemonHeaderProps) {
+  const { prevPokemon, nextPokemon, currentPokemon, allPokemon } = headerData;
   const router = useRouter();
 
   return (
@@ -66,12 +66,14 @@ export function PokemonHeader({
             />
           </SelectTrigger>
           <SelectContent>
-            {allPokemon?.map((pokemon) => (
-              <SelectItem key={pokemon.id} value={pokemon.id}>
-                #{pokemon.id}
-                <span className="hidden sm:inline">{pokemon.name}</span>
-              </SelectItem>
-            ))}
+            <div className="max-h-[300px] overflow-y-auto">
+              {allPokemon?.map((pokemon) => (
+                <SelectItem key={pokemon.id} value={pokemon.id}>
+                  #{pokemon.id}
+                  <span className="hidden sm:inline"> {pokemon.name}</span>
+                </SelectItem>
+              ))}
+            </div>
           </SelectContent>
         </Select>
       </div>
