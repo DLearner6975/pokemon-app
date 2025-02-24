@@ -8,6 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import { Button } from '../button';
 
 interface PokemonPaginationProps {
   totalItems: number;
@@ -30,7 +31,9 @@ export function PokemonPagination({
   }, [currentPage, itemsPerPage, onPageChange, totalItems]);
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
   };
 
   return (
@@ -38,13 +41,13 @@ export function PokemonPagination({
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                if (currentPage > 1) handlePageChange(currentPage - 1);
-              }}
-            />
+            <Button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage <= 1}
+              className="cursor-pointer"
+            >
+              <PaginationPrevious />
+            </Button>
           </PaginationItem>
           {[...Array(Math.min(5, totalPages))].map((_, index) => {
             let pageNumber;
@@ -59,16 +62,16 @@ export function PokemonPagination({
             }
             return (
               <PaginationItem key={index}>
-                <PaginationLink
-                  href="#"
-                  isActive={currentPage === pageNumber}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handlePageChange(pageNumber);
-                  }}
+                <button
+                  onClick={() => handlePageChange(pageNumber)}
+                  className={`cursor-pointer ${
+                    currentPage === pageNumber ? 'font-bold' : ''
+                  }`}
                 >
-                  {pageNumber}
-                </PaginationLink>
+                  <PaginationLink isActive={currentPage === pageNumber}>
+                    {pageNumber}
+                  </PaginationLink>
+                </button>
               </PaginationItem>
             );
           })}
@@ -78,26 +81,23 @@ export function PokemonPagination({
                 <PaginationEllipsis />
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handlePageChange(totalPages);
-                  }}
+                <Button
+                  onClick={() => handlePageChange(totalPages)}
+                  className="cursor-pointer"
                 >
-                  {totalPages}
-                </PaginationLink>
+                  <PaginationLink>{totalPages}</PaginationLink>
+                </Button>
               </PaginationItem>
             </>
           )}
           <PaginationItem>
-            <PaginationNext
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                if (currentPage < totalPages) handlePageChange(currentPage + 1);
-              }}
-            />
+            <Button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage >= totalPages}
+              className="cursor-pointer"
+            >
+              <PaginationNext />
+            </Button>
           </PaginationItem>
         </PaginationContent>
       </Pagination>

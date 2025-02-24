@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { type ISourceOptions } from "@tsparticles/engine";
-import { loadFull } from "tsparticles";
+import { useState, useEffect } from 'react';
+import Particles, { initParticlesEngine } from '@tsparticles/react';
+import { type ISourceOptions } from '@tsparticles/engine';
+import { loadFull } from 'tsparticles';
 
 export function PokemonParticles() {
   const [init, setInit] = useState(false);
@@ -19,24 +19,27 @@ export function PokemonParticles() {
   const particlesOptions: ISourceOptions = {
     fullScreen: {
       enable: true,
-      zIndex: 0,
+      zIndex: 1,
+    },
+    background: {
+      opacity: 0,
     },
     particles: {
       color: {
         value: [
-          "#FFFFFF",
-          "#FF0000",
-          "#00FF00",
-          "#0000FF",
-          "#FFFF00",
-          "#FF00FF",
+          '#FFFFFF',
+          '#FF0000',
+          '#00FF00',
+          '#0000FF',
+          '#FFFF00',
+          '#FF00FF',
         ],
       },
       move: {
-        direction: "bottom",
+        direction: 'bottom',
         enable: true,
         speed: 2,
-        outModes: "out",
+        outModes: 'out',
       },
       number: {
         value: 30,
@@ -50,29 +53,44 @@ export function PokemonParticles() {
         value: 0.7,
         animation: {
           enable: true,
-          minimumValue: 0.3,
           speed: 1,
           sync: false,
+          startValue: 'min',
         },
       },
       shape: {
-        type: ["circle", "square"],
+        type: ['circle', 'square'],
       },
       size: {
         value: { min: 3, max: 7 },
       },
+      zIndex: {
+        value: 1,
+      },
     },
     retina_detect: true,
     fpsLimit: 60,
+    interactivity: {
+      events: {
+        onClick: {
+          enable: false,
+        },
+        onHover: {
+          enable: false,
+        },
+      },
+    },
   };
 
   if (!init) return null;
 
   return (
-    <Particles
-      id="tsparticles"
-      options={particlesOptions}
-      className="fixed inset-0 w-full h-full"
-    />
+    <div className="fixed inset-0 pointer-events-none">
+      <Particles
+        id="tsparticles"
+        options={particlesOptions}
+        className="w-full h-full"
+      />
+    </div>
   );
 }
