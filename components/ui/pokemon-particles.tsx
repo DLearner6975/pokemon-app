@@ -127,6 +127,21 @@ export function PokemonParticles() {
               width: 50,
               height: 50,
             },
+            {
+              src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/12.svg',
+              width: 50,
+              height: 50,
+            },
+            {
+              src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/39.svg',
+              width: 50,
+              height: 50,
+            },
+            {
+              src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/257.svg',
+              width: 50,
+              height: 50,
+            },
           ],
         },
       },
