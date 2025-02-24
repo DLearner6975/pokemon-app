@@ -1,6 +1,6 @@
-import { notFound } from 'next/navigation';
-import { fetchPokemonData } from '@/components/utils/fetchPokemonData';
-import PokemonById from '@/components/ui/pokemon-by-id/pokemon-by-id';
+import { notFound } from "next/navigation";
+import { fetchPokemonData } from "@/components/utils/fetchPokemonData";
+import PokemonById from "@/components/ui/pokemon-by-id/pokemon-by-id";
 
 export default async function Page({
   params,
@@ -12,7 +12,6 @@ export default async function Page({
     const { formattedPokemon, evolutions, headerData } = await fetchPokemonData(
       id
     );
-    console.log('🚀 ~ formattedPokemon:', formattedPokemon);
     return (
       <PokemonById
         formattedPokemon={formattedPokemon}
