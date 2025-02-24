@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { PokemonCarousel } from '@/components/ui/pokemon-by-id/pokemon-carousel';
 import { PokemonEvolution } from '@/components/ui/pokemon-by-id/pokemon-evolution';
 import { PokemonHeader } from '@/components/ui/pokemon-by-id/pokemon-header';
-
+import { PokemonParticles } from '@/components/ui/pokemon-particles';
 import { PokemonDamageRelations } from './damage-relation/pokemon-damage-relations';
 import Link from 'next/link';
 import { PokemonStats } from './stats/pokemon-stats';
@@ -20,6 +20,7 @@ export default function PokemonById({
     backgroundColorMap[formattedPokemon?.color ?? 'bg-gray-500'];
   return (
     <div className="min-h-screen bg-gray-100">
+      <PokemonParticles />
       <PokemonHeader
         headerData={headerData}
         backgroundColorClass={backgroundColorClass}
