@@ -19,7 +19,7 @@ export function PokemonCarousel({ images }: PokemonCarouselProps) {
         {images.map((src, index) => (
           <CarouselItem key={index}>
             <div className="p-1">
-              <Card>
+              <Card className="group">
                 <CardContent className="flex aspect-square items-center justify-center p-6 relative">
                   <Image
                     src={src || '/placeholder.svg'}
@@ -29,8 +29,8 @@ export function PokemonCarousel({ images }: PokemonCarouselProps) {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute inset-12 flex items-center justify-between">
-                    <CarouselPrevious className="h-8 w-8" />
-                    <CarouselNext className="h-8 w-8" />
+                    <CarouselPrevious className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8" />
+                    <CarouselNext className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8" />
                   </div>
                 </CardContent>
               </Card>
