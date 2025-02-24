@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useCallback } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { FilterSidebar } from "./filter-sidebar";
-import { SearchBar } from "./search-bar";
-import { Filters, Pokemon, SimplePokemon } from "../types";
+import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { FilterSidebar } from './filter-sidebar';
+import { SearchBar } from './search-bar';
+import { Filters, Pokemon, SimplePokemon } from '../types';
 import {
   getInitialFilters,
   filterPokemon,
   handleFilterChange,
-} from "../utils/filter-utils";
-import { fetchPokemonDetails } from "../utils/pokemon-utils";
-import { LoginManager } from "./login/login-manager";
-import { PokemonGrid } from "./pokemon-items/pokemon-grid";
-import { PokemonPagination } from "./pokemon-items/pokemon-pagination";
-import { useWindowSize } from "@/hooks/useWindow";
-import { PokemonParticles } from "./pokemon-particles";
+} from '../utils/filter-utils';
+import { fetchPokemonDetails } from '../utils/pokemon-utils';
+// import { LoginManager } from './login/login-manager';
+import { PokemonGrid } from './pokemon-items/pokemon-grid';
+import { PokemonPagination } from './pokemon-items/pokemon-pagination';
+import { useWindowSize } from '@/hooks/useWindow';
+import { PokemonParticles } from './pokemon-particles';
 
 interface ProjectDashboardProps {
   initialPokemon: Pokemon[];
@@ -27,17 +27,17 @@ export default function ProjectDashboard({
   allPokemon,
 }: ProjectDashboardProps) {
   const router = useRouter();
-  const pathname = usePathname() || "/";
+  const pathname = usePathname() || '/';
   const searchParams = useSearchParams();
   const [pokemonDetails, setPokemonDetails] =
     useState<Pokemon[]>(initialPokemon);
 
   // Convert ReadonlyURLSearchParams to URLSearchParams
-  const searchParamsObj = new URLSearchParams(searchParams?.toString() ?? "");
+  const searchParamsObj = new URLSearchParams(searchParams?.toString() ?? '');
   const [filters, setFilters] = useState<Filters>(
     getInitialFilters(searchParamsObj)
   );
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentPagePokemon, setCurrentPagePokemon] = useState<SimplePokemon[]>(
     []
   );
@@ -125,10 +125,10 @@ export default function ProjectDashboard({
         isOpen={isSidebarOpen}
         onToggle={toggleSidebar}
       />
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         <header className="flex items-center justify-between border-b bg-white px-6 py-4">
           <SearchBar onSearch={handleSearch} />
-          <LoginManager />
+          {/* <LoginManager /> */}
         </header>
         <div className="flex-1 overflow-auto">
           <PokemonGrid
