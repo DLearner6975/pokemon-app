@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 'use client';
 import { backgroundColorMap, typeColors } from '@/components/types';
 import { Button } from '@/components/ui/button';
@@ -10,14 +8,29 @@ import { PokemonParticles } from '@/components/ui/pokemon-particles';
 import { PokemonDamageRelations } from './damage-relation/pokemon-damage-relations';
 import Link from 'next/link';
 import { PokemonStats } from './stats/pokemon-stats';
+import type {
+  Evolution,
+  HeaderData,
+  PokemonData,
+} from '@/components/utils/pokemon-data-formatter';
 
 export default function PokemonById({
   formattedPokemon,
   evolutions,
   headerData,
+}: {
+  formattedPokemon: PokemonData;
+  evolutions: Evolution[];
+  headerData: HeaderData;
 }) {
   const backgroundColorClass =
     backgroundColorMap[formattedPokemon?.color ?? 'bg-gray-500'];
+  const statsDetails = [
+    { label: 'Height', value: formattedPokemon.height },
+    { label: 'Category', value: formattedPokemon.category },
+    { label: 'Weight', value: formattedPokemon.weight },
+    { label: 'Abilities', value: formattedPokemon.abilities.join(', ') },
+  ];
   return (
     <div className="min-h-screen bg-gray-100">
       <PokemonParticles />
@@ -61,22 +74,12 @@ export default function PokemonById({
                 } text-white p-4 rounded-lg`}
               >
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div>Height</div>
-                    <div>{formattedPokemon.height}</div>
-                  </div>
-                  <div>
-                    <div>Category</div>
-                    <div>{formattedPokemon.category}</div>
-                  </div>
-                  <div>
-                    <div>Weight</div>
-                    <div>{formattedPokemon.weight}</div>
-                  </div>
-                  <div>
-                    <div>Abilities</div>
-                    <div>{formattedPokemon.abilities.join(', ')}</div>
-                  </div>
+                  {statsDetails.map(({ label, value }) => (
+                    <div key={label}>
+                      <div>{label}</div>
+                      <div>{value}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -92,7 +95,6 @@ export default function PokemonById({
                   {formattedPokemon.types.map((type) => (
                     <span
                       key={type}
-                      // className="inline-block px-3 py-1 rounded bg-orange-500 text-white"
                       className={`inline-block px-3 py-1 rounded text-white ${
                         typeColors[type] || 'bg-gray-500'
                       }`}

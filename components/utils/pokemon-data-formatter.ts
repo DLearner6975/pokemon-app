@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-interface PokemonData {
+export interface PokemonData {
   id: string;
   name: string;
   description: string;
@@ -10,6 +10,7 @@ interface PokemonData {
   category: string;
   abilities: string[];
   types: string[];
+  color: string;
   stats: {
     hp: number;
     attack: number;
@@ -19,19 +20,32 @@ interface PokemonData {
     speed: number;
   };
   images: string[];
+  damageRelations: {
+    double_damage_from: string[];
+    double_damage_to: string[];
+    half_damage_from: string[];
+    half_damage_to: string[];
+    no_damage_from: string[];
+    no_damage_to: string[];
+  };
 }
 
-interface Evolution {
+export interface Evolution {
   id: string;
   name: string;
   types: string[];
+  image: string;
+}
+interface Pokemon {
+  id: string;
+  name: string;
 }
 
-interface HeaderData {
-  prevPokemon: { id: string; name: string } | null;
-  nextPokemon: { id: string; name: string } | null;
-  currentPokemon: { id: string; name: string };
-  allPokemon: { id: string; name: string }[];
+export interface HeaderData {
+  prevPokemon: Pokemon | null;
+  nextPokemon: Pokemon | null;
+  currentPokemon: Pokemon;
+  allPokemon: Pokemon[];
 }
 
 export function getTypeColor(type: string): string {

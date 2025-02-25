@@ -8,19 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-
-interface Pokemon {
-  id: string;
-  name: string;
-}
+import { HeaderData } from '@/components/utils/pokemon-data-formatter';
 
 interface PokemonHeaderProps {
-  headerData: {
-    prevPokemon: Pokemon;
-    nextPokemon: Pokemon;
-    currentPokemon: Pokemon;
-    allPokemon: Pokemon[];
-  };
+  headerData: HeaderData;
   backgroundColorClass?: string;
 }
 
