@@ -33,7 +33,7 @@ export function PokemonHeader({
 
   return (
     <div
-      className={`grid grid-cols-3 items-center ${
+      className={`grid grid-cols-3 sticky top-0 z-20 items-center ${
         backgroundColorClass ?? 'bg-gray-500'
       } text-white px-4 py-2`}
     >
@@ -53,24 +53,14 @@ export function PokemonHeader({
         <Select onValueChange={(value) => router.push(`/pokemon/${value}`)}>
           <SelectTrigger className="w-[180px] bg-white text-gray-800">
             <SelectValue
-              placeholder={
-                <div>
-                  <span className="text-center sm:hidden">
-                    #{currentPokemon.id}
-                  </span>
-                  <span className="hidden sm:inline">
-                    #{currentPokemon.id} {currentPokemon.name}
-                  </span>
-                </div>
-              }
+              placeholder={<p className="text-center">{currentPokemon.name}</p>}
             />
           </SelectTrigger>
           <SelectContent>
             <div className="max-h-[300px] overflow-y-auto">
               {allPokemon?.map((pokemon) => (
                 <SelectItem key={pokemon.id} value={pokemon.id}>
-                  #{pokemon.id}
-                  <span className="hidden sm:inline"> {pokemon.name}</span>
+                  <p className="text-center"> {pokemon.name}</p>
                 </SelectItem>
               ))}
             </div>

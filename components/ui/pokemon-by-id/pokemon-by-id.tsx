@@ -28,11 +28,15 @@ export default function PokemonById({
         />
 
         <main className="max-w-6xl mx-auto p-6">
-          <h1 className="text-3xl font-bold text-center mb-8">
+          <h1
+            className={`${
+              backgroundColorClass ?? 'bg-gray-500'
+            } text-white p-4 rounded-lg text-3xl font-bold text-center mb-8`}
+          >
             {formattedPokemon.name} #{formattedPokemon.id}
           </h1>
 
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-12 relative z-10">
             <div>
               <PokemonCarousel images={formattedPokemon.images} />
               <div className="mt-8">
@@ -43,7 +47,13 @@ export default function PokemonById({
               </div>
             </div>
             <div className="space-y-6">
-              <p className="text-gray-700">{formattedPokemon.description}</p>
+              <p
+                className={`${
+                  backgroundColorClass ?? 'bg-gray-500'
+                } text-white p-4 rounded-lg`}
+              >
+                {formattedPokemon.description}
+              </p>
 
               <div
                 className={`${
@@ -52,26 +62,32 @@ export default function PokemonById({
               >
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <div className="text-sm opacity-80">Height</div>
+                    <div>Height</div>
                     <div>{formattedPokemon.height}</div>
                   </div>
                   <div>
-                    <div className="text-sm opacity-80">Category</div>
+                    <div>Category</div>
                     <div>{formattedPokemon.category}</div>
                   </div>
                   <div>
-                    <div className="text-sm opacity-80">Weight</div>
+                    <div>Weight</div>
                     <div>{formattedPokemon.weight}</div>
                   </div>
                   <div>
-                    <div className="text-sm opacity-80">Abilities</div>
+                    <div>Abilities</div>
                     <div>{formattedPokemon.abilities.join(', ')}</div>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 className="font-medium mb-2">Type</h3>
+                <h3
+                  className={`${
+                    backgroundColorClass ?? 'bg-gray-500'
+                  } text-white p-4 rounded-lg font-bold text-lg mb-2`}
+                >
+                  Type
+                </h3>
                 <div className="flex gap-2">
                   {formattedPokemon.types.map((type) => (
                     <span
