@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { Accordion } from '@/components/ui/accordion';
 import { Filters, FilterSidebarProps } from '../types';
 import {
   types,
@@ -14,7 +7,7 @@ import {
   habitats,
   shapes,
   colors,
-} from '../utils/filter-utils';
+} from '../utils/filter-types';
 import { PokemonTitle } from './pokemon-items/pokemon-title';
 import {
   ChevronsLeft,
@@ -25,11 +18,11 @@ import {
   Home,
   Shapes,
   Palette,
-  Crown,
   Menu,
 } from 'lucide-react';
 import { Button } from './button';
 import { cn } from '@/lib/utils';
+import { FilterAccordionItem } from './filter-accordion-item';
 
 export function FilterSidebar({
   onFilterChange,
@@ -124,244 +117,66 @@ export function FilterSidebar({
               </span>
             </h2>
             <Accordion type="multiple" className="w-full">
-              <AccordionItem value="type">
-                <AccordionTrigger
-                  className={cn(
-                    'flex items-center justify-start w-full gap-2 py-2 [&[data-state=open]>svg]:rotate-0',
-                    { '[&>svg:last-child]:hidden': !isOpen && !isMobileOpen }
-                  )}
-                >
-                  <Flame className="h-4 w-4 shrink-0" />
-                  <span
-                    className={cn('flex-1 text-left', {
-                      hidden: !isOpen && !isMobileOpen,
-                    })}
-                  >
-                    Type
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent
-                  className={cn({ hidden: !isOpen && !isMobileOpen })}
-                >
-                  {types.map((type) => (
-                    <div
-                      key={type}
-                      className="flex items-center space-x-2 mb-2 pl-6"
-                    >
-                      <Checkbox
-                        id={`type-${type}`}
-                        checked={filters.types.includes(type)}
-                        onCheckedChange={(checked) => {
-                          const newTypes = checked
-                            ? [...filters.types, type]
-                            : filters.types.filter((t) => t !== type);
-                          handleFilterChange('types', newTypes);
-                        }}
-                      />
-                      <Label htmlFor={`type-${type}`}>{type}</Label>
-                    </div>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="generation">
-                <AccordionTrigger
-                  className={cn(
-                    'flex items-center justify-start w-full gap-2 py-2 [&[data-state=open]>svg]:rotate-0',
-                    { '[&>svg:last-child]:hidden': !isOpen && !isMobileOpen }
-                  )}
-                >
-                  <History className="h-4 w-4 shrink-0" />
-                  <span
-                    className={cn('flex-1 text-left', {
-                      hidden: !isOpen && !isMobileOpen,
-                    })}
-                  >
-                    Generation
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent
-                  className={cn({ hidden: !isOpen && !isMobileOpen })}
-                >
-                  {generations.map((gen) => (
-                    <div
-                      key={gen}
-                      className="flex items-center space-x-2 mb-2 pl-6"
-                    >
-                      <Checkbox
-                        id={`gen-${gen}`}
-                        checked={filters.generation.includes(gen)}
-                        onCheckedChange={(checked) => {
-                          const newGens = checked
-                            ? [...filters.generation, gen]
-                            : filters.generation.filter((g) => g !== gen);
-                          handleFilterChange('generation', newGens);
-                        }}
-                      />
-                      <Label htmlFor={`gen-${gen}`}>{gen}</Label>
-                    </div>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="habitat">
-                <AccordionTrigger
-                  className={cn(
-                    'flex items-center justify-start w-full gap-2 py-2 [&[data-state=open]>svg]:rotate-0',
-                    { '[&>svg:last-child]:hidden': !isOpen && !isMobileOpen }
-                  )}
-                >
-                  <Home className="h-4 w-4 shrink-0" />
-                  <span
-                    className={cn('flex-1 text-left', {
-                      hidden: !isOpen && !isMobileOpen,
-                    })}
-                  >
-                    Habitat
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent
-                  className={cn({ hidden: !isOpen && !isMobileOpen })}
-                >
-                  {habitats.map((habitat) => (
-                    <div
-                      key={habitat}
-                      className="flex items-center space-x-2 mb-2 pl-6"
-                    >
-                      <Checkbox
-                        id={`habitat-${habitat}`}
-                        checked={filters.habitat.includes(habitat)}
-                        onCheckedChange={(checked) => {
-                          const newHabitats = checked
-                            ? [...filters.habitat, habitat]
-                            : filters.habitat.filter((h) => h !== habitat);
-                          handleFilterChange('habitat', newHabitats);
-                        }}
-                      />
-                      <Label htmlFor={`habitat-${habitat}`}>{habitat}</Label>
-                    </div>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="shape">
-                <AccordionTrigger
-                  className={cn(
-                    'flex items-center justify-start w-full gap-2 py-2 [&[data-state=open]>svg]:rotate-0',
-                    { '[&>svg:last-child]:hidden': !isOpen && !isMobileOpen }
-                  )}
-                >
-                  <Shapes className="h-4 w-4 shrink-0" />
-                  <span
-                    className={cn('flex-1 text-left', {
-                      hidden: !isOpen && !isMobileOpen,
-                    })}
-                  >
-                    Shape
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent
-                  className={cn({ hidden: !isOpen && !isMobileOpen })}
-                >
-                  {shapes.map((shape) => (
-                    <div
-                      key={shape}
-                      className="flex items-center space-x-2 mb-2 pl-6"
-                    >
-                      <Checkbox
-                        id={`shape-${shape}`}
-                        checked={filters.shape.includes(shape)}
-                        onCheckedChange={(checked) => {
-                          const newShapes = checked
-                            ? [...filters.shape, shape]
-                            : filters.shape.filter((s) => s !== shape);
-                          handleFilterChange('shape', newShapes);
-                        }}
-                      />
-                      <Label htmlFor={`shape-${shape}`}>{shape}</Label>
-                    </div>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="color">
-                <AccordionTrigger
-                  className={cn(
-                    'flex items-center justify-start w-full gap-2 py-2 [&[data-state=open]>svg]:rotate-0',
-                    { '[&>svg:last-child]:hidden': !isOpen && !isMobileOpen }
-                  )}
-                >
-                  <Palette className="h-4 w-4 shrink-0" />
-                  <span
-                    className={cn('flex-1 text-left', {
-                      hidden: !isOpen && !isMobileOpen,
-                    })}
-                  >
-                    Color
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent
-                  className={cn({ hidden: !isOpen && !isMobileOpen })}
-                >
-                  {colors.map((color) => (
-                    <div
-                      key={color}
-                      className="flex items-center space-x-2 mb-2 pl-6"
-                    >
-                      <Checkbox
-                        id={`color-${color}`}
-                        checked={filters.color.includes(color)}
-                        onCheckedChange={(checked) => {
-                          const newColors = checked
-                            ? [...filters.color, color]
-                            : filters.color.filter((c) => c !== color);
-                          handleFilterChange('color', newColors);
-                        }}
-                      />
-                      <Label htmlFor={`color-${color}`}>{color}</Label>
-                    </div>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="special">
-                <AccordionTrigger
-                  className={cn(
-                    'flex items-center justify-start w-full gap-2 py-2 [&[data-state=open]>svg]:rotate-0',
-                    { '[&>svg:last-child]:hidden': !isOpen && !isMobileOpen }
-                  )}
-                >
-                  <Crown className="h-4 w-4 shrink-0" />
-                  <span
-                    className={cn('flex-1 text-left', {
-                      hidden: !isOpen && !isMobileOpen,
-                    })}
-                  >
-                    Special
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent
-                  className={cn({ hidden: !isOpen && !isMobileOpen })}
-                >
-                  <div className="mt-4 space-y-2">
-                    <div className="flex items-center space-x-2 mb-2 pl-6">
-                      <Checkbox
-                        id="legendary"
-                        checked={filters.legendary}
-                        onCheckedChange={(checked) =>
-                          handleFilterChange('legendary', checked)
-                        }
-                      />
-                      <Label htmlFor="legendary">Legendary</Label>
-                    </div>
-                    <div className="flex items-center space-x-2 mb-2 pl-6">
-                      <Checkbox
-                        id="mythical"
-                        checked={filters.mythical}
-                        onCheckedChange={(checked) =>
-                          handleFilterChange('mythical', checked)
-                        }
-                      />
-                      <Label htmlFor="mythical">Mythical</Label>
-                    </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+              <FilterAccordionItem
+                value="type"
+                icon={Flame}
+                title="Type"
+                items={types}
+                isOpen={isOpen}
+                isMobileOpen={isMobileOpen}
+                selectedItems={filters.types}
+                onItemChange={(newTypes) =>
+                  handleFilterChange('types', newTypes)
+                }
+              />
+              <FilterAccordionItem
+                value="generation"
+                icon={History}
+                title="Generation"
+                items={generations}
+                isOpen={isOpen}
+                isMobileOpen={isMobileOpen}
+                selectedItems={filters.generation}
+                onItemChange={(newGens) =>
+                  handleFilterChange('generation', newGens)
+                }
+              />
+              <FilterAccordionItem
+                value="habitat"
+                icon={Home}
+                title="Habitat"
+                items={habitats}
+                isOpen={isOpen}
+                isMobileOpen={isMobileOpen}
+                selectedItems={filters.habitat}
+                onItemChange={(newHabitats) =>
+                  handleFilterChange('habitat', newHabitats)
+                }
+              />
+              <FilterAccordionItem
+                value="shape"
+                icon={Shapes}
+                title="Shape"
+                items={shapes}
+                isOpen={isOpen}
+                isMobileOpen={isMobileOpen}
+                selectedItems={filters.shape}
+                onItemChange={(newShapes) =>
+                  handleFilterChange('shape', newShapes)
+                }
+              />
+              <FilterAccordionItem
+                value="color"
+                icon={Palette}
+                title="Color"
+                items={colors}
+                isOpen={isOpen}
+                isMobileOpen={isMobileOpen}
+                selectedItems={filters.color}
+                onItemChange={(newColors) =>
+                  handleFilterChange('color', newColors)
+                }
+              />
             </Accordion>
           </div>
         </div>
