@@ -1,5 +1,5 @@
 'use client';
-import { backgroundColorMap, typeColors } from '@/components/types';
+import { typeColors } from '@/components/types';
 import { Button } from '@/components/ui/button';
 import { PokemonCarousel } from '@/components/ui/pokemon-by-id/pokemon-carousel';
 import { PokemonEvolution } from '@/components/ui/pokemon-by-id/pokemon-evolution';
@@ -13,6 +13,8 @@ import type {
   HeaderData,
   PokemonData,
 } from '@/components/utils/pokemon-data-formatter';
+import { hoverColorClass } from '@/components/utils/color-util';
+import { backgroundColorClass } from '@/components/utils/color-util';
 
 export default function PokemonById({
   formattedPokemon,
@@ -23,8 +25,8 @@ export default function PokemonById({
   evolutions: Evolution[];
   headerData: HeaderData;
 }) {
-  const backgroundColorClass =
-    backgroundColorMap[formattedPokemon?.color ?? 'bg-gray-500'];
+  const backgroundColor = backgroundColorClass(formattedPokemon.color);
+  const hoverColor = hoverColorClass(formattedPokemon.color);
   const statsDetails = [
     { label: 'Height', value: formattedPokemon.height },
     { label: 'Category', value: formattedPokemon.category },
@@ -37,13 +39,13 @@ export default function PokemonById({
       <div className="relative z-10">
         <PokemonHeader
           headerData={headerData}
-          backgroundColorClass={backgroundColorClass}
+          backgroundColor={backgroundColor}
         />
 
         <main className="max-w-6xl mx-auto p-6">
           <h1
             className={`${
-              backgroundColorClass ?? 'bg-gray-500'
+              backgroundColor ?? 'bg-gray-500'
             } text-white p-4 rounded-lg text-3xl font-bold text-center mb-8`}
           >
             {formattedPokemon.name} #{formattedPokemon.id}
@@ -51,18 +53,15 @@ export default function PokemonById({
 
           <div className="grid md:grid-cols-2 gap-12 relative z-10">
             <div>
-              <PokemonCarousel images={formattedPokemon.images} />
+              <PokemonCarousel formattedPokemon={formattedPokemon} />
               <div className="mt-8">
-                <PokemonStats
-                  stats={formattedPokemon.stats}
-                  backgroundColorClass={backgroundColorClass}
-                />
+                <PokemonStats formattedPokemon={formattedPokemon} />
               </div>
             </div>
             <div className="space-y-6">
               <p
                 className={`${
-                  backgroundColorClass ?? 'bg-gray-500'
+                  backgroundColor ?? 'bg-gray-500'
                 } text-white p-4 rounded-lg`}
               >
                 {formattedPokemon.description}
@@ -70,7 +69,7 @@ export default function PokemonById({
 
               <div
                 className={`${
-                  backgroundColorClass ?? 'bg-gray-500'
+                  backgroundColor ?? 'bg-gray-500'
                 } text-white p-4 rounded-lg`}
               >
                 <div className="grid grid-cols-2 gap-4">
@@ -86,7 +85,7 @@ export default function PokemonById({
               <div>
                 <h3
                   className={`${
-                    backgroundColorClass ?? 'bg-gray-500'
+                    backgroundColor ?? 'bg-gray-500'
                   } text-white p-4 rounded-lg font-bold text-lg mb-2`}
                 >
                   Type
@@ -106,10 +105,7 @@ export default function PokemonById({
               </div>
 
               {formattedPokemon.damageRelations ? (
-                <PokemonDamageRelations
-                  damageRelations={formattedPokemon.damageRelations}
-                  backgroundColorClass={backgroundColorClass}
-                />
+                <PokemonDamageRelations formattedPokemon={formattedPokemon} />
               ) : (
                 <p className="text-red-500">
                   Error: Damage relations data is missing
@@ -121,7 +117,7 @@ export default function PokemonById({
           <div className="mt-12">
             <PokemonEvolution
               evolutions={evolutions}
-              backgroundColorClass={backgroundColorClass}
+              backgroundColor={backgroundColor}
             />
           </div>
 
@@ -129,9 +125,7 @@ export default function PokemonById({
             <Link href="/">
               <Button
                 variant="default"
-                className={`${
-                  backgroundColorClass ?? 'bg-gray-500'
-                } hover:bg-yellow-700`}
+                className={`${backgroundColor ?? 'bg-gray-500'} ${hoverColor}`}
               >
                 Explore More Pokémon
               </Button>

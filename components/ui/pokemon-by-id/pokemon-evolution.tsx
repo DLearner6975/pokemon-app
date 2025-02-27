@@ -11,21 +11,19 @@ interface Evolution {
 
 interface PokemonEvolutionProps {
   evolutions: Evolution[];
-  backgroundColorClass: string;
+  backgroundColor: string;
 }
 
 export function PokemonEvolution({
   evolutions,
-  backgroundColorClass,
+  backgroundColor,
 }: PokemonEvolutionProps) {
   if (!evolutions || evolutions.length === 0) {
     return null;
   }
 
   return (
-    <div
-      className={`${backgroundColorClass ?? 'bg-gray-500'} p-6 rounded-lg mt-8`}
-    >
+    <div className={`${backgroundColor} p-6 rounded-lg mt-8`}>
       <h2 className="text-white text-xl mb-4">Evolutions</h2>
       <div className="flex flex-wrap items-center justify-center gap-6">
         {evolutions.map((evolution, index) => {

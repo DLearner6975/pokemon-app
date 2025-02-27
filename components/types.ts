@@ -78,6 +78,32 @@ export const backgroundColorMap: { [key: string]: string } = {
   yellow: 'bg-yellow-500',
 };
 
+export const statsColorMap: { [key: string]: string } = {
+  black: 'bg-black-200',
+  blue: 'bg-blue-700',
+  brown: 'bg-yellow-900', // Closest match for brown
+  gray: 'bg-gray-600',
+  green: 'bg-green-700',
+  pink: 'bg-pink-700',
+  purple: 'bg-purple-700',
+  red: 'bg-red-700',
+  white: 'bg-gray-400',
+  yellow: 'bg-yellow-600',
+};
+
+export const hoverColorMap: { [key: string]: string } = {
+  black: 'hover:bg-black-500',
+  blue: 'hover:bg-blue-400',
+  brown: 'hover:bg-yellow-700', // Closest match for brown
+  gray: 'hover:bg-gray-400',
+  green: 'hover:bg-green-400',
+  pink: 'hover:bg-pink-400',
+  purple: 'hover:bg-purple-400',
+  red: 'hover:bg-red-400',
+  white: 'hover:bg-gray-100',
+  yellow: 'hover:bg-yellow-400',
+};
+
 export const shadowColorMap: { [key: string]: string } = {
   black: 'shadow-black',
   blue: 'shadow-blue-500',

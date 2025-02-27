@@ -1,17 +1,23 @@
 import { Star } from 'lucide-react';
-import { PokemonStatsProps } from './types';
 import { StatBar } from './stat-bar';
-
-export function PokemonStats({
-  stats,
+import type { PokemonData } from '@/components/utils/pokemon-data-formatter';
+import {
   backgroundColorClass,
-}: PokemonStatsProps) {
+  statsColorClass,
+} from '@/components/utils/color-util';
+export function PokemonStats({
+  formattedPokemon,
+}: {
+  formattedPokemon: PokemonData;
+}) {
+  const stats = formattedPokemon.stats;
   const hasAnyStatOverMax = Object.values(stats)
     .filter((stat): stat is number => typeof stat === 'number')
     .some((stat) => stat > 100);
-
+  const backgroundColor = backgroundColorClass(formattedPokemon?.color);
+  const statsColor = statsColorClass(formattedPokemon?.color);
   return (
-    <div className={`${backgroundColorClass ?? 'bg-gray-500'} p-4 rounded-lg`}>
+    <div className={`${backgroundColor ?? 'bg-gray-500'} p-4 rounded-lg`}>
       <div className="space-y-2">
         {Object.entries(stats).map(([statName, value]) => (
           <div key={statName}>
@@ -22,7 +28,7 @@ export function PokemonStats({
                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' ')}
             </div>
-            <StatBar value={value} />
+            <StatBar value={value} statsColor={statsColor} />
           </div>
         ))}
       </div>

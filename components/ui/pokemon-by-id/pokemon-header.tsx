@@ -12,12 +12,12 @@ import { HeaderData } from '@/components/utils/pokemon-data-formatter';
 
 interface PokemonHeaderProps {
   headerData: HeaderData;
-  backgroundColorClass?: string;
+  backgroundColor?: string;
 }
 
 export function PokemonHeader({
   headerData,
-  backgroundColorClass,
+  backgroundColor,
 }: PokemonHeaderProps) {
   const { prevPokemon, nextPokemon, currentPokemon, allPokemon } = headerData;
   const router = useRouter();
@@ -25,7 +25,7 @@ export function PokemonHeader({
   return (
     <div
       className={`grid grid-cols-3 sticky top-0 z-20 items-center ${
-        backgroundColorClass ?? 'bg-gray-500'
+        backgroundColor ?? 'bg-gray-500'
       } text-white px-4 py-2`}
     >
       <div>

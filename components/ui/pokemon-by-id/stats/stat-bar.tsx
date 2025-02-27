@@ -1,11 +1,7 @@
 import { Star } from 'lucide-react';
 import { StatBarProps } from './types';
 
-export function StatBar({
-  value,
-  maxValue = 100,
-  backgroundColorClass,
-}: StatBarProps) {
+export function StatBar({ value, maxValue = 100, statsColor }: StatBarProps) {
   const percentage = (value / maxValue) * 100;
   const isOverMaxValue = percentage > 100;
 
@@ -13,7 +9,7 @@ export function StatBar({
     <div className="relative">
       <div className="h-2 bg-gray-200 w-full">
         <div
-          className={`h-full ${backgroundColorClass ?? 'bg-gray-500'}`}
+          className={`h-full ${statsColor ?? 'bg-gray-500'}`}
           style={{ width: `${Math.min(percentage, 100)}%` }}
         />
       </div>

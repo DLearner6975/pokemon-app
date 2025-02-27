@@ -1,10 +1,13 @@
+import { backgroundColorClass } from '@/components/utils/color-util';
 import { DamageRelationSection } from './damage-relation-section';
-import type { DamageRelationsProps } from './types';
+import type { PokemonData } from '@/components/utils/pokemon-data-formatter';
 
 export const PokemonDamageRelations = ({
-  damageRelations,
-  backgroundColorClass,
-}: DamageRelationsProps) => {
+  formattedPokemon,
+}: {
+  formattedPokemon: PokemonData;
+}) => {
+  const damageRelations = formattedPokemon?.damageRelations;
   if (!damageRelations) {
     console.error('Damage relations data is missing');
     return null;
@@ -36,11 +39,11 @@ export const PokemonDamageRelations = ({
       types: damageRelations.no_damage_to,
     },
   ];
-
+  const backgroundColor = backgroundColorClass(formattedPokemon.color);
   return (
     <div
       className={`${
-        backgroundColorClass ?? 'bg-gray-500'
+        backgroundColor ?? 'bg-gray-500'
       } p-4 rounded-lg shadow-sm text-white`}
     >
       <h3 className="font-bold text-lg mb-2">Damage Relations</h3>
