@@ -10,7 +10,6 @@ interface FilterAccordionItemProps {
   title: string;
   items: string[];
   isOpen: boolean;
-  isMobileOpen: boolean;
   selectedItems: string[];
   onItemChange: (value: string[]) => void;
 }
@@ -21,7 +20,6 @@ export function FilterAccordionItem({
   title,
   items,
   isOpen,
-  isMobileOpen,
   selectedItems,
   onItemChange,
 }: FilterAccordionItemProps) {
@@ -30,19 +28,19 @@ export function FilterAccordionItem({
       <AccordionTrigger
         className={cn(
           'flex items-center justify-start w-full gap-2 py-2 [&[data-state=open]>svg]:rotate-0',
-          { '[&>svg:last-child]:hidden': !isOpen && !isMobileOpen }
+          { '[&>svg:last-child]:hidden': !isOpen }
         )}
       >
         <Icon className="h-4 w-4 shrink-0" />
         <span
           className={cn('flex-1 text-left', {
-            hidden: !isOpen && !isMobileOpen,
+            hidden: !isOpen,
           })}
         >
           {title}
         </span>
       </AccordionTrigger>
-      <AccordionContent className={cn({ hidden: !isOpen && !isMobileOpen })}>
+      <AccordionContent className={cn({ hidden: !isOpen })}>
         {items.map((item) => (
           <div key={item} className="flex items-center space-x-2 mb-2 pl-6">
             <Checkbox

@@ -9,6 +9,7 @@ import {
   colors,
 } from '../utils/filter-types';
 import { PokemonTitle } from './pokemon-items/pokemon-title';
+import { PikachuIcon } from './pokemon-items/pikachu-icon';
 import {
   ChevronsLeft,
   ChevronsRight,
@@ -18,7 +19,6 @@ import {
   Home,
   Shapes,
   Palette,
-  Menu,
 } from 'lucide-react';
 import { Button } from './button';
 import { cn } from '@/lib/utils';
@@ -31,7 +31,6 @@ export function FilterSidebar({
   onToggle,
 }: FilterSidebarProps) {
   const [filters, setFilters] = useState<Filters>(initialFilters);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const handleFilterChange = (category: keyof Filters, value: unknown) => {
     setFilters((prevFilters) => {
@@ -53,35 +52,21 @@ export function FilterSidebar({
 
       // Close mobile sidebar after selection
       if (window.innerWidth < 768) {
-        setIsMobileOpen(false);
+        onToggle(); // Close sidebar on mobile after selection
       }
 
       return newFilters;
     });
   };
 
-  const toggleMobileSidebar = () => {
-    setIsMobileOpen(!isMobileOpen);
-  };
-
   return (
     <>
-      {/* Mobile Menu Button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="fixed top-4 left-4 z-50 md:hidden"
-        onClick={toggleMobileSidebar}
-      >
-        <Menu className="h-6 w-6" />
-      </Button>
-
       <div
         className={cn(
           'fixed inset-0 z-40 bg-black/50 md:hidden',
-          isMobileOpen ? 'block' : 'hidden'
+          isOpen ? 'block' : 'hidden'
         )}
-        onClick={toggleMobileSidebar}
+        onClick={onToggle}
       />
 
       <div
@@ -92,29 +77,43 @@ export function FilterSidebar({
           'md:flex md:w-64 md:border-r md:overflow-y-auto md:h-screen md:flex-col md:gap-12',
           // Conditional styles
           {
-            'translate-x-0': isMobileOpen,
-            '-translate-x-full': !isMobileOpen,
+            'translate-x-0': isOpen,
+            '-translate-x-full': !isOpen,
             'md:w-64': isOpen,
             'md:w-16': !isOpen,
           }
         )}
       >
-        <PokemonTitle width={150} height={75} />
+        <div className="flex justify-center items-center p-2">
+          {window.innerWidth < 768 ? (
+            <PikachuIcon
+              className="w-12 h-12 text-yellow-400"
+              width={150}
+              height={75}
+            />
+          ) : isOpen ? (
+            <PokemonTitle className="hidden md:block" width={150} height={75} />
+          ) : (
+            <PikachuIcon
+              className="w-12 h-12 text-yellow-400"
+              width={150}
+              height={75}
+            />
+          )}
+        </div>
         <div
           className={cn(
             'h-full overflow-y-auto transition-all duration-300 ease-in-out',
             {
-              'w-64': isOpen || isMobileOpen,
-              'w-16': !isOpen && !isMobileOpen,
+              'w-64': isOpen,
+              'w-16': !isOpen,
             }
           )}
         >
           <div className="p-4">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <FilterX className="w-6 h-6" />
-              <span className={cn({ hidden: !isOpen && !isMobileOpen })}>
-                Filters
-              </span>
+              <span className={cn({ hidden: !isOpen })}>Filters</span>
             </h2>
             <Accordion type="multiple" className="w-full">
               <FilterAccordionItem
@@ -123,7 +122,6 @@ export function FilterSidebar({
                 title="Type"
                 items={types}
                 isOpen={isOpen}
-                isMobileOpen={isMobileOpen}
                 selectedItems={filters.types}
                 onItemChange={(newTypes) =>
                   handleFilterChange('types', newTypes)
@@ -135,7 +133,6 @@ export function FilterSidebar({
                 title="Generation"
                 items={generations}
                 isOpen={isOpen}
-                isMobileOpen={isMobileOpen}
                 selectedItems={filters.generation}
                 onItemChange={(newGens) =>
                   handleFilterChange('generation', newGens)
@@ -147,7 +144,6 @@ export function FilterSidebar({
                 title="Habitat"
                 items={habitats}
                 isOpen={isOpen}
-                isMobileOpen={isMobileOpen}
                 selectedItems={filters.habitat}
                 onItemChange={(newHabitats) =>
                   handleFilterChange('habitat', newHabitats)
@@ -159,7 +155,6 @@ export function FilterSidebar({
                 title="Shape"
                 items={shapes}
                 isOpen={isOpen}
-                isMobileOpen={isMobileOpen}
                 selectedItems={filters.shape}
                 onItemChange={(newShapes) =>
                   handleFilterChange('shape', newShapes)
@@ -171,7 +166,6 @@ export function FilterSidebar({
                 title="Color"
                 items={colors}
                 isOpen={isOpen}
-                isMobileOpen={isMobileOpen}
                 selectedItems={filters.color}
                 onItemChange={(newColors) =>
                   handleFilterChange('color', newColors)
