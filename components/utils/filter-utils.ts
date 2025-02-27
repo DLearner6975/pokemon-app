@@ -3,79 +3,6 @@
 import { Filters, Pokemon, SimplePokemon } from '../types';
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
-export const types = [
-  'normal',
-  'fire',
-  'water',
-  'electric',
-  'grass',
-  'ice',
-  'fighting',
-  'poison',
-  'ground',
-  'flying',
-  'psychic',
-  'bug',
-  'rock',
-  'ghost',
-  'dragon',
-  'dark',
-  'steel',
-  'fairy',
-];
-export const generations = [
-  'I',
-  'II',
-  'III',
-  'IV',
-  'V',
-  'VI',
-  'VII',
-  'VIII',
-  'IX',
-];
-export const habitats = [
-  'cave',
-  'forest',
-  'grassland',
-  'mountain',
-  'rare',
-  'rough-terrain',
-  'sea',
-  'urban',
-  'waters-edge',
-];
-
-export const shapes = [
-  'ball',
-  'squiggle',
-  'fish',
-  'arms',
-  'blob',
-  'upright',
-  'legs',
-  'quadruped',
-  'wings',
-  'tentacles',
-  'heads',
-  'humanoid',
-  'bug-wings',
-  'armor',
-];
-
-export const colors = [
-  'black',
-  'blue',
-  'brown',
-  'gray',
-  'green',
-  'pink',
-  'purple',
-  'red',
-  'white',
-  'yellow',
-];
-
 export function getInitialFilters(searchParams: URLSearchParams): Filters {
   return {
     types: searchParams.get('types')?.split(',') || [],
@@ -84,10 +11,7 @@ export function getInitialFilters(searchParams: URLSearchParams): Filters {
     habitat: searchParams.get('habitat')?.split(',') || [],
     shape: searchParams.get('shape')?.split(',') || [],
     color: searchParams.get('color')?.split(',') || [],
-    baseExperience: {
-      min: parseInt(searchParams.get('base_exp_min') || '0'),
-      max: parseInt(searchParams.get('base_exp_max') || '1000'),
-    },
+
     legendary: searchParams.get('legendary') === 'true',
     mythical: searchParams.get('mythical') === 'true',
   };
@@ -144,11 +68,7 @@ export function filterPokemon(
         !filters.color.includes(details.color?.name.toLowerCase() || '')
       )
         return false;
-      if (
-        details.base_experience < filters.baseExperience.min ||
-        details.base_experience > filters.baseExperience.max
-      )
-        return false;
+
       if (filters.legendary && !details.is_legendary) return false;
       if (filters.mythical && !details.is_mythical) return false;
 
@@ -178,9 +98,6 @@ export function handleFilterChange(
       } else {
         params.delete(key);
       }
-    } else if (key === 'baseExperience') {
-      params.set('base_exp_min', value.min.toString());
-      params.set('base_exp_max', value.max.toString());
     } else if (typeof value === 'boolean') {
       if (value) {
         params.set(key, 'true');

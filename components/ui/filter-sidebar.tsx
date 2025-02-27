@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { Accordion } from '@/components/ui/accordion';
 import { Filters, FilterSidebarProps } from '../types';
 import {
   types,
@@ -14,10 +7,22 @@ import {
   habitats,
   shapes,
   colors,
-} from '../utils/filter-utils';
+} from '../utils/filter-types';
 import { PokemonTitle } from './pokemon-items/pokemon-title';
-import { ChevronsLeft, ChevronsRight, FilterX } from 'lucide-react';
+import { PikachuIcon } from './pokemon-items/pikachu-icon';
+import {
+  ChevronsLeft,
+  ChevronsRight,
+  FilterX,
+  Flame,
+  History,
+  Home,
+  Shapes,
+  Palette,
+} from 'lucide-react';
 import { Button } from './button';
+import { cn } from '@/lib/utils';
+import { FilterAccordionItem } from './filter-accordion-item';
 
 export function FilterSidebar({
   onFilterChange,
@@ -26,6 +31,7 @@ export function FilterSidebar({
   onToggle,
 }: FilterSidebarProps) {
   const [filters, setFilters] = useState<Filters>(initialFilters);
+
   const handleFilterChange = (category: keyof Filters, value: unknown) => {
     setFilters((prevFilters) => {
       let newValue = value;
@@ -43,172 +49,144 @@ export function FilterSidebar({
       }
       const newFilters = { ...prevFilters, [category]: newValue };
       onFilterChange(newFilters);
+
+      // Close mobile sidebar after selection
+      if (window.innerWidth < 768) {
+        onToggle(); // Close sidebar on mobile after selection
+      }
+
       return newFilters;
     });
   };
+
   return (
-    <div
-      className={`hidden md:flex w-64 bg-white border-r overflow-y-auto h-screen flex-col gap-12 relative ${
-        isOpen ? 'w-64' : 'w-0 md:w-12'
-      } transition-all duration-300 ease-in-out`}
-    >
-      <PokemonTitle width={150} height={75} />
+    <>
       <div
-        className={`top-0 left-0 h-full ${
-          isOpen ? 'w-64' : 'w-0'
-        } bg-white border-r overflow-y-auto transition-all duration-300 ease-in-out`}
-      >
-        <div className="p-4">
-          <h2 className="text-lg font-semibold mb-4">
-            <FilterX className="w-6 h-6 inline-block mr-2" />
-            Filters
-          </h2>
-          <Accordion type="multiple" className="w-full">
-            <AccordionItem value="type">
-              <AccordionTrigger>Type</AccordionTrigger>
-              <AccordionContent>
-                {types.map((type) => (
-                  <div key={type} className="flex items-center space-x-2 mb-2">
-                    <Checkbox
-                      id={`type-${type}`}
-                      checked={filters.types.includes(type)}
-                      onCheckedChange={(checked) => {
-                        const newTypes = checked
-                          ? [...filters.types, type]
-                          : filters.types.filter((t) => t !== type);
-                        handleFilterChange('types', newTypes);
-                      }}
-                    />
-                    <Label htmlFor={`type-${type}`}>{type}</Label>
-                  </div>
-                ))}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="generation">
-              <AccordionTrigger>Generation</AccordionTrigger>
-              <AccordionContent>
-                {generations.map((gen) => (
-                  <div key={gen} className="flex items-center space-x-2 mb-2">
-                    <Checkbox
-                      id={`gen-${gen}`}
-                      checked={filters.generation.includes(gen)}
-                      onCheckedChange={(checked) => {
-                        const newGens = checked
-                          ? [...filters.generation, gen]
-                          : filters.generation.filter((g) => g !== gen);
-                        handleFilterChange('generation', newGens);
-                      }}
-                    />
-                    <Label htmlFor={`gen-${gen}`}>{gen}</Label>
-                  </div>
-                ))}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="habitat">
-              <AccordionTrigger>Habitat</AccordionTrigger>
-              <AccordionContent>
-                {habitats.map((habitat) => (
-                  <div
-                    key={habitat}
-                    className="flex items-center space-x-2 mb-2"
-                  >
-                    <Checkbox
-                      id={`habitat-${habitat}`}
-                      checked={filters.habitat.includes(habitat)}
-                      onCheckedChange={(checked) => {
-                        const newHabitats = checked
-                          ? [...filters.habitat, habitat]
-                          : filters.habitat.filter((h) => h !== habitat);
-                        handleFilterChange('habitat', newHabitats);
-                      }}
-                    />
-                    <Label htmlFor={`habitat-${habitat}`}>{habitat}</Label>
-                  </div>
-                ))}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="shape">
-              <AccordionTrigger>Shape</AccordionTrigger>
-              <AccordionContent>
-                {shapes.map((shape) => (
-                  <div key={shape} className="flex items-center space-x-2 mb-2">
-                    <Checkbox
-                      id={`shape-${shape}`}
-                      checked={filters.shape.includes(shape)}
-                      onCheckedChange={(checked) => {
-                        const newShapes = checked
-                          ? [...filters.shape, shape]
-                          : filters.shape.filter((s) => s !== shape);
-                        handleFilterChange('shape', newShapes);
-                      }}
-                    />
-                    <Label htmlFor={`shape-${shape}`}>{shape}</Label>
-                  </div>
-                ))}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="color">
-              <AccordionTrigger>Color</AccordionTrigger>
-              <AccordionContent>
-                {colors.map((color) => (
-                  <div key={color} className="flex items-center space-x-2 mb-2">
-                    <Checkbox
-                      id={`color-${color}`}
-                      checked={filters.color.includes(color)}
-                      onCheckedChange={(checked) => {
-                        const newColors = checked
-                          ? [...filters.color, color]
-                          : filters.color.filter((c) => c !== color);
-                        handleFilterChange('color', newColors);
-                      }}
-                    />
-                    <Label htmlFor={`color-${color}`}>{color}</Label>
-                  </div>
-                ))}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="special">
-              <AccordionTrigger>Special</AccordionTrigger>
-              <AccordionContent>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Checkbox
-                      id="legendary"
-                      checked={filters.legendary}
-                      onCheckedChange={(checked) =>
-                        handleFilterChange('legendary', checked)
-                      }
-                    />
-                    <Label htmlFor="legendary">Legendary</Label>
-                  </div>
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Checkbox
-                      id="mythical"
-                      checked={filters.mythical}
-                      onCheckedChange={(checked) =>
-                        handleFilterChange('mythical', checked)
-                      }
-                    />
-                    <Label htmlFor="mythical">Mythical</Label>
-                  </div>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-      </div>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-4 -right-2 z-10"
-        onClick={onToggle}
-      >
-        {isOpen ? (
-          <ChevronsLeft className="h-4 w-4" />
-        ) : (
-          <ChevronsRight className="h-4 w-4" />
+        className={cn(
+          'fixed inset-0 z-40 bg-black/50 md:hidden',
+          isOpen ? 'block' : 'hidden'
         )}
-      </Button>
-    </div>
+        onClick={onToggle}
+      />
+
+      <div
+        className={cn(
+          // Mobile styles
+          'fixed inset-y-0 left-0 z-40 w-64 bg-white transform transition-transform duration-300 ease-in-out md:relative md:transform-none',
+          // Desktop styles
+          'md:flex md:w-64 md:border-r md:overflow-y-auto md:h-screen md:flex-col md:gap-12',
+          // Conditional styles
+          {
+            'translate-x-0': isOpen,
+            '-translate-x-full': !isOpen,
+            'md:w-64': isOpen,
+            'md:w-16': !isOpen,
+          }
+        )}
+      >
+        <div className="flex justify-center items-center p-2">
+          {window.innerWidth < 768 ? (
+            <PikachuIcon
+              className="w-12 h-12 text-yellow-400"
+              width={150}
+              height={75}
+            />
+          ) : isOpen ? (
+            <PokemonTitle className="hidden md:block" width={150} height={75} />
+          ) : (
+            <PikachuIcon
+              className="w-12 h-12 text-yellow-400"
+              width={150}
+              height={75}
+            />
+          )}
+        </div>
+        <div
+          className={cn(
+            'h-full overflow-y-auto transition-all duration-300 ease-in-out',
+            {
+              'w-64': isOpen,
+              'w-16': !isOpen,
+            }
+          )}
+        >
+          <div className="p-4">
+            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <FilterX className="w-6 h-6" />
+              <span className={cn({ hidden: !isOpen })}>Filters</span>
+            </h2>
+            <Accordion type="multiple" className="w-full">
+              <FilterAccordionItem
+                value="type"
+                icon={Flame}
+                title="Type"
+                items={types}
+                isOpen={isOpen}
+                selectedItems={filters.types}
+                onItemChange={(newTypes) =>
+                  handleFilterChange('types', newTypes)
+                }
+              />
+              <FilterAccordionItem
+                value="generation"
+                icon={History}
+                title="Generation"
+                items={generations}
+                isOpen={isOpen}
+                selectedItems={filters.generation}
+                onItemChange={(newGens) =>
+                  handleFilterChange('generation', newGens)
+                }
+              />
+              <FilterAccordionItem
+                value="habitat"
+                icon={Home}
+                title="Habitat"
+                items={habitats}
+                isOpen={isOpen}
+                selectedItems={filters.habitat}
+                onItemChange={(newHabitats) =>
+                  handleFilterChange('habitat', newHabitats)
+                }
+              />
+              <FilterAccordionItem
+                value="shape"
+                icon={Shapes}
+                title="Shape"
+                items={shapes}
+                isOpen={isOpen}
+                selectedItems={filters.shape}
+                onItemChange={(newShapes) =>
+                  handleFilterChange('shape', newShapes)
+                }
+              />
+              <FilterAccordionItem
+                value="color"
+                icon={Palette}
+                title="Color"
+                items={colors}
+                isOpen={isOpen}
+                selectedItems={filters.color}
+                onItemChange={(newColors) =>
+                  handleFilterChange('color', newColors)
+                }
+              />
+            </Accordion>
+          </div>
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute top-4 -right-2 z-10 hidden md:flex"
+          onClick={onToggle}
+        >
+          {isOpen ? (
+            <ChevronsLeft className="h-4 w-4" />
+          ) : (
+            <ChevronsRight className="h-4 w-4" />
+          )}
+        </Button>
+      </div>
+    </>
   );
 }

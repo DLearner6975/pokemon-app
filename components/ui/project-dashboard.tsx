@@ -16,6 +16,8 @@ import { PokemonGrid } from './pokemon-items/pokemon-grid';
 import { PokemonPagination } from './pokemon-items/pokemon-pagination';
 import { useWindowSize } from '@/hooks/useWindow';
 import { PokemonParticles } from './pokemon-particles';
+import { Button } from '@/components/ui/button';
+import { Menu } from 'lucide-react';
 
 interface ProjectDashboardProps {
   initialPokemon: Pokemon[];
@@ -127,7 +129,17 @@ export default function ProjectDashboard({
       />
       <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         <header className="flex items-center justify-between border-b bg-white px-6 py-4">
-          <SearchBar onSearch={handleSearch} />
+          <div className="flex items-center gap-4 flex-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={toggleSidebar}
+            >
+              <Menu className="h-6 w-6" />
+            </Button>
+            <SearchBar onSearch={handleSearch} />
+          </div>
           {/* <LoginManager /> */}
         </header>
         <div className="flex-1 overflow-auto">
