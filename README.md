@@ -1,5 +1,44 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Technologies Used
+
+This project uses the following technologies:
+
+### Core Technologies
+
+- [Next.js 15](https://nextjs.org/) - React framework with server-side rendering and routing
+- [React 19](https://react.dev/) - JavaScript library for building user interfaces
+- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript superset
+
+### UI and Styling
+
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [shadcn/ui](https://ui.shadcn.com/) - UI components built with Radix UI and Tailwind
+- [Radix UI](https://www.radix-ui.com/) - Unstyled, accessible UI components
+- [Lucide Icons](https://lucide.dev/) - Icon library
+- [Class Variance Authority](https://cva.style/docs) - For creating variant components
+- [tailwindcss-animate](https://github.com/jamiebuilds/tailwindcss-animate) - Animation utilities for Tailwind
+
+### UI Components and Features
+
+- [Embla Carousel](https://www.embla-carousel.com/) - Carousel/slider component
+- [tsParticles](https://particles.js.org/) - Particle animations library
+
+### Development Tools
+
+- [ESLint](https://eslint.org/) - JavaScript linter
+- [PostCSS](https://postcss.org/) - CSS transformation tool
+- [Turbopack](https://turbo.build/pack) - Incremental bundler (used in development)
+
+### Data Source
+
+- [PokéAPI](https://pokeapi.co/) - RESTful API used to retrieve comprehensive Pokémon data including:
+  - Pokémon information (stats, abilities, types)
+  - Species details
+  - Evolution chains
+  - Type effectiveness
+  - Images via the [PokeAPI/sprites](https://github.com/PokeAPI/sprites) repository
+
 ## Getting Started
 
 First, run the development server:
