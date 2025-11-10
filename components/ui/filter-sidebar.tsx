@@ -84,7 +84,7 @@ export function FilterSidebar({
           }
         )}
       >
-        <div className="flex justify-center items-center p-2">
+        {/* <div className="flex justify-center items-center p-2">
           {window.innerWidth < 768 ? (
             <PikachuIcon
               className="w-12 h-12 text-yellow-400"
@@ -100,7 +100,7 @@ export function FilterSidebar({
               height={75}
             />
           )}
-        </div>
+        </div> */}
         <div
           className={cn(
             'h-full overflow-y-auto transition-all duration-300 ease-in-out',
