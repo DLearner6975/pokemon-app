@@ -1,15 +1,9 @@
-import {
-  PokemonCardProps,
-  shadowColorMap,
-  typeColors,
-} from '@/components/types';
+import { PokemonCardProps, typeColors } from '@/components/types';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { Fragment } from 'react';
 
 export const PokemonFrontCard = ({ details }: PokemonCardProps) => {
-  const { name, color, types, abilities, sprites } = details;
-  const shadowClass = shadowColorMap[color?.name ?? 'shadow-gray-500'];
+  const { name, types, abilities, sprites } = details;
   const displayImageUrl =
     // @ts-expect-error The other property is not recognized by TypeScript
     sprites?.other?.home?.front_default ||
@@ -64,51 +58,20 @@ export const PokemonFrontCard = ({ details }: PokemonCardProps) => {
               <p className="text-xs sm:text-sm font-bold text-foreground mb-1.5 sm:mb-2">
                 Abilities:
               </p>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed break-words">
-                {abilities.map((ability) => ability?.ability?.name).join(', ')}
-              </p>
+              <div className="flex gap-1.5 sm:gap-2 flex-wrap">
+                {abilities.map((ability, index) => (
+                  <div
+                    key={index}
+                    className="bg-muted/10 border border-muted-foreground/30 text-foreground font-medium px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm rounded-full hover:bg-muted/20 transition-all duration-200 shadow-md hover:shadow-lg"
+                  >
+                    {ability?.ability?.name}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      {/* <div
-        className={`relative flex justify-center items-center ${shadowClass} rounded-lg overflow-hidden h-[180px] group`}
-      >
-        <Image
-          src={displayImageUrl || '/placeholder-image.jpg'}
-          alt={`${name} sprite`}
-          width={150}
-          height={150}
-          // className={`w-[150px] h-[150px] object-contain p-4 transition-all duration-300 ease-in-out transform group-hover:scale-125 group-hover:-translate-y-2 group-hover:rotate-3 z-10 shadow-lg rounded-lg ${shadowClass} md:backface-hidden`}
-          className={`object-contain max-w-full max-h-full p-4 transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:-translate-y-2 group-hover:rotate-3 shadow-lg rounded-lg ${shadowClass}`}
-          aria-label={`${name} image. Hover to enlarge.`}
-          priority
-        />
-      </div>
-      <div className="flex items-center flex-wrap gap-0.5">
-        <h3 className="font-semibold text-xs mr-1">Types:</h3>
-        {types.map((type, index) => (
-          <Badge
-            key={index}
-            className={`capitalize text-white text-xs ${
-              typeColors[type?.type?.name] || 'bg-gray-500'
-            }`}
-          >
-            {type?.type?.name}
-          </Badge>
-        ))}
-      </div>
-      <div className="flex flex-wrap items-start text-xs">
-        <h3 className="font-semibold  mr-1">Abilities:</h3>
-        <div className="flex flex-wrap">
-          {abilities.map((ability, index) => (
-            <Fragment key={index}>
-              {index > 0 && <span className="mx-1">/</span>}
-              <span className="capitalize">{ability?.ability?.name}</span>
-            </Fragment>
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 };
