@@ -46,7 +46,7 @@ export const PokemonDamageRelations = ({
         backgroundColor ?? 'bg-gray-500'
       } p-4 rounded-lg shadow-sm text-white`}
     >
-      <h3 className="font-bold text-lg mb-2">Damage Relations</h3>
+      <h3 className="text-lg mb-2 font-super-adorable">Damage Relations</h3>
       <div className="grid grid-cols-2 gap-4">
         {sections.map(({ title, types }) => (
           <DamageRelationSection

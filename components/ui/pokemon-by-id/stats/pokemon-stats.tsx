@@ -21,7 +21,7 @@ export function PokemonStats({
       <div className="space-y-2">
         {Object.entries(stats).map(([statName, value]) => (
           <div key={statName}>
-            <div className="text-sm text-white font-bold">
+            <div className="text-sm text-white font-super-adorable">
               {statName
                 .replace(/([A-Z])/g, ' $1')
                 .split(' ')

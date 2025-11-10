@@ -46,7 +46,7 @@ export default function PokemonById({
           <h1
             className={`${
               backgroundColor ?? 'bg-gray-500'
-            } text-white p-4 rounded-lg text-3xl font-bold text-center mb-8`}
+            } text-white p-4 rounded-lg text-3xl text-center mb-8 font-super-adorable`}
           >
             {formattedPokemon.name} #{formattedPokemon.id}
           </h1>
@@ -86,7 +86,7 @@ export default function PokemonById({
                 <h3
                   className={`${
                     backgroundColor ?? 'bg-gray-500'
-                  } text-white p-4 rounded-lg font-bold text-lg mb-2`}
+                  } text-white p-4 rounded-lg text-lg mb-2 font-super-adorable`}
                 >
                   Type
                 </h3>
@@ -125,7 +125,9 @@ export default function PokemonById({
             <Link href="/">
               <Button
                 variant="default"
-                className={`${backgroundColor ?? 'bg-gray-500'} ${hoverColor}`}
+                className={`${
+                  backgroundColor ?? 'bg-gray-500'
+                } ${hoverColor} font-super-adorable`}
               >
                 Explore More Pokémon
               </Button>

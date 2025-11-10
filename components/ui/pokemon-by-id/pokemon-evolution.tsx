@@ -24,7 +24,9 @@ export function PokemonEvolution({
 
   return (
     <div className={`${backgroundColor} p-6 rounded-lg mt-8`}>
-      <h2 className="text-white text-xl mb-4">Evolutions</h2>
+      <h2 className="text-white text-xl mb-4 font-super-adorable">
+        Evolutions
+      </h2>
       <div className="flex flex-wrap items-center justify-center gap-6">
         {evolutions.map((evolution, index) => {
           return (

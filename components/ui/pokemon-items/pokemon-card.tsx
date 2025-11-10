@@ -22,7 +22,7 @@ export function PokemonCard({ details }: PokemonCardProps) {
       onClick={() => handleCardClick(id)}
     >
       <CardHeader className="p-4">
-        <CardTitle className="flex justify-between items-center">
+        <CardTitle className="font-super-adorable flex justify-between items-center">
           <span className="text-base capitalize">{name}</span>
           <span className="text-sm text-gray-500">
             #{id.toString().padStart(2, '0')}

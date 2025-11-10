@@ -32,7 +32,7 @@ export function PokemonHeader({
         {prevPokemon && (
           <Link
             href={`/pokemon/${prevPokemon.id}`}
-            className="flex items-center gap-2 hover:underline"
+            className="flex items-center gap-2 hover:underline font-super-adorable"
           >
             <ChevronLeft className="h-4 w-4" />
             <span>#{prevPokemon.id}</span>
@@ -58,7 +58,7 @@ export function PokemonHeader({
           </SelectContent>
         </Select>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end font-super-adorable">
         {nextPokemon && (
           <Link
             href={`/pokemon/${nextPokemon.id}`}
