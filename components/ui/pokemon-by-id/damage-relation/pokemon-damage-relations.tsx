@@ -4,6 +4,7 @@ import type { PokemonData } from '@/components/utils/pokemon-data-formatter';
 
 export const PokemonDamageRelations = ({
   formattedPokemon,
+  gradientColor,
 }: {
   formattedPokemon: PokemonData;
 }) => {
@@ -42,9 +43,7 @@ export const PokemonDamageRelations = ({
   const backgroundColor = backgroundColorClass(formattedPokemon.color);
   return (
     <div
-      className={`${
-        backgroundColor ?? 'bg-gray-500'
-      } p-4 rounded-lg shadow-sm text-white`}
+      className={`${gradientColor} text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl`}
     >
       <h3 className="text-lg mb-2 font-super-adorable">Damage Relations</h3>
       <div className="grid grid-cols-2 gap-4">

@@ -13,8 +13,12 @@ import type {
   HeaderData,
   PokemonData,
 } from '@/components/utils/pokemon-data-formatter';
-import { hoverColorClass } from '@/components/utils/color-util';
-import { backgroundColorClass } from '@/components/utils/color-util';
+import {
+  gradientColorClass,
+  backgroundColorClass,
+  hoverColorClass,
+} from '@/components/utils/color-util';
+import { Badge } from '../badge';
 
 export default function PokemonById({
   formattedPokemon,
@@ -26,7 +30,7 @@ export default function PokemonById({
   headerData: HeaderData;
 }) {
   const backgroundColor = backgroundColorClass(formattedPokemon.color);
-  const hoverColor = hoverColorClass(formattedPokemon.color);
+  const gradientColor = gradientColorClass(formattedPokemon.color);
   const statsDetails = [
     { label: 'Height', value: formattedPokemon.height },
     { label: 'Category', value: formattedPokemon.category },
@@ -40,49 +44,57 @@ export default function PokemonById({
         <PokemonHeader
           headerData={headerData}
           backgroundColor={backgroundColor}
+          gradientColor={gradientColor}
         />
 
         <main className="max-w-6xl mx-auto p-6">
-          <h1
-            className={`${
-              backgroundColor ?? 'bg-gray-500'
-            } text-white p-4 rounded-lg text-3xl text-center mb-8 font-super-adorable`}
+          <div
+            className={`${gradientColor} text-white rounded-2xl sm:rounded-3xl px-6 sm:px-8 py-4 sm:py-6 mb-6 sm:mb-8 text-center shadow-xl`}
           >
-            {formattedPokemon.name} #{formattedPokemon.id}
-          </h1>
-
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-super-adorable">
+              {formattedPokemon.name} #{formattedPokemon.id}
+            </h1>
+          </div>
           <div className="grid md:grid-cols-2 gap-12 relative z-10">
             <div>
-              <PokemonCarousel formattedPokemon={formattedPokemon} />
+              <PokemonCarousel
+                formattedPokemon={formattedPokemon}
+                gradientColor={gradientColor}
+              />
               <div className="mt-8">
                 <PokemonStats formattedPokemon={formattedPokemon} />
               </div>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <p
-                className={`${
-                  backgroundColor ?? 'bg-gray-500'
-                } text-white p-4 rounded-lg`}
+                // className={`${
+                //   backgroundColor ?? 'bg-gray-500'
+                // } text-white p-4 rounded-lg`}
+                className={`${gradientColor} text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl`}
               >
-                {formattedPokemon.description}
+                {formattedPokemon.description ||
+                  'The tentacles are normally kept short. On hunts, they are extended to ensnare and immobilize prey.'}
               </p>
 
               <div
-                className={`${
-                  backgroundColor ?? 'bg-gray-500'
-                } text-white p-4 rounded-lg`}
+                // className={`${
+                //   backgroundColor ?? 'bg-gray-500'
+                // } text-white p-4 rounded-lg`}
+                className={`${gradientColor} text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl`}
               >
                 <div className="grid grid-cols-2 gap-4">
                   {statsDetails.map(({ label, value }) => (
                     <div key={label}>
-                      <div>{label}</div>
-                      <div>{value}</div>
+                      <p className="text-sm font-semibold opacity-90 mb-1">
+                        {label}
+                      </p>
+                      <p className="text-xl sm:text-2xl font-black">{value}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <h3
                   className={`${
                     backgroundColor ?? 'bg-gray-500'
@@ -102,10 +114,31 @@ export default function PokemonById({
                     </span>
                   ))}
                 </div>
+              </div> */}
+              <div
+                className={`${gradientColor} text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl`}
+              >
+                <h3 className="text-lg sm:text-xl font-black mb-3 font-super-adorable">
+                  Type
+                </h3>
+                <div className="flex gap-2 flex-wrap">
+                  {formattedPokemon.types.map((type) => (
+                    <Badge
+                      key={type}
+                      className={`${
+                        typeColors[type as keyof typeof typeColors]
+                      } text-white font-bold px-4 py-2 text-sm sm:text-base`}
+                    >
+                      {type.toLowerCase()}
+                    </Badge>
+                  ))}
+                </div>
               </div>
-
               {formattedPokemon.damageRelations ? (
-                <PokemonDamageRelations formattedPokemon={formattedPokemon} />
+                <PokemonDamageRelations
+                  formattedPokemon={formattedPokemon}
+                  gradientColor={gradientColor}
+                />
               ) : (
                 <p className="text-red-500">
                   Error: Damage relations data is missing
@@ -118,18 +151,17 @@ export default function PokemonById({
             <PokemonEvolution
               evolutions={evolutions}
               backgroundColor={backgroundColor}
+              gradientColor={gradientColor}
             />
           </div>
 
-          <div className="text-center mt-8">
+          <div className="mt-6 sm:mt-8 text-center">
             <Link href="/">
               <Button
-                variant="default"
-                className={`${
-                  backgroundColor ?? 'bg-gray-500'
-                } ${hoverColor} font-super-adorable`}
+                // onClick={onClose}
+                className={`${gradientColor} hover:from-blue-600 hover:to-purple-700 text-white font-bold px-8 py-6 rounded-full text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105`}
               >
-                Explore More Pokémon
+                Explore More Pokemon
               </Button>
             </Link>
           </div>

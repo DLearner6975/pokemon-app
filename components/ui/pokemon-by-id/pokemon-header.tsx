@@ -18,55 +18,57 @@ interface PokemonHeaderProps {
 export function PokemonHeader({
   headerData,
   backgroundColor,
+  gradientColor,
 }: PokemonHeaderProps) {
+  console.log('🚀 ~ PokemonHeader ~ gradientColor:', gradientColor);
   const { prevPokemon, nextPokemon, currentPokemon, allPokemon } = headerData;
   const router = useRouter();
 
   return (
     <div
-      className={`grid grid-cols-3 sticky top-0 z-20 items-center ${
-        backgroundColor ?? 'bg-gray-500'
-      } text-white px-4 py-2`}
+      className={`${gradientColor} text-white py-4 px-4 sm:px-6 sticky top-0 z-10 shadow-lg`}
     >
-      <div>
+      <div className="max-w-6xl mx-auto flex items-center justify-between">
         {prevPokemon && (
           <Link
-            href={`/pokemon/${prevPokemon.id}`}
-            className="flex items-center gap-2 hover:underline font-super-adorable"
+            href={`/pokemon/${prevPokemon?.id}`}
+            className="flex items-center gap-2 font-bold hover:scale-105 transition-transform text-sm sm:text-base"
           >
-            <ChevronLeft className="h-4 w-4" />
-            <span>#{prevPokemon.id}</span>
-            <span className="hidden sm:inline">{prevPokemon.name}</span>
+            <ChevronLeft className="h-5 w-5" />
+            <span className="hidden sm:inline">#{prevPokemon?.id}</span>
+            <span className="hidden md:inline">{prevPokemon?.name}</span>
           </Link>
         )}
-      </div>
-      <div className="flex justify-center">
-        <Select onValueChange={(value) => router.push(`/pokemon/${value}`)}>
-          <SelectTrigger className="w-[180px] bg-white text-gray-800">
-            <SelectValue
-              placeholder={<p className="text-center">{currentPokemon.name}</p>}
-            />
-          </SelectTrigger>
-          <SelectContent>
-            <div className="max-h-[300px] overflow-y-auto">
-              {allPokemon?.map((pokemon) => (
-                <SelectItem key={pokemon.id} value={pokemon.id}>
-                  <p className="text-center"> {pokemon.name}</p>
-                </SelectItem>
-              ))}
-            </div>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="flex justify-end font-super-adorable">
+
+        <div className="flex items-center gap-2 sm:gap-4">
+          <Select onValueChange={(value) => router.push(`/pokemon/${value}`)}>
+            <SelectTrigger className="w-[180px] bg-white text-gray-800">
+              <SelectValue
+                placeholder={
+                  <p className="text-center">{currentPokemon.name}</p>
+                }
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <div className="max-h-[300px] overflow-y-auto">
+                {allPokemon?.map((pokemon) => (
+                  <SelectItem key={pokemon.id} value={pokemon.id}>
+                    <p className="text-center"> {pokemon.name}</p>
+                  </SelectItem>
+                ))}
+              </div>
+            </SelectContent>
+          </Select>
+        </div>
+
         {nextPokemon && (
           <Link
-            href={`/pokemon/${nextPokemon.id}`}
-            className="flex items-center gap-2 hover:underline"
+            href={`/pokemon/${nextPokemon?.id}`}
+            className="flex items-center gap-2 font-bold hover:scale-105 transition-transform text-sm sm:text-base"
           >
-            <span className="hidden sm:inline">{nextPokemon.name}</span>
-            <span>#{nextPokemon.id}</span>
-            <ChevronRight className="h-4 w-4" />
+            <span className="hidden md:inline">{nextPokemon?.name}</span>
+            <span className="hidden sm:inline">#{nextPokemon?.id}</span>
+            <ChevronRight className="h-5 w-5" />
           </Link>
         )}
       </div>

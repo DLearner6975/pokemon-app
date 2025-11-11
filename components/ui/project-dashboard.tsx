@@ -11,7 +11,6 @@ import {
   handleFilterChange,
 } from '../utils/filter-utils';
 import { fetchPokemonDetails } from '../utils/pokemon-utils';
-// import { LoginManager } from './login/login-manager';
 import { PokemonGrid } from './pokemon-items/pokemon-grid';
 import { PokemonPagination } from './pokemon-items/pokemon-pagination';
 import { useWindowSize } from '@/hooks/useWindow';
@@ -120,7 +119,7 @@ export default function ProjectDashboard({
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#f5f5f5] relative">
-      <PokemonParticles />
+      {/* <PokemonParticles /> */}
       <FilterSidebar
         onFilterChange={handleFilterChangeWrapper}
         initialFilters={filters}
@@ -140,7 +139,6 @@ export default function ProjectDashboard({
             </Button>
             <SearchBar onSearch={handleSearch} />
           </div>
-          {/* <LoginManager /> */}
         </header>
         <div className="flex-1 overflow-auto">
           <PokemonGrid
