@@ -11,10 +11,6 @@ export default function PokemonBackCard({ details }: PokemonCardProps) {
     details;
   const backgroundColorClass =
     backgroundColorMap[color?.name ?? 'gray'] ?? 'bg-gray-500';
-  console.log(
-    '🚀 ~ PokemonBackCard ~ backgroundColorClass:',
-    backgroundColorClass
-  );
 
   return (
     <div className="absolute inset-0 backface-hidden rotate-y-180">
@@ -58,8 +54,10 @@ export default function PokemonBackCard({ details }: PokemonCardProps) {
           />
 
           <div className="flex items-start justify-between mb-4 sm:mb-6">
-            <h3 className="text-xl sm:text-2xl font-black">{name}</h3>
-            <span className="text-base sm:text-lg font-bold">
+            <h3 className="text-xl sm:text-2xl capitalize font-super-adorable">
+              {name}
+            </h3>
+            <span className="text-base sm:text-lg italic font-super-adorable">
               #{id.toString().padStart(2, '0')}
             </span>
           </div>
@@ -71,19 +69,23 @@ export default function PokemonBackCard({ details }: PokemonCardProps) {
                 <p className="text-xs sm:text-sm font-semibold mb-0.5 opacity-90">
                   Height
                 </p>
-                <p className="text-2xl sm:text-3xl font-black">{height}</p>
+                <p className="text-2xl sm:text-3xl font-super-adorable">
+                  {height}
+                </p>
               </div>
               <div>
                 <p className="text-xs sm:text-sm font-semibold mb-0.5 opacity-90">
                   Weight
                 </p>
-                <p className="text-2xl sm:text-3xl font-black">{weight}</p>
+                <p className="text-2xl sm:text-3xl font-super-adorable">
+                  {weight}
+                </p>
               </div>
               <div>
                 <p className="text-xs sm:text-sm font-semibold mb-0.5 opacity-90">
                   Base Exp
                 </p>
-                <p className="text-2xl sm:text-3xl font-black">
+                <p className="text-2xl sm:text-3xl font-super-adorable">
                   {base_experience}
                 </p>
               </div>
@@ -99,7 +101,7 @@ export default function PokemonBackCard({ details }: PokemonCardProps) {
                   <div className="space-y-1 sm:space-y-1.5 text-xs sm:text-sm">
                     <div className="flex justify-between">
                       <span className="opacity-90">{s.stat.name}</span>
-                      <span className="font-bold">{s.base_stat}</span>
+                      <span className="font-super-adorable">{s.base_stat}</span>
                     </div>
                   </div>
                 </div>

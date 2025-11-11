@@ -20,11 +20,11 @@ export const PokemonFrontCard = ({ details }: PokemonCardProps) => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
         <div className="relative z-10 flex flex-col h-full">
-          <div className="flex items-start justify-between mb-3 sm:mb-4">
-            <h3 className="text-xl sm:text-2xl font-black text-foreground">
-              {name.charAt(0).toUpperCase() + name.slice(1)}
+          <div className="flex items-start justify-between mb-3 sm:mb-4 font-super-adorable">
+            <h3 className="text-xl sm:text-2xl  text-foreground capitalize ">
+              {name}
             </h3>
-            <span className="text-base sm:text-lg font-bold text-muted-foreground">
+            <span className="text-base sm:text-lg italic text-muted-foreground">
               #{details.id.toString().padStart(2, '0')}
             </span>
           </div>
@@ -42,7 +42,7 @@ export const PokemonFrontCard = ({ details }: PokemonCardProps) => {
 
           <div className="space-y-3 sm:space-y-4 flex-1">
             <div>
-              <p className="text-xs sm:text-sm font-bold text-foreground mb-1.5 sm:mb-2">
+              <p className="text-xs sm:text-sm text-foreground mb-1.5 sm:mb-2 font-super-adorable">
                 Types:
               </p>
               <div className="flex gap-1.5 sm:gap-2 flex-wrap">
@@ -59,9 +59,7 @@ export const PokemonFrontCard = ({ details }: PokemonCardProps) => {
               </div>
             </div>
             <div>
-              <p className="text-xs font-semibold text-foreground mb-1.5">
-                Abilities:
-              </p>
+              <p className="text-xs mb-1.5 font-super-adorable">Abilities:</p>
               <div className="flex gap-1.5 flex-wrap">
                 {abilities.map((ability, index) => (
                   <Badge

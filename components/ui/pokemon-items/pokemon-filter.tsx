@@ -143,7 +143,7 @@ function FilterSection({
           </div>
           {!isCollapsed && (
             <>
-              <span className="text-foreground text-base sm:text-lg transition-all duration-300">
+              <span className="text-base sm:text-lg transition-all duration-300 font-super-adorable">
                 {title}
               </span>
               {selected.length > 0 && (
