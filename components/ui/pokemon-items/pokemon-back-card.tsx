@@ -5,27 +5,21 @@ import { backgroundColorMap, PokemonCardProps } from '@/components/types';
 import { ChevronsDown } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CardFooter } from '../card';
 
 export default function PokemonBackCard({ details }: PokemonCardProps) {
-  console.log('🚀 ~ PokemonBackCard ~ details:', details);
   const { id, name, base_experience, height, weight, color, stats, sprites } =
     details;
-  const backgroundColorClass = backgroundColorMap[color?.name ?? 'bg-gray-500'];
+  const backgroundColorClass =
+    backgroundColorMap[color?.name ?? 'gray'] ?? 'bg-gray-500';
   console.log(
     '🚀 ~ PokemonBackCard ~ backgroundColorClass:',
     backgroundColorClass
   );
 
   return (
-    <div
-      // className="absolute inset-0 backface-hidden rotate-y-180"
-      className={`${
-        backgroundColorClass ?? 'bg-gray-500'
-      } text-white rounded-2xl sm:rounded-3xl  absolute inset-0 backface-hidden rotate-y-180`}
-    >
+    <div className="absolute inset-0 backface-hidden rotate-y-180">
       <div
-        className={`bg-gradient-to-br ${backgroundColorClass} rounded-2xl sm:rounded-3xl border-2 sm:border-4 border-white/20 p-4 sm:p-6 shadow-xl h-full text-white relative overflow-hidden flex flex-col`}
+        className={`bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 ${backgroundColorClass}  rounded-2xl sm:rounded-3xl border-2 sm:border-4 border-white/20 p-4 sm:p-6 shadow-xl h-full text-white relative overflow-hidden flex flex-col`}
       >
         {/* Close button to flip card back */}
         {/* <button
