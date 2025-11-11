@@ -42,6 +42,11 @@ export interface FilterSidebarProps {
 
 export interface PokemonCardProps {
   details: Pokemon;
+  isFlipped: boolean[];
+}
+export interface PokemonFrontCardProps {
+  details: Pokemon;
+  isFlipped: boolean[];
 }
 
 export const typeColors: { [key: string]: string } = {

@@ -20,7 +20,6 @@ export function PokemonHeader({
   backgroundColor,
   gradientColor,
 }: PokemonHeaderProps) {
-  console.log('🚀 ~ PokemonHeader ~ gradientColor:', gradientColor);
   const { prevPokemon, nextPokemon, currentPokemon, allPokemon } = headerData;
   const router = useRouter();
 
@@ -40,25 +39,27 @@ export function PokemonHeader({
           </Link>
         )}
 
-        <div className="flex items-center gap-2 sm:gap-4">
-          <Select onValueChange={(value) => router.push(`/pokemon/${value}`)}>
-            <SelectTrigger className="w-[180px] bg-white text-gray-800">
-              <SelectValue
-                placeholder={
-                  <p className="text-center">{currentPokemon.name}</p>
-                }
-              />
-            </SelectTrigger>
-            <SelectContent>
-              <div className="max-h-[300px] overflow-y-auto">
-                {allPokemon?.map((pokemon) => (
-                  <SelectItem key={pokemon.id} value={pokemon.id}>
-                    <p className="text-center"> {pokemon.name}</p>
-                  </SelectItem>
-                ))}
-              </div>
-            </SelectContent>
-          </Select>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <Select onValueChange={(value) => router.push(`/pokemon/${value}`)}>
+              <SelectTrigger className="w-[180px] bg-white text-gray-800">
+                <SelectValue
+                  placeholder={
+                    <p className="text-center">{currentPokemon.name}</p>
+                  }
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <div className="max-h-[300px] overflow-y-auto">
+                  {allPokemon?.map((pokemon) => (
+                    <SelectItem key={pokemon.id} value={pokemon.id}>
+                      <p className="text-center">{pokemon.name}</p>
+                    </SelectItem>
+                  ))}
+                </div>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         {nextPokemon && (

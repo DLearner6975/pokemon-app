@@ -6,43 +6,24 @@ import { ChevronsDown } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function PokemonBackCard({ details }: PokemonCardProps) {
+export default function PokemonBackCard({
+  details,
+  isFlipped,
+}: PokemonCardProps) {
   const { id, name, base_experience, height, weight, color, stats, sprites } =
     details;
   const backgroundColorClass =
     backgroundColorMap[color?.name ?? 'gray'] ?? 'bg-gray-500';
 
   return (
-    <div className="absolute inset-0 backface-hidden rotate-y-180">
+    <div
+      className={`absolute inset-0 backface-hidden rotate-y-180 ${
+        isFlipped[id] ? 'pointer-events-auto' : 'pointer-events-none'
+      }`}
+    >
       <div
         className={`bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 ${backgroundColorClass}  rounded-2xl sm:rounded-3xl border-2 sm:border-4 border-white/20 p-4 sm:p-6 shadow-xl h-full text-white relative overflow-hidden flex flex-col`}
       >
-        {/* Close button to flip card back */}
-        {/* <button
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleCardFlip(pokemon.id);
-          }}
-          className="absolute top-3 right-3 z-30 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm border-2 border-white/30 flex items-center justify-center transition-all hover:scale-110"
-          aria-label="Flip back"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button> */}
-
-        {/* Content layer */}
         <div className="flex-1 relative z-10">
           <Image
             src={sprites?.back_default || '/placeholder.svg'}
@@ -63,7 +44,6 @@ export default function PokemonBackCard({ details }: PokemonCardProps) {
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:gap-6">
-            {/* Left column - Physical stats */}
             <div className="space-y-2 sm:space-y-3">
               <div>
                 <p className="text-xs sm:text-sm font-semibold mb-0.5 opacity-90">
@@ -91,7 +71,6 @@ export default function PokemonBackCard({ details }: PokemonCardProps) {
               </div>
             </div>
 
-            {/* Right column - Stats table */}
             <div>
               <p className="text-sm sm:text-base font-black mb-2 sm:mb-3">
                 Stats
@@ -109,15 +88,13 @@ export default function PokemonBackCard({ details }: PokemonCardProps) {
             </div>
           </div>
         </div>
-
-        {/* More details link */}
         <div className="flex justify-center pt-4 relative z-20">
           <Link
             href={`/pokemon/${id}`}
-            className="flex items-center gap-2 text-sm sm:text-base font-semibold opacity-90 hover:opacity-100 transition-all bg-white/20 hover:bg-white/30 px-4 py-2 rounded-xl backdrop-blur-sm border-2 border-white/30 shadow-lg hover:shadow-xl hover:scale-105"
+            className="flex items-center gap-2 text-sm sm:text-base font-black bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 hover:from-yellow-500 hover:via-orange-500 hover:to-pink-600 text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 border-2 border-white/50"
           >
             <span>More details</span>
-            <ChevronsDown className="h-4 w-4" />
+            <ChevronsDown className="h-4 w-4 sm:h-5 sm:w-5" />
           </Link>
         </div>
       </div>

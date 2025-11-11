@@ -7,7 +7,11 @@ import { PokemonFrontCard } from './pokemon-front-card';
 export function PokemonCard({ details }: PokemonCardProps) {
   const { name, id, color } = details;
   const [isFlipped, setIsFlipped] = useState<boolean[]>([]);
-  const handleCardClick = (id: number) => {
+  const handleCardClick = (e: React.MouseEvent, id: number) => {
+    // ✅ Only flip if the click wasn't on a link
+    const target = e.target as HTMLElement;
+    if (target.closest('a')) return; // Don't flip if clicking a link
+
     setIsFlipped((prev) => {
       const newFlipped = [...prev];
       newFlipped[id] = !newFlipped[id];
@@ -17,7 +21,7 @@ export function PokemonCard({ details }: PokemonCardProps) {
   const shadowClass = shadowColorMap[color?.name ?? 'shadow-gray-500'];
 
   return (
-    <div onClick={() => handleCardClick(id)}>
+    <div onClick={(e) => handleCardClick(e, id)}>
       {/* <CardHeader className="p-4">
         <CardTitle className="font-super-adorable flex justify-between items-center">
           <span className="text-base capitalize">{name}</span>
@@ -31,8 +35,9 @@ export function PokemonCard({ details }: PokemonCardProps) {
           isFlipped[id] ? 'rotate-y-180' : ''
         }`}
       >
-        <PokemonFrontCard details={details} />
-        <PokemonBackCard details={details} />
+        <PokemonFrontCard details={details} isFlipped={isFlipped} />
+
+        <PokemonBackCard details={details} isFlipped={isFlipped} />
       </div>
     </div>
   );

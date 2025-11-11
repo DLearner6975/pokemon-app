@@ -169,12 +169,16 @@ export function PokemonParticles() {
   if (!init) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none">
-      <Particles
-        id="tsparticles"
-        options={particlesOptions}
-        className="w-full h-full"
-      />
+    <div
+      className={`absolute  opacity-20 hover:opacity-40 transition-opacity duration-300 pointer-events-none hidden lg:block`}
+    >
+      <div className="fixed inset-0 pointer-events-none">
+        <Particles
+          id="tsparticles"
+          options={particlesOptions}
+          className="w-full h-full"
+        />
+      </div>
     </div>
   );
 }

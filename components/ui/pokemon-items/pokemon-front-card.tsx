@@ -1,10 +1,13 @@
-import { PokemonCardProps, typeColors } from '@/components/types';
+import { PokemonFrontCardProps, typeColors } from '@/components/types';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { gradientColorClass } from '@/components/utils/color-util';
 
-export const PokemonFrontCard = ({ details }: PokemonCardProps) => {
-  const { name, types, abilities, sprites } = details;
+export const PokemonFrontCard = ({
+  details,
+  isFlipped,
+}: PokemonFrontCardProps) => {
+  const { id, name, types, abilities, sprites } = details;
   const displayImageUrl =
     // @ts-expect-error The other property is not recognized by TypeScript
     sprites?.other?.home?.front_default ||
@@ -15,7 +18,11 @@ export const PokemonFrontCard = ({ details }: PokemonCardProps) => {
     details?.color?.name ?? 'bg-gray-500'
   );
   return (
-    <div className="backface-hidden">
+    <div
+      className={`backface-hidden ${
+        isFlipped[id] ? 'pointer-events-none' : 'pointer-events-auto'
+      }`}
+    >
       <div className="bg-white rounded-2xl sm:rounded-3xl border-2 sm:border-4 border-primary/20 p-4 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden group h-full flex flex-col">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
