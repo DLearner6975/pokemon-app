@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { FilterSidebar } from './filter-sidebar';
 import { SearchBar } from './search-bar';
 import { Filters, Pokemon, SimplePokemon } from '../types';
 import {
@@ -15,8 +14,6 @@ import { PokemonGrid } from './pokemon-items/pokemon-grid';
 import { PokemonPagination } from './pokemon-items/pokemon-pagination';
 import { useWindowSize } from '@/hooks/useWindow';
 import { PokemonParticles } from './pokemon-particles';
-import { Button } from '@/components/ui/button';
-import { Menu } from 'lucide-react';
 import { PokemonFilter } from './pokemon-items/pokemon-filter';
 
 interface ProjectDashboardProps {
@@ -114,10 +111,6 @@ export default function ProjectDashboard({
     [filteredPokemon, currentPagePokemon]
   );
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
       <div className="flex h-screen relative z-10">
@@ -136,7 +129,11 @@ export default function ProjectDashboard({
         `}
         >
           <div className="sticky top-0 h-screen overflow-y-auto">
-            <PokemonFilter onClose={() => setIsSidebarOpen(false)} />
+            <PokemonFilter
+              onClose={() => setIsSidebarOpen(false)}
+              onFilterChange={handleFilterChangeWrapper}
+              initialFilters={filters}
+            />
             {/* <FilterSidebar
             onFilterChange={handleFilterChangeWrapper}
             initialFilters={filters}
@@ -146,7 +143,10 @@ export default function ProjectDashboard({
           </div>
         </aside>
         <div className="flex-1 flex flex-col overflow-hidden relative z-10">
-          <SearchBar onSearch={handleSearch} />
+          <SearchBar
+            onSearch={handleSearch}
+            onOpenSidebar={() => setIsSidebarOpen(true)}
+          />
 
           <div className="flex-1 overflow-auto">
             <PokemonGrid

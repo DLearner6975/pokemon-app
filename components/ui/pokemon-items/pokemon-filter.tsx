@@ -192,15 +192,62 @@ function FilterSection({
   );
 }
 
-export function PokemonFilter({ onClose }: { onClose?: () => void }) {
-  const [selectedTypes, setSelectedTypes] = React.useState<string[]>([]);
+interface PokemonFilterProps {
+  onClose?: () => void;
+  onFilterChange?: (filters: {
+    types: string[];
+    generation: string[];
+    habitat: string[];
+    shape: string[];
+    color: string[];
+    abilities: string[];
+    legendary: boolean;
+    mythical: boolean;
+  }) => void;
+  initialFilters?: {
+    types: string[];
+    generation: string[];
+    habitat: string[];
+    shape: string[];
+    color: string[];
+    abilities: string[];
+    legendary: boolean;
+    mythical: boolean;
+  };
+}
+
+export function PokemonFilter({
+  onClose,
+  onFilterChange,
+  initialFilters,
+}: PokemonFilterProps) {
+  const [selectedTypes, setSelectedTypes] = React.useState<string[]>(
+    initialFilters?.types || []
+  );
   const [selectedGenerations, setSelectedGenerations] = React.useState<
     string[]
-  >([]);
-  const [selectedHabitats, setSelectedHabitats] = React.useState<string[]>([]);
-  const [selectedShapes, setSelectedShapes] = React.useState<string[]>([]);
-  const [selectedColors, setSelectedColors] = React.useState<string[]>([]);
+  >(initialFilters?.generation || []);
+  const [selectedHabitats, setSelectedHabitats] = React.useState<string[]>(
+    initialFilters?.habitat || []
+  );
+  const [selectedShapes, setSelectedShapes] = React.useState<string[]>(
+    initialFilters?.shape || []
+  );
+  const [selectedColors, setSelectedColors] = React.useState<string[]>(
+    initialFilters?.color || []
+  );
   const [isCollapsed, setIsCollapsed] = React.useState(false);
+
+  // Sync with initialFilters when they change
+  React.useEffect(() => {
+    if (initialFilters) {
+      setSelectedTypes(initialFilters.types || []);
+      setSelectedGenerations(initialFilters.generation || []);
+      setSelectedHabitats(initialFilters.habitat || []);
+      setSelectedShapes(initialFilters.shape || []);
+      setSelectedColors(initialFilters.color || []);
+    }
+  }, [initialFilters]);
 
   const totalSelected =
     selectedTypes.length +
@@ -209,12 +256,37 @@ export function PokemonFilter({ onClose }: { onClose?: () => void }) {
     selectedShapes.length +
     selectedColors.length;
 
+  const totalApplied = initialFilters
+    ? (initialFilters.types?.length || 0) +
+      (initialFilters.generation?.length || 0) +
+      (initialFilters.habitat?.length || 0) +
+      (initialFilters.shape?.length || 0) +
+      (initialFilters.color?.length || 0)
+    : 0;
+
+  const hasFiltersToApply = totalSelected > 0 || totalApplied > 0;
+
   const clearAll = () => {
     setSelectedTypes([]);
     setSelectedGenerations([]);
     setSelectedHabitats([]);
     setSelectedShapes([]);
     setSelectedColors([]);
+  };
+
+  const handleApplyFilters = () => {
+    if (onFilterChange) {
+      onFilterChange({
+        types: selectedTypes.map((t) => t.toLowerCase()),
+        generation: selectedGenerations,
+        habitat: selectedHabitats.map((h) => h.toLowerCase()),
+        shape: selectedShapes.map((s) => s.toLowerCase()),
+        color: selectedColors.map((c) => c.toLowerCase()),
+        abilities: [],
+        legendary: false,
+        mythical: false,
+      });
+    }
   };
 
   return (
@@ -303,12 +375,11 @@ export function PokemonFilter({ onClose }: { onClose?: () => void }) {
           options={pokemonTypes}
           selected={selectedTypes}
           onChange={setSelectedTypes}
-          defaultOpen={true}
           isCollapsed={isCollapsed}
         />
         <FilterSection
           title="Generation"
-          icon={<Hash className="h-6 w-6 text-white md:text-primary" />}
+          icon={<Hash className="h-6 w-6 text-white md:text-secondary" />}
           options={generations}
           selected={selectedGenerations}
           onChange={setSelectedGenerations}
@@ -316,7 +387,7 @@ export function PokemonFilter({ onClose }: { onClose?: () => void }) {
         />
         <FilterSection
           title="Habitat"
-          icon={<Home className="h-6 w-6 text-white md:text-primary" />}
+          icon={<Home className="h-6 w-6 text-white md:text-accent" />}
           options={habitats}
           selected={selectedHabitats}
           onChange={setSelectedHabitats}
@@ -332,7 +403,7 @@ export function PokemonFilter({ onClose }: { onClose?: () => void }) {
         />
         <FilterSection
           title="Color"
-          icon={<Palette className="h-6 w-6 text-white md:text-primary" />}
+          icon={<Palette className="h-6 w-6 text-white md:text-secondary" />}
           options={colors}
           selected={selectedColors}
           onChange={setSelectedColors}
@@ -340,11 +411,14 @@ export function PokemonFilter({ onClose }: { onClose?: () => void }) {
         />
       </div>
 
-      {!isCollapsed && totalSelected > 0 && (
+      {!isCollapsed && hasFiltersToApply && (
         <div className="p-4 sm:p-5 bg-gradient-to-r from-muted/30 to-muted/50">
-          <Button className="w-full h-10 sm:h-12 bg-gradient-to-r from-primary via-secondary to-accent hover:shadow-xl hover:scale-[1.02] text-white font-black text-base sm:text-lg rounded-xl sm:rounded-2xl transition-all duration-300 shadow-lg border-2 border-white/50">
+          <Button
+            onClick={handleApplyFilters}
+            className="w-full h-10 sm:h-12 bg-gradient-to-r from-primary via-secondary to-accent hover:shadow-xl hover:scale-[1.02] text-white font-black text-base sm:text-lg rounded-xl sm:rounded-2xl transition-all duration-300 shadow-lg border-2 border-white/50"
+          >
             <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" />
-            Apply Filters ({totalSelected})
+            Apply Filters {totalSelected > 0 ? `(${totalSelected})` : '(Clear)'}
           </Button>
         </div>
       )}

@@ -1,16 +1,28 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState } from 'react';
 import { PokemonCardProps, shadowColorMap } from '@/components/types';
 import PokemonBackCard from './pokemon-back-card';
 import { PokemonFrontCard } from './pokemon-front-card';
 
 export function PokemonCard({ details }: PokemonCardProps) {
-  const { name, id, color } = details;
+  const { id, color } = details;
   const [isFlipped, setIsFlipped] = useState<boolean[]>([]);
+
+  const shouldIgnoreClick = (target: HTMLElement): boolean => {
+    const isLink = target.closest('a') !== null;
+    const isDialogOpen =
+      document.querySelector('[role="dialog"][data-state="open"]') !== null;
+    const isDialogElement =
+      target.closest('[role="dialog"]') !== null ||
+      target.getAttribute('role') === 'dialog' ||
+      target.closest('[data-radix-portal]') !== null;
+
+    return isLink || isDialogOpen || isDialogElement;
+  };
+
   const handleCardClick = (e: React.MouseEvent, id: number) => {
-    // ✅ Only flip if the click wasn't on a link
     const target = e.target as HTMLElement;
-    if (target.closest('a')) return; // Don't flip if clicking a link
+
+    if (shouldIgnoreClick(target)) return;
 
     setIsFlipped((prev) => {
       const newFlipped = [...prev];

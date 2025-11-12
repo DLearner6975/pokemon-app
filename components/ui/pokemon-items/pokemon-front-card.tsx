@@ -109,6 +109,7 @@ export const PokemonFrontCard = ({
                     <DialogContent
                       className="sm:max-w-[425px] rounded-3xl border-4 border-purple-200 dark:border-purple-800"
                       aria-describedby="abilities-description"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <DialogHeader>
                         <DialogTitle className="text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center gap-2 capitalize font-super-adorable">
