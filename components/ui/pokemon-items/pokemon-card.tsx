@@ -22,14 +22,6 @@ export function PokemonCard({ details }: PokemonCardProps) {
 
   return (
     <div onClick={(e) => handleCardClick(e, id)}>
-      {/* <CardHeader className="p-4">
-        <CardTitle className="font-super-adorable flex justify-between items-center">
-          <span className="text-base capitalize">{name}</span>
-          <span className="text-sm text-gray-500">
-            #{id.toString().padStart(2, '0')}
-          </span>
-        </CardTitle>
-      </CardHeader> */}
       <div
         className={` transition-transform duration-500 transform-style-preserve-3d ${
           isFlipped[id] ? 'rotate-y-180' : ''

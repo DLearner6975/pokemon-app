@@ -34,7 +34,7 @@ export function PokemonHeader({
             className="flex items-center gap-2 font-bold hover:scale-105 transition-transform text-sm sm:text-base"
           >
             <ChevronLeft className="h-5 w-5" />
-            <span className="hidden sm:inline">#{prevPokemon?.id}</span>
+            <span>#{prevPokemon?.id}</span>
             <span className="hidden md:inline">{prevPokemon?.name}</span>
           </Link>
         )}
@@ -68,7 +68,7 @@ export function PokemonHeader({
             className="flex items-center gap-2 font-bold hover:scale-105 transition-transform text-sm sm:text-base"
           >
             <span className="hidden md:inline">{nextPokemon?.name}</span>
-            <span className="hidden sm:inline">#{nextPokemon?.id}</span>
+            <span>#{nextPokemon?.id}</span>
             <ChevronRight className="h-5 w-5" />
           </Link>
         )}

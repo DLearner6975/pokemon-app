@@ -55,7 +55,7 @@ export default function PokemonById({
               {formattedPokemon.name} #{formattedPokemon.id}
             </h1>
           </div>
-          <div className="grid md:grid-cols-2 gap-12 relative z-10">
+          <div className="grid md:grid-cols-2 gap-12">
             <div>
               <PokemonCarousel
                 formattedPokemon={formattedPokemon}

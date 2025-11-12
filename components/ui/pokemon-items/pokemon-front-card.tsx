@@ -2,6 +2,16 @@ import { PokemonFrontCardProps, typeColors } from '@/components/types';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { gradientColorClass } from '@/components/utils/color-util';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Sparkles } from 'lucide-react';
+import { useState } from 'react';
 
 export const PokemonFrontCard = ({
   details,
@@ -14,6 +24,10 @@ export const PokemonFrontCard = ({
     // @ts-expect-error The other property is not recognized by TypeScript
     sprites?.other?.dream_world?.front_default ||
     sprites?.front_default;
+  const displayedAbilities = abilities.slice(0, 2);
+  const hasMoreAbilities = abilities.length > 2;
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const remainingCount = abilities.length - 2;
   const gradientColor = gradientColorClass(
     details?.color?.name ?? 'bg-gray-500'
   );
@@ -68,15 +82,65 @@ export const PokemonFrontCard = ({
             <div>
               <p className="text-xs mb-1.5 font-super-adorable">Abilities:</p>
               <div className="flex gap-1.5 flex-wrap">
-                {abilities.map((ability, index) => (
+                {displayedAbilities.map((ability, index) => (
                   <Badge
                     key={index}
                     variant="outline"
-                    className="text-[10px] sm:text-xs px-2 py-0.5 bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200 text-purple-700 font-medium hover:scale-105 transition-transform duration-200"
+                    className="text-purple-700 dark:text-purple-300 border-2 border-purple-400 dark:border-purple-600 font-semibold text-xs px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-950/50 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
                   >
                     {ability?.ability?.name}
                   </Badge>
                 ))}
+                {hasMoreAbilities && (
+                  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 px-3 text-xs font-bold rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-lg hover:shadow-xl transition-all cursor-pointer focus-visible:ring-4 focus-visible:ring-purple-300 focus-visible:ring-offset-2"
+                        aria-label={`View ${remainingCount} more ${
+                          remainingCount === 1 ? 'ability' : 'abilities'
+                        } for ${name}`}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        +{remainingCount} more
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent
+                      className="sm:max-w-[425px] rounded-3xl border-4 border-purple-200 dark:border-purple-800"
+                      aria-describedby="abilities-description"
+                    >
+                      <DialogHeader>
+                        <DialogTitle className="text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center gap-2 capitalize font-super-adorable">
+                          <Sparkles
+                            className="w-6 h-6 text-yellow-400 animate-pulse"
+                            aria-hidden="true"
+                          />
+                          {name} - All Abilities
+                        </DialogTitle>
+                      </DialogHeader>
+                      <div id="abilities-description" className="sr-only">
+                        Complete list of all abilities for {name}
+                      </div>
+                      <div
+                        className="flex flex-wrap gap-3 pt-4"
+                        role="list"
+                        aria-label={`All abilities for ${name}`}
+                      >
+                        {abilities.map((ability, index) => (
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="text-purple-700 dark:text-purple-300 border-2 border-purple-400 dark:border-purple-600 font-semibold text-sm px-4 py-2 rounded-full bg-purple-50 dark:bg-purple-950/50"
+                            role="listitem"
+                          >
+                            {ability?.ability?.name}
+                          </Badge>
+                        ))}
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                )}
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '../button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useWindowSize } from '../../../hooks/useWindow';
 
 interface PokemonPaginationProps {
   totalItems: number;
@@ -15,6 +16,16 @@ export function PokemonPagination({
 }: PokemonPaginationProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const { width } = useWindowSize();
+
+  // Determine max pages to show based on screen size
+  // xs to s (< 640px): show min 3, max 5 pages, desktop (>= 640px): show 10 pages
+  const maxPagesToShow =
+    width !== undefined && width < 640
+      ? totalPages <= 2
+        ? totalPages
+        : Math.min(5, totalPages) // min 3 (if available), max 5 for small screens
+      : Math.min(10, totalPages); // max 10 for desktop
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -40,31 +51,34 @@ export function PokemonPagination({
 
       <div className="flex items-center gap-1 sm:gap-2">
         {/* Show first page and ellipsis if needed */}
-        {totalPages > 10 && currentPage > 6 && (
-          <>
-            <Button
-              onClick={() => goToPage(1)}
-              className="h-10 w-10 sm:h-12 sm:w-12 rounded-full font-black text-sm sm:text-base shadow-lg transition-all duration-200 hover:scale-110 bg-white hover:bg-gray-100 text-foreground border-2 border-primary/20"
-            >
-              1
-            </Button>
-            <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 text-gray-500 hover:text-gray-700 transition-colors">
-              <span className="text-2xl font-black tracking-wider">•••</span>
-            </div>
-          </>
-        )}
+        {totalPages > maxPagesToShow &&
+          currentPage > Math.ceil(maxPagesToShow / 2) + 1 && (
+            <>
+              <Button
+                onClick={() => goToPage(1)}
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full font-black text-sm sm:text-base shadow-lg transition-all duration-200 hover:scale-110 bg-white hover:bg-gray-100 text-foreground border-2 border-primary/20"
+              >
+                1
+              </Button>
+              <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 text-gray-500 hover:text-gray-700 transition-colors">
+                <span className="text-2xl font-black tracking-wider">•••</span>
+              </div>
+            </>
+          )}
 
         {/* Main page numbers */}
-        {[...Array(Math.min(10, totalPages))].map((_, index) => {
+        {[...Array(maxPagesToShow)].map((_, index) => {
           let pageNumber;
-          if (totalPages <= 10) {
+          const halfPages = Math.floor(maxPagesToShow / 2);
+
+          if (totalPages <= maxPagesToShow) {
             pageNumber = index + 1;
-          } else if (currentPage <= 6) {
+          } else if (currentPage <= halfPages + 1) {
             pageNumber = index + 1;
-          } else if (currentPage >= totalPages - 5) {
-            pageNumber = totalPages - 9 + index;
+          } else if (currentPage >= totalPages - halfPages) {
+            pageNumber = totalPages - maxPagesToShow + index + 1;
           } else {
-            pageNumber = currentPage - 4 + index;
+            pageNumber = currentPage - halfPages + index;
           }
           return (
             <Button
@@ -82,19 +96,20 @@ export function PokemonPagination({
         })}
 
         {/* Show ellipsis and last page if needed */}
-        {totalPages > 10 && currentPage < totalPages - 5 && (
-          <>
-            <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 text-gray-500 hover:text-gray-700 transition-colors">
-              <span className="text-2xl font-black tracking-wider">•••</span>
-            </div>
-            <Button
-              onClick={() => goToPage(totalPages)}
-              className="h-10 w-10 sm:h-12 sm:w-12 rounded-full font-black text-sm sm:text-base shadow-lg transition-all duration-200 hover:scale-110 bg-white hover:bg-gray-100 text-foreground border-2 border-primary/20"
-            >
-              {totalPages}
-            </Button>
-          </>
-        )}
+        {totalPages > maxPagesToShow &&
+          currentPage < totalPages - Math.floor(maxPagesToShow / 2) && (
+            <>
+              <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 text-gray-500 hover:text-gray-700 transition-colors">
+                <span className="text-2xl font-black tracking-wider">•••</span>
+              </div>
+              <Button
+                onClick={() => goToPage(totalPages)}
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full font-black text-sm sm:text-base shadow-lg transition-all duration-200 hover:scale-110 bg-white hover:bg-gray-100 text-foreground border-2 border-primary/20"
+              >
+                {totalPages}
+              </Button>
+            </>
+          )}
       </div>
 
       <Button
