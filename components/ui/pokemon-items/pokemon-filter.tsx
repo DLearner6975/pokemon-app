@@ -135,7 +135,7 @@ function FilterSection({
             className={cn(
               'flex-shrink-0 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-md',
               isCollapsed
-                ? 'h-12 w-12 p-2.5'
+                ? 'h-12 w-12 p-2.5 [&_svg]:!text-white'
                 : 'hidden md:flex h-10 w-10 md:h-auto md:w-auto md:rounded-none md:bg-none p-2 md:p-0 md:shadow-none'
             )}
           >
