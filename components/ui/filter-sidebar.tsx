@@ -8,8 +8,6 @@ import {
   shapes,
   colors,
 } from '../utils/filter-types';
-import { PokemonTitle } from './pokemon-items/pokemon-title';
-import { PikachuIcon } from './pokemon-items/pikachu-icon';
 import {
   ChevronsLeft,
   ChevronsRight,

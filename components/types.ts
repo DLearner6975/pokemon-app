@@ -42,7 +42,7 @@ export interface FilterSidebarProps {
 
 export interface PokemonCardProps {
   details: Pokemon;
-  isFlipped: boolean[];
+  isFlipped?: boolean[];
 }
 export interface PokemonFrontCardProps {
   details: Pokemon;
@@ -107,6 +107,8 @@ export const hoverColorMap: { [key: string]: string } = {
   red: 'hover:bg-red-400',
   white: 'hover:bg-gray-100',
   yellow: 'hover:bg-yellow-400',
+  // TODO: Below is an example of the hover to have for each color or keep it the same????
+  // hover: 'hover:from-blue-600 hover:to-purple-700',
 };
 
 export const shadowColorMap: { [key: string]: string } = {

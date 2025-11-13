@@ -32,6 +32,8 @@ export default function ProjectDashboard({
     useState<Pokemon[]>(initialPokemon);
 
   // Convert ReadonlyURLSearchParams to URLSearchParams
+  //TODO: Look into using useSearchParams hook to get search params. Need to look deeper into this. Going to disable exhaustive deps error for now.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const searchParamsObj = new URLSearchParams(searchParams?.toString() ?? '');
   const [filters, setFilters] = useState<Filters>(
     getInitialFilters(searchParamsObj)

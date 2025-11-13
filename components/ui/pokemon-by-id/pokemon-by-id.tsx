@@ -57,19 +57,13 @@ export default function PokemonById({
           </div>
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <PokemonCarousel
-                formattedPokemon={formattedPokemon}
-                gradientColor={gradientColor}
-              />
+              <PokemonCarousel formattedPokemon={formattedPokemon} />
               <div className="mt-8">
                 <PokemonStats formattedPokemon={formattedPokemon} />
               </div>
             </div>
             <div className="space-y-4 sm:space-y-6">
               <p
-                // className={`${
-                //   backgroundColor ?? 'bg-gray-500'
-                // } text-white p-4 rounded-lg`}
                 className={`${gradientColor} text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl`}
               >
                 {formattedPokemon.description ||
@@ -77,9 +71,6 @@ export default function PokemonById({
               </p>
 
               <div
-                // className={`${
-                //   backgroundColor ?? 'bg-gray-500'
-                // } text-white p-4 rounded-lg`}
                 className={`${gradientColor} text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl`}
               >
                 <div className="grid grid-cols-2 gap-4">
@@ -93,28 +84,6 @@ export default function PokemonById({
                   ))}
                 </div>
               </div>
-
-              {/* <div>
-                <h3
-                  className={`${
-                    backgroundColor ?? 'bg-gray-500'
-                  } text-white p-4 rounded-lg text-lg mb-2 font-super-adorable`}
-                >
-                  Type
-                </h3>
-                <div className="flex gap-2">
-                  {formattedPokemon.types.map((type) => (
-                    <span
-                      key={type}
-                      className={`inline-block px-3 py-1 rounded text-white ${
-                        typeColors[type] || 'bg-gray-500'
-                      }`}
-                    >
-                      {type}
-                    </span>
-                  ))}
-                </div>
-              </div> */}
               <div
                 className={`${gradientColor} text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl`}
               >
@@ -158,8 +127,9 @@ export default function PokemonById({
           <div className="mt-6 sm:mt-8 text-center">
             <Link href="/">
               <Button
-                // onClick={onClose}
-                className={`${gradientColor} hover:from-blue-600 hover:to-purple-700 text-white font-bold px-8 py-6 rounded-full text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105`}
+                className={`${gradientColor} ${hoverColorClass(
+                  formattedPokemon.color ?? 'bg-gray-500'
+                )} text-white font-bold px-8 py-6 rounded-full text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105`}
               >
                 Explore More Pokemon
               </Button>

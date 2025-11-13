@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 
 interface Evolution {
@@ -12,11 +11,11 @@ interface Evolution {
 interface PokemonEvolutionProps {
   evolutions: Evolution[];
   backgroundColor: string;
+  gradientColor: string;
 }
 
 export function PokemonEvolution({
   evolutions,
-  backgroundColor,
   gradientColor,
 }: PokemonEvolutionProps) {
   if (!evolutions || evolutions.length === 0) {

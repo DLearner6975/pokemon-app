@@ -13,11 +13,11 @@ import { HeaderData } from '@/components/utils/pokemon-data-formatter';
 interface PokemonHeaderProps {
   headerData: HeaderData;
   backgroundColor?: string;
+  gradientColor: string;
 }
 
 export function PokemonHeader({
   headerData,
-  backgroundColor,
   gradientColor,
 }: PokemonHeaderProps) {
   const { prevPokemon, nextPokemon, currentPokemon, allPokemon } = headerData;

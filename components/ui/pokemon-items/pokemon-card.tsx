@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { PokemonCardProps, shadowColorMap } from '@/components/types';
+//TODO: Look into  shadowColorMap for background image.
+import { PokemonCardProps } from '@/components/types';
 import PokemonBackCard from './pokemon-back-card';
 import { PokemonFrontCard } from './pokemon-front-card';
 
 export function PokemonCard({ details }: PokemonCardProps) {
-  const { id, color } = details;
+  const { id } = details;
   const [isFlipped, setIsFlipped] = useState<boolean[]>([]);
 
   const shouldIgnoreClick = (target: HTMLElement): boolean => {
@@ -30,7 +31,6 @@ export function PokemonCard({ details }: PokemonCardProps) {
       return newFlipped;
     });
   };
-  const shadowClass = shadowColorMap[color?.name ?? 'shadow-gray-500'];
 
   return (
     <div onClick={(e) => handleCardClick(e, id)}>

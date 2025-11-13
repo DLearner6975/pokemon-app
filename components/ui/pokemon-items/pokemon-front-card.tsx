@@ -1,7 +1,6 @@
 import { PokemonFrontCardProps, typeColors } from '@/components/types';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { gradientColorClass } from '@/components/utils/color-util';
 import {
   Dialog,
   DialogContent,
@@ -28,9 +27,7 @@ export const PokemonFrontCard = ({
   const hasMoreAbilities = abilities.length > 2;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const remainingCount = abilities.length - 2;
-  const gradientColor = gradientColorClass(
-    details?.color?.name ?? 'bg-gray-500'
-  );
+
   return (
     <div
       className={`backface-hidden ${
