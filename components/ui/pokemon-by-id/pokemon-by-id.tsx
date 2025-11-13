@@ -66,8 +66,7 @@ export default function PokemonById({
               <p
                 className={`${gradientColor} text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl`}
               >
-                {formattedPokemon.description ||
-                  'The tentacles are normally kept short. On hunts, they are extended to ensnare and immobilize prey.'}
+                {formattedPokemon.description || 'No description available.'}
               </p>
 
               <div

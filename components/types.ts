@@ -125,7 +125,7 @@ export const shadowColorMap: { [key: string]: string } = {
 };
 
 export const gradientColorMap: { [key: string]: string } = {
-  black: 'bg-gradient-to-r from-black-500 to-black-600',
+  black: 'bg-gradient-to-r from-gray-900 to-black',
   blue: 'bg-gradient-to-r from-blue-500 to-blue-400',
   brown: 'bg-gradient-to-r from-yellow-800 to-yellow-700', // Closest match for brown
   gray: 'bg-gradient-to-r from-gray-500 to-gray-400',

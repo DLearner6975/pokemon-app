@@ -27,7 +27,7 @@ export default function PokemonBackCard({
         <div className="flex-1 relative z-10">
           <Image
             src={sprites?.back_default || '/placeholder.svg'}
-            alt={name}
+            alt={`${name} back sprite`}
             className="absolute bottom-4 right-4 w-16 h-16 sm:w-20 sm:h-20 opacity-80"
             width={80}
             height={80}

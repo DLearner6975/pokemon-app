@@ -118,6 +118,15 @@ export default function ProjectDashboard({
       <div className="flex h-screen relative z-10">
         <PokemonParticles />
 
+        {/* Overlay backdrop for mobile/tablet */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+
         <aside
           className={`
           fixed lg:static inset-y-0 left-0 z-50
@@ -136,12 +145,6 @@ export default function ProjectDashboard({
               onFilterChange={handleFilterChangeWrapper}
               initialFilters={filters}
             />
-            {/* <FilterSidebar
-            onFilterChange={handleFilterChangeWrapper}
-            initialFilters={filters}
-            isOpen={isSidebarOpen}
-            onToggle={toggleSidebar}
-          /> */}
           </div>
         </aside>
         <div className="flex-1 flex flex-col overflow-hidden relative z-10">

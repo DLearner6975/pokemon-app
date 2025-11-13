@@ -33,7 +33,13 @@ export function PokemonCard({ details }: PokemonCardProps) {
   };
 
   return (
-    <div onClick={(e) => handleCardClick(e, id)}>
+    <div
+      onClick={(e) => handleCardClick(e, id)}
+      aria-label="Flip pokemon card"
+      role="button"
+      tabIndex={0}
+      className="cursor-pointer"
+    >
       <div
         className={` transition-transform duration-500 transform-style-preserve-3d ${
           isFlipped[id] ? 'rotate-y-180' : ''

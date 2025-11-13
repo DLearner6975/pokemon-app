@@ -170,7 +170,7 @@ export function PokemonParticles() {
 
   return (
     <div
-      className={`absolute  opacity-20 hover:opacity-40 transition-opacity duration-300 pointer-events-none hidden lg:block`}
+      className={`absolute opacity-20 hover:opacity-40 transition-opacity duration-300 pointer-events-none hidden lg:block`}
     >
       <div className="fixed inset-0 pointer-events-none">
         <Particles

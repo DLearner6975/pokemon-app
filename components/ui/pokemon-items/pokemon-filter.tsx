@@ -287,6 +287,8 @@ export function PokemonFilter({
         mythical: false,
       });
     }
+    // Close sidebar after applying filters
+    onClose?.();
   };
 
   return (
@@ -311,7 +313,7 @@ export function PokemonFilter({
               alt="Pokemon"
               className="h-10 sm:h-12 mx-auto mb-2 drop-shadow-md object-contain"
             />
-            <button
+            <Button
               onClick={() => {
                 setIsCollapsed(true);
                 onClose?.();
@@ -320,7 +322,7 @@ export function PokemonFilter({
             >
               <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 text-primary lg:block hidden" />
               <X className="h-4 w-4 sm:h-5 sm:w-5 text-primary lg:hidden block" />
-            </button>
+            </Button>
           </>
         ) : (
           <div className="flex flex-col items-center gap-2 sm:gap-3">
@@ -331,12 +333,13 @@ export function PokemonFilter({
               alt="Pikachu"
               className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 sm:border-4 border-primary/30 bg-yellow-400 shadow-lg hover:scale-110 transition-all duration-300 cursor-pointer"
             />
-            <button
+            <Button
               onClick={() => setIsCollapsed(false)}
               className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-gradient-to-r from-primary to-secondary hover:shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              aria-label="Expand filter sidebar"
             >
               <Menu className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-            </button>
+            </Button>
           </div>
         )}
       </div>

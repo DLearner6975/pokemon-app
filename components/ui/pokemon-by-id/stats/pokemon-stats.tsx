@@ -53,6 +53,6 @@ export function PokemonStats({
         </p>
       )}
     </div>
-    //TODO: Might have to add star image back on Stats section.
   );
+  // TODO: Might have to add star image back on Stats section.
 }

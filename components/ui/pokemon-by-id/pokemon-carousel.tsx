@@ -28,7 +28,9 @@ export function PokemonCarousel({
         <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 flex items-center justify-center min-h-[250px] sm:min-h-[300px]">
           <Image
             src={images[currentImageIndex] || '/placeholder.svg'}
-            alt={`${formattedPokemon.name} ${currentImageIndex + 1}`}
+            alt={`${formattedPokemon.name} sprite image ${
+              currentImageIndex + 1
+            } of ${images.length}`}
             className="w-full h-full max-h-[250px] sm:max-h-[300px] object-contain drop-shadow-2xl"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             fill
