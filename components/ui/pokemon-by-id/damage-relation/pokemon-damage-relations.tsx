@@ -1,11 +1,12 @@
-import { backgroundColorClass } from '@/components/utils/color-util';
 import { DamageRelationSection } from './damage-relation-section';
 import type { PokemonData } from '@/components/utils/pokemon-data-formatter';
 
 export const PokemonDamageRelations = ({
   formattedPokemon,
+  gradientColor,
 }: {
   formattedPokemon: PokemonData;
+  gradientColor: string;
 }) => {
   const damageRelations = formattedPokemon?.damageRelations;
   if (!damageRelations) {
@@ -39,12 +40,9 @@ export const PokemonDamageRelations = ({
       types: damageRelations.no_damage_to,
     },
   ];
-  const backgroundColor = backgroundColorClass(formattedPokemon.color);
   return (
     <div
-      className={`${
-        backgroundColor ?? 'bg-gray-500'
-      } p-4 rounded-lg shadow-sm text-white`}
+      className={`${gradientColor} text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl`}
     >
       <h3 className="text-lg mb-2 font-super-adorable">Damage Relations</h3>
       <div className="grid grid-cols-2 gap-4">

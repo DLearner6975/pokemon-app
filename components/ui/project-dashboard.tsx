@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { FilterSidebar } from './filter-sidebar';
 import { SearchBar } from './search-bar';
 import { Filters, Pokemon, SimplePokemon } from '../types';
 import {
@@ -11,13 +10,11 @@ import {
   handleFilterChange,
 } from '../utils/filter-utils';
 import { fetchPokemonDetails } from '../utils/pokemon-utils';
-// import { LoginManager } from './login/login-manager';
 import { PokemonGrid } from './pokemon-items/pokemon-grid';
 import { PokemonPagination } from './pokemon-items/pokemon-pagination';
 import { useWindowSize } from '@/hooks/useWindow';
 import { PokemonParticles } from './pokemon-particles';
-import { Button } from '@/components/ui/button';
-import { Menu } from 'lucide-react';
+import { PokemonFilter } from './pokemon-items/pokemon-filter';
 
 interface ProjectDashboardProps {
   initialPokemon: Pokemon[];
@@ -35,6 +32,8 @@ export default function ProjectDashboard({
     useState<Pokemon[]>(initialPokemon);
 
   // Convert ReadonlyURLSearchParams to URLSearchParams
+  //TODO: Look into using useSearchParams hook to get search params. Need to look deeper into this. Going to disable exhaustive deps error for now.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const searchParamsObj = new URLSearchParams(searchParams?.toString() ?? '');
   const [filters, setFilters] = useState<Filters>(
     getInitialFilters(searchParamsObj)
@@ -114,45 +113,58 @@ export default function ProjectDashboard({
     [filteredPokemon, currentPagePokemon]
   );
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
   return (
-    <div className="flex h-screen overflow-hidden bg-[#f5f5f5] relative">
-      <PokemonParticles />
-      <FilterSidebar
-        onFilterChange={handleFilterChangeWrapper}
-        initialFilters={filters}
-        isOpen={isSidebarOpen}
-        onToggle={toggleSidebar}
-      />
-      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
-        <header className="flex items-center justify-between border-b bg-white px-6 py-4">
-          <div className="flex items-center gap-4 flex-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={toggleSidebar}
-            >
-              <Menu className="h-6 w-6" />
-            </Button>
-            <SearchBar onSearch={handleSearch} />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      <div className="flex h-screen relative z-10">
+        <PokemonParticles />
+
+        {/* Overlay backdrop for mobile/tablet */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+
+        <aside
+          className={`
+          fixed lg:static inset-y-0 left-0 z-50
+          transform transition-transform duration-300 ease-in-out
+          ${
+            isSidebarOpen
+              ? 'translate-x-0'
+              : '-translate-x-full lg:translate-x-0'
+          }
+          shrink-0
+        `}
+        >
+          <div className="sticky top-0 h-screen overflow-y-auto">
+            <PokemonFilter
+              onClose={() => setIsSidebarOpen(false)}
+              onFilterChange={handleFilterChangeWrapper}
+              initialFilters={filters}
+            />
           </div>
-          {/* <LoginManager /> */}
-        </header>
-        <div className="flex-1 overflow-auto">
-          <PokemonGrid
-            currentPagePokemon={currentPagePokemon}
-            pokemonDetails={pokemonDetails}
+        </aside>
+        <div className="flex-1 flex flex-col overflow-hidden relative z-10">
+          <SearchBar
+            onSearch={handleSearch}
+            onOpenSidebar={() => setIsSidebarOpen(true)}
+          />
+
+          <div className="flex-1 overflow-auto">
+            <PokemonGrid
+              currentPagePokemon={currentPagePokemon}
+              pokemonDetails={pokemonDetails}
+            />
+          </div>
+          <PokemonPagination
+            totalItems={filteredPokemon.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
           />
         </div>
-        <PokemonPagination
-          totalItems={filteredPokemon.length}
-          itemsPerPage={itemsPerPage}
-          onPageChange={handlePageChange}
-        />
       </div>
     </div>
   );

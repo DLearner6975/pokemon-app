@@ -20,18 +20,20 @@ export function PokemonGrid({
   }
 
   return (
-    <div className="grid grid-cols-1 justify-items-center md:grid-cols-2 lg:grid-cols-4 gap-4 p-6">
-      {currentPagePokemon.map((pokemon) => {
-        const details = pokemonDetails.find(
-          (detail) => detail.name === pokemon.name
-        );
+    <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 sm:py-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
+        {currentPagePokemon.map((pokemon) => {
+          const details = pokemonDetails.find(
+            (detail) => detail.name === pokemon.name
+          );
 
-        return details ? (
-          <PokemonCard key={details.id} details={details} />
-        ) : (
-          <PokemonCardSkeleton key={pokemon.name} />
-        );
-      })}
+          return details ? (
+            <PokemonCard key={details.id} details={details} />
+          ) : (
+            <PokemonCardSkeleton key={pokemon.name} />
+          );
+        })}
+      </div>
     </div>
   );
 }

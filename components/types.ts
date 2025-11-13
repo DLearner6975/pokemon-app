@@ -42,6 +42,11 @@ export interface FilterSidebarProps {
 
 export interface PokemonCardProps {
   details: Pokemon;
+  isFlipped?: boolean[];
+}
+export interface PokemonFrontCardProps {
+  details: Pokemon;
+  isFlipped: boolean[];
 }
 
 export const typeColors: { [key: string]: string } = {
@@ -102,6 +107,8 @@ export const hoverColorMap: { [key: string]: string } = {
   red: 'hover:bg-red-400',
   white: 'hover:bg-gray-100',
   yellow: 'hover:bg-yellow-400',
+  // TODO: Below is an example of the hover to have for each color or keep it the same????
+  // hover: 'hover:from-blue-600 hover:to-purple-700',
 };
 
 export const shadowColorMap: { [key: string]: string } = {
@@ -115,4 +122,17 @@ export const shadowColorMap: { [key: string]: string } = {
   red: 'shadow-red-500',
   white: 'shadow-silver-500',
   yellow: 'shadow-yellow-500',
+};
+
+export const gradientColorMap: { [key: string]: string } = {
+  black: 'bg-gradient-to-r from-gray-900 to-black',
+  blue: 'bg-gradient-to-r from-blue-500 to-blue-400',
+  brown: 'bg-gradient-to-r from-yellow-800 to-yellow-700', // Closest match for brown
+  gray: 'bg-gradient-to-r from-gray-500 to-gray-400',
+  green: 'bg-gradient-to-r from-green-500 to-green-400',
+  pink: 'bg-gradient-to-r from-pink-500 to-pink-400',
+  purple: 'bg-gradient-to-r from-purple-500 to-purple-400',
+  red: 'bg-gradient-to-r from-red-400 to-red-500',
+  white: 'bg-gradient-to-r from-slate-300 to-zinc-200',
+  yellow: 'bg-gradient-to-r from-yellow-400 to-yellow-500',
 };
