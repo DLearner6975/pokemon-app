@@ -20,6 +20,9 @@ export default function PokemonBackCard({
       className={`absolute inset-0 backface-hidden rotate-y-180 ${
         isFlipped[id] ? 'pointer-events-auto' : 'pointer-events-none'
       }`}
+      style={{
+        willChange: 'transform',
+      }}
     >
       <div
         className={`bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 ${backgroundColorClass}  rounded-2xl sm:rounded-3xl border-2 sm:border-4 border-white/20 p-4 sm:p-6 shadow-xl h-full text-white relative overflow-hidden flex flex-col`}
