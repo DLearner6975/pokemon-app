@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import { SimpleTooltip } from '@/components/ui/simple-tooltip';
 import Image from 'next/image';
 import { useFilterContext } from '@/components/context/filter-context';
 import {
@@ -240,15 +241,16 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
             )}
           </div>
           {totalActiveFilters > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearFilters}
-              className="h-8 sm:h-9 px-2 sm:px-3 text-xs sm:text-sm font-bold text-white hover:bg-white/20 hover:scale-105 transition-all duration-200 rounded-full gap-1 sm:gap-1.5"
-            >
-              <X className="h-3 w-3 sm:h-4 sm:w-4" />
-              {/* <span className="hidden sm:inline">Clear</span> */}
-            </Button>
+            <SimpleTooltip content="Clear All Filters">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="h-8 sm:h-9 px-2 sm:px-3 text-xs sm:text-sm font-bold text-white hover:bg-white/20 hover:scale-105 transition-all duration-200 rounded-full gap-1 sm:gap-1.5"
+              >
+                <X className="h-3 w-3 sm:h-4 sm:w-4" />
+              </Button>
+            </SimpleTooltip>
           )}
         </div>
       )}
