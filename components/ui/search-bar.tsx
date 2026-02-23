@@ -1,21 +1,24 @@
+'use client';
+
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Pokeball } from './pokemon-items/pokeball';
 import { Button } from '@/components/ui/button';
 import { SearchIcon, Menu } from 'lucide-react';
+import { useFilterContext } from '@/components/context/filter-context';
 
 interface SearchBarProps {
-  onSearch: (query: string) => void;
   onOpenSidebar?: () => void;
 }
 
-export function SearchBar({ onSearch, onOpenSidebar }: SearchBarProps) {
-  const [searchQuery, setSearchQuery] = useState('');
+export function SearchBar({ onOpenSidebar }: SearchBarProps) {
+  const { setSearchQuery } = useFilterContext();
+  const [localQuery, setLocalQuery] = useState('');
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuery = e.target.value;
+    setLocalQuery(newQuery);
     setSearchQuery(newQuery);
-    onSearch(newQuery);
   };
 
   return (
@@ -33,7 +36,7 @@ export function SearchBar({ onSearch, onOpenSidebar }: SearchBarProps) {
           <Input
             placeholder="Search for Pokemon..."
             className="pl-10 sm:pl-12 h-10 sm:h-12 rounded-full border-2 border-primary/20 focus-visible:ring-primary/50 text-sm sm:text-base bg-white/90"
-            value={searchQuery}
+            value={localQuery}
             onChange={handleSearchChange}
           />
         </div>

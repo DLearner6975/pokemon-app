@@ -1,47 +1,45 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { SearchBar } from './search-bar';
-import { Filters, Pokemon, SimplePokemon } from '../types';
-import {
-  getInitialFilters,
-  filterPokemon,
-  handleFilterChange,
-} from '../utils/filter-utils';
+import type { Pokemon, SimplePokemon } from '../types';
+import { filterPokemon } from '../utils/filter-utils';
 import { fetchPokemonDetails } from '../utils/pokemon-utils';
 import { PokemonGrid } from './pokemon-items/pokemon-grid';
 import { PokemonPagination } from './pokemon-items/pokemon-pagination';
 import { useWindowSize } from '@/hooks/useWindow';
 import { PokemonParticles } from './pokemon-particles';
 import { PokemonFilter } from './pokemon-items/pokemon-filter';
+import {
+  FilterProvider,
+  useFilterContext,
+} from '../context/filter-context';
 
 interface ProjectDashboardProps {
   initialPokemon: Pokemon[];
   allPokemon: SimplePokemon[];
 }
 
-export default function ProjectDashboard({
+export default function ProjectDashboard(props: ProjectDashboardProps) {
+  return (
+    <FilterProvider>
+      <DashboardContent {...props} />
+    </FilterProvider>
+  );
+}
+
+function DashboardContent({
   initialPokemon,
   allPokemon,
 }: ProjectDashboardProps) {
-  const router = useRouter();
-  const pathname = usePathname() || '/';
-  const searchParams = useSearchParams();
+  const { filters, debouncedQuery } = useFilterContext();
+
   const [pokemonDetails, setPokemonDetails] =
     useState<Pokemon[]>(initialPokemon);
 
-  // Keep a ref in sync so callbacks don't need pokemonDetails as a dependency
   const detailsRef = useRef(pokemonDetails);
   detailsRef.current = pokemonDetails;
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const searchParamsObj = new URLSearchParams(searchParams?.toString() ?? '');
-  const [filters, setFilters] = useState<Filters>(
-    getInitialFilters(searchParamsObj),
-  );
-  const [searchQuery, setSearchQuery] = useState('');
-  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [currentPagePokemon, setCurrentPagePokemon] = useState<SimplePokemon[]>(
     [],
   );
@@ -54,13 +52,6 @@ export default function ProjectDashboard({
 
   const itemsPerPage = 24;
 
-  // Debounce search query by 300ms
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedQuery(searchQuery), 300);
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
-
-  // Build a Map for O(1) detail lookups
   const detailsMap = useMemo(() => {
     const map = new Map<string, Pokemon>();
     for (const p of pokemonDetails) {
@@ -69,13 +60,11 @@ export default function ProjectDashboard({
     return map;
   }, [pokemonDetails]);
 
-  // Memoize the filtered list so it only recomputes when inputs change
   const filteredPokemon = useMemo(
     () => filterPokemon(allPokemon, detailsMap, debouncedQuery, filters),
     [allPokemon, detailsMap, debouncedQuery, filters],
   );
 
-  // Stable fetch function that reads from ref instead of depending on state
   const fetchMissingDetails = useCallback(
     async (pokemonToFetch: SimplePokemon[]) => {
       const currentDetails = detailsRef.current;
@@ -94,10 +83,9 @@ export default function ProjectDashboard({
         }
       }
     },
-    [], // no state dependency — uses ref
+    [],
   );
 
-  // Fetch current page details, then prefetch next page in the background
   useEffect(() => {
     let cancelled = false;
 
@@ -106,7 +94,6 @@ export default function ProjectDashboard({
 
       if (cancelled || !pageIndices) return;
 
-      // Prefetch next page
       const nextStart = pageIndices.end;
       const nextEnd = Math.min(
         nextStart + itemsPerPage,
@@ -135,25 +122,6 @@ export default function ProjectDashboard({
     }
   }, [windowSize.width]);
 
-  const handleFilterChangeWrapper = useCallback(
-    (newFilters: Filters) => {
-      handleFilterChange(
-        newFilters,
-        searchParamsObj,
-        setFilters,
-        () => {},
-        router,
-        pathname,
-      );
-    },
-    [searchParamsObj, router, pathname],
-  );
-
-  const handleSearch = useCallback((query: string) => {
-    setSearchQuery(query);
-  }, []);
-
-  // Use index-based comparison instead of JSON.stringify
   const handlePageChange = useCallback(
     (startIndex: number, endIndex: number) => {
       setPageIndices((prev) => {
@@ -192,18 +160,11 @@ export default function ProjectDashboard({
         `}
         >
           <div className="sticky top-0 h-screen overflow-y-auto">
-            <PokemonFilter
-              onClose={() => setIsSidebarOpen(false)}
-              onFilterChange={handleFilterChangeWrapper}
-              initialFilters={filters}
-            />
+            <PokemonFilter onClose={() => setIsSidebarOpen(false)} />
           </div>
         </aside>
         <div className="flex-1 flex flex-col overflow-hidden relative z-10">
-          <SearchBar
-            onSearch={handleSearch}
-            onOpenSidebar={() => setIsSidebarOpen(true)}
-          />
+          <SearchBar onOpenSidebar={() => setIsSidebarOpen(true)} />
 
           <div className="flex-1 overflow-auto">
             <PokemonGrid
