@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { SearchBar } from './search-bar';
 import { Filters, Pokemon, SimplePokemon } from '../types';
@@ -31,55 +31,107 @@ export default function ProjectDashboard({
   const [pokemonDetails, setPokemonDetails] =
     useState<Pokemon[]>(initialPokemon);
 
-  // Convert ReadonlyURLSearchParams to URLSearchParams
-  //TODO: Look into using useSearchParams hook to get search params. Need to look deeper into this. Going to disable exhaustive deps error for now.
+  // Keep a ref in sync so callbacks don't need pokemonDetails as a dependency
+  const detailsRef = useRef(pokemonDetails);
+  detailsRef.current = pokemonDetails;
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const searchParamsObj = new URLSearchParams(searchParams?.toString() ?? '');
   const [filters, setFilters] = useState<Filters>(
-    getInitialFilters(searchParamsObj)
+    getInitialFilters(searchParamsObj),
   );
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [currentPagePokemon, setCurrentPagePokemon] = useState<SimplePokemon[]>(
-    []
+    [],
   );
+  const [pageIndices, setPageIndices] = useState<{
+    start: number;
+    end: number;
+  } | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const windowSize = useWindowSize();
 
   const itemsPerPage = 24;
-  const filteredPokemon = filterPokemon(
-    allPokemon,
-    pokemonDetails,
-    searchQuery,
-    filters
+
+  // Debounce search query by 300ms
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedQuery(searchQuery), 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Build a Map for O(1) detail lookups
+  const detailsMap = useMemo(() => {
+    const map = new Map<string, Pokemon>();
+    for (const p of pokemonDetails) {
+      if (p) map.set(p.name, p);
+    }
+    return map;
+  }, [pokemonDetails]);
+
+  // Memoize the filtered list so it only recomputes when inputs change
+  const filteredPokemon = useMemo(
+    () => filterPokemon(allPokemon, detailsMap, debouncedQuery, filters),
+    [allPokemon, detailsMap, debouncedQuery, filters],
   );
 
+  // Stable fetch function that reads from ref instead of depending on state
   const fetchMissingDetails = useCallback(
     async (pokemonToFetch: SimplePokemon[]) => {
-      const missingPokemon = pokemonToFetch.filter(
-        (pokemon) =>
-          !pokemonDetails.some((detail) => detail?.name === pokemon.name)
-      );
+      const currentDetails = detailsRef.current;
+      const seen = new Set(currentDetails.map((d) => d?.name));
+      const missingPokemon = pokemonToFetch.filter((p) => !seen.has(p.name));
 
       if (missingPokemon.length > 0) {
         const newDetails = await Promise.all(
-          missingPokemon.map(fetchPokemonDetails)
+          missingPokemon.map(fetchPokemonDetails),
         );
         const validDetails = newDetails.filter(
-          (detail) => detail !== null
+          (detail) => detail !== null,
         ) as Pokemon[];
-        setPokemonDetails((prev) => [...prev, ...validDetails]);
+        if (validDetails.length > 0) {
+          setPokemonDetails((prev) => [...prev, ...validDetails]);
+        }
       }
     },
-    [pokemonDetails]
+    [], // no state dependency — uses ref
   );
 
+  // Fetch current page details, then prefetch next page in the background
   useEffect(() => {
-    fetchMissingDetails(currentPagePokemon);
-  }, [currentPagePokemon, fetchMissingDetails]);
+    let cancelled = false;
+
+    (async () => {
+      await fetchMissingDetails(currentPagePokemon);
+
+      if (cancelled || !pageIndices) return;
+
+      // Prefetch next page
+      const nextStart = pageIndices.end;
+      const nextEnd = Math.min(
+        nextStart + itemsPerPage,
+        filteredPokemon.length,
+      );
+      if (nextStart < filteredPokemon.length) {
+        const nextPagePokemon = filteredPokemon.slice(nextStart, nextEnd);
+        await fetchMissingDetails(nextPagePokemon);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    currentPagePokemon,
+    fetchMissingDetails,
+    pageIndices,
+    filteredPokemon,
+    itemsPerPage,
+  ]);
 
   useEffect(() => {
     if (windowSize.width !== undefined) {
-      setIsSidebarOpen(windowSize.width >= 768); // 768px is typically considered a breakpoint for medium screens
+      setIsSidebarOpen(windowSize.width >= 768);
     }
   }, [windowSize.width]);
 
@@ -91,26 +143,27 @@ export default function ProjectDashboard({
         setFilters,
         () => {},
         router,
-        pathname
+        pathname,
       );
     },
-    [searchParamsObj, router, pathname]
+    [searchParamsObj, router, pathname],
   );
 
   const handleSearch = useCallback((query: string) => {
     setSearchQuery(query);
   }, []);
 
+  // Use index-based comparison instead of JSON.stringify
   const handlePageChange = useCallback(
     (startIndex: number, endIndex: number) => {
-      const newPagePokemon = filteredPokemon.slice(startIndex, endIndex);
-      if (
-        JSON.stringify(newPagePokemon) !== JSON.stringify(currentPagePokemon)
-      ) {
-        setCurrentPagePokemon(newPagePokemon);
-      }
+      setPageIndices((prev) => {
+        if (prev && prev.start === startIndex && prev.end === endIndex)
+          return prev;
+        return { start: startIndex, end: endIndex };
+      });
+      setCurrentPagePokemon(filteredPokemon.slice(startIndex, endIndex));
     },
-    [filteredPokemon, currentPagePokemon]
+    [filteredPokemon],
   );
 
   return (
@@ -118,7 +171,6 @@ export default function ProjectDashboard({
       <div className="flex h-screen relative z-10">
         <PokemonParticles />
 
-        {/* Overlay backdrop for mobile/tablet */}
         {isSidebarOpen && (
           <div
             className="fixed inset-0 bg-black/50 z-40 lg:hidden"
@@ -156,7 +208,7 @@ export default function ProjectDashboard({
           <div className="flex-1 overflow-auto">
             <PokemonGrid
               currentPagePokemon={currentPagePokemon}
-              pokemonDetails={pokemonDetails}
+              detailsMap={detailsMap}
             />
           </div>
           <PokemonPagination

@@ -19,15 +19,14 @@ export function getInitialFilters(searchParams: URLSearchParams): Filters {
 
 export function filterPokemon(
   allPokemon: SimplePokemon[],
-  pokemonDetails: Pokemon[],
+  detailsMap: Map<string, Pokemon>,
   searchQuery: string,
   filters: Filters
 ): SimplePokemon[] {
+  const query = searchQuery.toLowerCase();
   return allPokemon.filter((pokemon) => {
-    const matchesSearch = pokemon.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const details = pokemonDetails.find((p) => p.name === pokemon.name);
+    const matchesSearch = pokemon.name.toLowerCase().includes(query);
+    const details = detailsMap.get(pokemon.name);
 
     if (!details) return matchesSearch; // If we don't have details yet, only filter by search
 

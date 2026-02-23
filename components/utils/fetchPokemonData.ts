@@ -30,7 +30,7 @@ async function getEvolutionChain(url: string) {
 
 export async function getPokemonList() {
   const res = await fetch(
-    'https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0'
+    'https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0',
   );
   if (!res.ok) {
     throw new Error('Failed to fetch pokemon list');
@@ -48,17 +48,18 @@ async function getTypeData(url: string) {
 }
 
 export async function fetchPokemonData(id: string) {
-  const pokemon = await getPokemon(id);
-  const species = await getSpecies(id);
-  const evolutionChain = await getEvolutionChain(species.evolution_chain.url);
-  const pokemonList = await getPokemonList();
+  const [pokemon, species, pokemonList] = await Promise.all([
+    getPokemon(id),
+    getSpecies(id),
+    getPokemonList(),
+  ]);
 
-  // Fetch damage relations for each type
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const typePromises = pokemon.types.map((type: any) =>
-    getTypeData(type.type.url)
-  );
-  const typeData = await Promise.all(typePromises);
+  // Evolution chain depends on species; type data depends on pokemon — fetch in parallel
+  const [evolutionChain, ...typeData] = await Promise.all([
+    getEvolutionChain(species.evolution_chain.url),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...pokemon.types.map((type: any) => getTypeData(type.type.url)),
+  ]);
 
   const formattedPokemon = formatPokemonData(pokemon, species, typeData);
   const evolutions = formatEvolutionData(evolutionChain).map((evolution) => ({
@@ -69,12 +70,12 @@ export async function fetchPokemonData(id: string) {
 
   const currentIndex = pokemonList.findIndex(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (p: any) => p.name === pokemon.name
+    (p: any) => p.name === pokemon.name,
   );
   const headerData = formatHeaderData(
     formattedPokemon,
     pokemonList,
-    currentIndex
+    currentIndex,
   );
 
   return {
