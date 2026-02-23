@@ -247,7 +247,7 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
               className="h-8 sm:h-9 px-2 sm:px-3 text-xs sm:text-sm font-bold text-white hover:bg-white/20 hover:scale-105 transition-all duration-200 rounded-full gap-1 sm:gap-1.5"
             >
               <X className="h-3 w-3 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline">Clear</span>
+              {/* <span className="hidden sm:inline">Clear</span> */}
             </Button>
           )}
         </div>
@@ -295,18 +295,6 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
           isCollapsed={isCollapsed}
         />
       </div>
-
-      {!isCollapsed && totalActiveFilters > 0 && (
-        <div className="p-4 sm:p-5 bg-gradient-to-r from-muted/30 to-muted/50">
-          <Button
-            onClick={() => onClose?.()}
-            className="w-full h-10 sm:h-12 bg-gradient-to-r from-primary via-secondary to-accent hover:shadow-xl hover:scale-[1.02] text-white font-black text-base sm:text-lg rounded-xl sm:rounded-2xl transition-all duration-300 shadow-lg border-2 border-white/50"
-          >
-            <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" />
-            Apply Filters ({totalActiveFilters})
-          </Button>
-        </div>
-      )}
     </div>
   );
 }
