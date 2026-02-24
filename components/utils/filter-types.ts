@@ -1,4 +1,4 @@
-export const types = [
+export const pokemonTypes = [
   'normal',
   'fire',
   'water',
@@ -18,6 +18,7 @@ export const types = [
   'steel',
   'fairy',
 ];
+
 export const generations = [
   'I',
   'II',
@@ -29,6 +30,7 @@ export const generations = [
   'VIII',
   'IX',
 ];
+
 export const habitats = [
   'cave',
   'forest',

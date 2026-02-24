@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '../button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useWindowSize } from '../../../hooks/useWindow';
@@ -26,6 +26,14 @@ export function PokemonPagination({
         ? totalPages
         : Math.min(5, totalPages) // min 3 (if available), max 5 for small screens
       : Math.min(10, totalPages); // max 10 for desktop
+
+  const prevTotalRef = useRef(totalItems);
+  useEffect(() => {
+    if (prevTotalRef.current !== totalItems) {
+      prevTotalRef.current = totalItems;
+      setCurrentPage(1);
+    }
+  }, [totalItems]);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;

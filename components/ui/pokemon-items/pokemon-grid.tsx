@@ -4,12 +4,12 @@ import { SimplePokemon, Pokemon } from '@/components/types';
 
 interface PokemonGridProps {
   currentPagePokemon: SimplePokemon[];
-  pokemonDetails: Pokemon[];
+  detailsMap: Map<string, Pokemon>;
 }
 
 export function PokemonGrid({
   currentPagePokemon,
-  pokemonDetails,
+  detailsMap,
 }: PokemonGridProps) {
   if (currentPagePokemon.length === 0) {
     return (
@@ -23,9 +23,7 @@ export function PokemonGrid({
     <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 sm:py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
         {currentPagePokemon.map((pokemon) => {
-          const details = pokemonDetails.find(
-            (detail) => detail.name === pokemon.name
-          );
+          const details = detailsMap.get(pokemon.name);
 
           return details ? (
             <PokemonCard key={details.id} details={details} />

@@ -13,7 +13,7 @@ export default async function Page() {
 
   // Fetch details for the first 151 Pokemon (for performance reasons)
   const initialPokemonDetails = await Promise.all(
-    allPokemon.slice(0, 12).map(fetchPokemonDetails)
+    allPokemon.slice(0, 12).map(fetchPokemonDetails),
   );
 
   return (

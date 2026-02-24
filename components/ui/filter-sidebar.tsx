@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Accordion } from '@/components/ui/accordion';
 import { Filters, FilterSidebarProps } from '../types';
 import {
-  types,
+  pokemonTypes,
   generations,
   habitats,
   shapes,
@@ -118,7 +118,7 @@ export function FilterSidebar({
                 value="type"
                 icon={Flame}
                 title="Type"
-                items={types}
+                items={pokemonTypes}
                 isOpen={isOpen}
                 selectedItems={filters.types}
                 onItemChange={(newTypes) =>
