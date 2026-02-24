@@ -234,24 +234,26 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
             <h2 className="text-xl sm:text-2xl font-black text-white drop-shadow-md">
               Filters
             </h2>
-            {totalActiveFilters > 0 && (
-              <Badge className="ml-1 sm:ml-2 h-6 sm:h-7 px-2 sm:px-3 text-sm sm:text-base font-bold bg-white text-primary border-2 border-white/50 shadow-lg animate-in zoom-in duration-300">
-                {totalActiveFilters}
-              </Badge>
-            )}
+            <Badge className={cn(
+              "ml-1 sm:ml-2 h-6 sm:h-7 px-2 sm:px-3 text-sm sm:text-base font-bold bg-white text-primary border-2 border-white/50 shadow-lg transition-opacity duration-200",
+              totalActiveFilters > 0 ? "opacity-100" : "opacity-0 invisible"
+            )}>
+              {totalActiveFilters || 0}
+            </Badge>
           </div>
-          {totalActiveFilters > 0 && (
-            <SimpleTooltip content="Clear All Filters">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearFilters}
-                className="h-8 sm:h-9 px-2 sm:px-3 text-xs sm:text-sm font-bold text-white hover:bg-white/20 hover:scale-105 transition-all duration-200 rounded-full gap-1 sm:gap-1.5"
-              >
-                <X className="h-3 w-3 sm:h-4 sm:w-4" />
-              </Button>
-            </SimpleTooltip>
-          )}
+          <SimpleTooltip content="Clear All Filters">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={clearFilters}
+              className={cn(
+                "h-8 sm:h-9 px-2 sm:px-3 text-xs sm:text-sm font-bold text-white hover:bg-white/20 hover:scale-105 transition-all duration-200 rounded-full gap-1 sm:gap-1.5",
+                totalActiveFilters > 0 ? "opacity-100" : "opacity-0 invisible pointer-events-none"
+              )}
+            >
+              <X className="h-3 w-3 sm:h-4 sm:w-4" />
+            </Button>
+          </SimpleTooltip>
         </div>
       )}
 

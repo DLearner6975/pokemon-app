@@ -10,10 +10,7 @@ import { PokemonPagination } from './pokemon-items/pokemon-pagination';
 import { useWindowSize } from '@/hooks/useWindow';
 import { PokemonParticles } from './pokemon-particles';
 import { PokemonFilter } from './pokemon-items/pokemon-filter';
-import {
-  FilterProvider,
-  useFilterContext,
-} from '../context/filter-context';
+import { FilterProvider, useFilterContext } from '../context/filter-context';
 
 interface ProjectDashboardProps {
   initialPokemon: Pokemon[];
