@@ -1,0 +1,74 @@
+name: Bug report
+description: Report something that is broken, incorrect, or regressed.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug.
+
+        Before submitting, make sure you checked for duplicates and reviewed `CONTRIBUTING.md` so the issue includes enough context for someone else to reproduce it.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Bug summary
+      description: Describe the problem in one or two sentences.
+      placeholder: The Pokemon detail page shows a blank carousel after selecting a card.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened instead?
+      placeholder: The selected Pokemon images should load and remain visible.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happened?
+      placeholder: The carousel area renders, but no image appears and the controls stop responding.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Share the smallest reliable set of steps.
+      placeholder: |
+        1. Open the app
+        2. Search for Pikachu
+        3. Open the Pokemon detail page
+        4. Click the next image
+        5. Observe the blank carousel
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include browser, device, OS, and branch or deployment context if relevant.
+      placeholder: macOS 15, Chrome 134, local `main`, mobile viewport
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs, screenshots, or references
+      description: Paste console output, stack traces, screenshots, or links that help explain the bug.
+      placeholder: Paste any supporting evidence here.
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checklist
+      options:
+        - label: I searched for an existing bug report before opening this issue.
+          required: true
+        - label: I included enough detail for someone else to reproduce the problem.
+          required: true
