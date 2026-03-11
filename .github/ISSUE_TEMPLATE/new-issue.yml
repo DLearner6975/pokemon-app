@@ -1,0 +1,72 @@
+name: Feature / new issue
+description: Propose a feature, improvement, or scoped piece of work.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for new features, improvements, and well-scoped work items.
+
+        Good submissions explain the problem first, then the proposed change. Please review `CONTRIBUTING.md` before opening a new issue.
+  - type: dropdown
+    id: request_type
+    attributes:
+      label: Request type
+      description: Pick the closest match for this new issue.
+      options:
+        - New feature
+        - Improvement to an existing feature
+        - Technical task or maintenance item
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+      description: What user problem, gap, or opportunity is this issue trying to address?
+      placeholder: Users can browse Pokemon cards, but they cannot save favorites for later.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the change you want to make or the direction you want explored.
+      placeholder: Add a favorites action on each Pokemon card and a saved favorites view.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Expected user impact
+      description: Why does this matter, and who benefits from it?
+      placeholder: Returning users can quickly revisit Pokemon they care about without repeating searches.
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: References, examples, or screenshots
+      description: Link related issues, designs, examples, or screenshots if they help explain the request.
+      placeholder: Add any supporting context here.
+    validations:
+      required: false
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Scope notes or constraints
+      description: Mention deadlines, technical limits, or things that should stay out of scope.
+      placeholder: Must work on mobile first. Authentication is out of scope for this issue.
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checklist
+      options:
+        - label: I searched for an existing feature or issue before opening this one.
+          required: true
+        - label: I explained the problem and expected value, not just the solution.
+          required: true
