@@ -1,5 +1,6 @@
 import {
   backgroundColorMap,
+  borderColorMap,
   gradientColorMap,
   hoverColorMap,
   statsColorMap,
@@ -7,6 +8,9 @@ import {
 
 export const backgroundColorClass = (color: string) =>
   backgroundColorMap[color ?? 'bg-gray-500'];
+
+export const borderColorClass = (color: string) =>
+  borderColorMap[color ?? 'border-gray-200'];
 
 export const hoverColorClass = (color: string) =>
   hoverColorMap[color ?? 'bg-gray-500'];

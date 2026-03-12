@@ -11,6 +11,7 @@ import {
 import { Button } from '../button';
 import {
   backgroundColorClass,
+  borderColorClass,
   hoverColorClass,
 } from '@/components/utils/color-util';
 import { PokemonData } from '@/components/utils/pokemon-data-formatter';
@@ -23,6 +24,7 @@ export function PokemonCarousel({
   const images = formattedPokemon?.images;
   const backgroundColor = backgroundColorClass(formattedPokemon?.color);
   const hoverColor = hoverColorClass(formattedPokemon?.color);
+  const borderColor = borderColorClass(formattedPokemon?.color);
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
@@ -35,7 +37,7 @@ export function PokemonCarousel({
   return (
     <Carousel
       setApi={setApi}
-      className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl border-2 border-blue-200"
+      className={`relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl border-2 ${borderColor}`}
     >
       <div className="relative">
         <CarouselContent className="relative">
