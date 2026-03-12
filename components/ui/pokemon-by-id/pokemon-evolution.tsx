@@ -39,7 +39,7 @@ export function PokemonEvolution({
             >
               <Link
                 href={`/pokemon/${evolution.id}`}
-                className="text-center block transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded-2xl"
+                className="text-center block transition-transform hover:scale-105 rounded-2xl "
               >
                 <div className="bg-white rounded-full w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center shadow-xl mb-3">
                   <Image

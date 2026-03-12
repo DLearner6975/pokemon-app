@@ -148,3 +148,16 @@ export const gradientColorMap: { [key: string]: string } = {
   white: 'bg-gradient-to-r from-slate-300 to-zinc-200',
   yellow: 'bg-gradient-to-r from-yellow-400 to-yellow-500',
 };
+
+export const gradientColorWhiteMap: { [key: string]: string } = {
+  black: 'bg-gradient-to-r from-gray-900 to-white',
+  blue: 'bg-gradient-to-r from-blue-500 to-white',
+  brown: 'bg-gradient-to-r from-yellow-800 to-white', // Closest match for brown
+  gray: 'bg-gradient-to-r from-gray-500 to-white',
+  green: 'bg-gradient-to-r from-green-500 to-white',
+  pink: 'bg-gradient-to-r from-pink-500 to-white',
+  purple: 'bg-gradient-to-r from-purple-500 to-white',
+  red: 'bg-gradient-to-r from-red-400 to-white',
+  white: 'bg-gradient-to-r from-slate-300 to-white',
+  yellow: 'bg-gradient-to-r from-yellow-400 to-white',
+};

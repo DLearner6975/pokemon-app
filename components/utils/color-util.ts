@@ -2,6 +2,7 @@ import {
   backgroundColorMap,
   borderColorMap,
   gradientColorMap,
+  gradientColorWhiteMap,
   hoverColorMap,
   statsColorMap,
 } from '../types';
@@ -20,3 +21,6 @@ export const statsColorClass = (color: string) =>
 
 export const gradientColorClass = (color: string) =>
   gradientColorMap[color ?? 'bg-gradient-to-r from-gray-500 to-gray-600'];
+
+export const gradientColorWhiteClass = (color: string) =>
+  gradientColorWhiteMap[color ?? 'bg-gradient-to-r from-gray-500 to-white'];

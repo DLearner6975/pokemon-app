@@ -13,6 +13,7 @@ import {
   backgroundColorClass,
   borderColorClass,
   hoverColorClass,
+  gradientColorWhiteClass,
 } from '@/components/utils/color-util';
 import { PokemonData } from '@/components/utils/pokemon-data-formatter';
 
@@ -22,11 +23,12 @@ export function PokemonCarousel({
   formattedPokemon: PokemonData;
 }) {
   const images = formattedPokemon?.images;
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
   const backgroundColor = backgroundColorClass(formattedPokemon?.color);
   const hoverColor = hoverColorClass(formattedPokemon?.color);
   const borderColor = borderColorClass(formattedPokemon?.color);
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
+  const gradientColor = gradientColorWhiteClass(formattedPokemon?.color);
 
   useEffect(() => {
     if (!api) return;
@@ -44,7 +46,7 @@ export function PokemonCarousel({
           {images.map((src, index) => (
             <CarouselItem
               key={index}
-              className="relative bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 flex items-center justify-center min-h-[250px] sm:min-h-[300px]"
+              className={`relative ${gradientColor} rounded-xl sm:rounded-2xl p-6 sm:p-8 flex items-center justify-center min-h-[250px] sm:min-h-[300px] `}
             >
               <Image
                 src={src || '/placeholder.svg'}
