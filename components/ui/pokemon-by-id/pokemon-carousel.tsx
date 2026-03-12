@@ -61,10 +61,10 @@ export function PokemonCarousel({
         </CarouselContent>
         <div className="absolute inset-0 flex items-center justify-between p-4 pointer-events-none">
           <CarouselPrevious
-            className={`relative left-0 translate-x-0 pointer-events-auto ${hoverColor} hover:text-white`}
+            className={`absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 pointer-events-auto ${hoverColor} hover:text-white`}
           />
           <CarouselNext
-            className={`relative right-0 translate-x-0 pointer-events-auto ${hoverColor} hover:text-white`}
+            className={`absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 pointer-events-auto ${hoverColor} hover:text-white`}
           />
         </div>
       </div>
