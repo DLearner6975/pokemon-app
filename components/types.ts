@@ -82,6 +82,18 @@ export const backgroundColorMap: { [key: string]: string } = {
   white: 'bg-gray-200',
   yellow: 'bg-yellow-500',
 };
+export const borderColorMap: { [key: string]: string } = {
+  black: 'border-black',
+  blue: 'border-blue-200',
+  brown: 'border-yellow-600', // Closest match for brown
+  gray: 'border-gray-200',
+  green: 'border-green-200',
+  pink: 'border-pink-200',
+  purple: 'border-purple-200',
+  red: 'border-red-200',
+  white: 'border-gray-200',
+  yellow: 'border-yellow-400',
+};
 
 export const statsColorMap: { [key: string]: string } = {
   black: 'bg-black-200',
