@@ -6,14 +6,40 @@ import { ChevronsDown } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+const typeToBackgroundColor: Record<string, string> = {
+  fire: 'red',
+  water: 'blue',
+  grass: 'green',
+  electric: 'yellow',
+  psychic: 'pink',
+  poison: 'purple',
+  bug: 'green',
+  flying: 'blue',
+  ground: 'brown',
+  rock: 'brown',
+  ice: 'blue',
+  fighting: 'red',
+  ghost: 'purple',
+  dragon: 'purple',
+  dark: 'black',
+  steel: 'gray',
+  fairy: 'pink',
+  normal: 'gray',
+};
+
 export default function PokemonBackCard({
   details,
   isFlipped,
 }: PokemonCardProps) {
-  const { id, name, base_experience, height, weight, color, stats, sprites } =
+  const { id, name, base_experience, height, weight, color, types, stats, sprites } =
     details;
+  const fallbackColor =
+    color?.name ??
+    (types?.[0]?.type?.name
+      ? typeToBackgroundColor[types[0].type.name] ?? 'gray'
+      : 'gray');
   const backgroundColorClass =
-    backgroundColorMap[color?.name ?? 'gray'] ?? 'bg-gray-500';
+    backgroundColorMap[fallbackColor] ?? 'bg-gray-500';
 
   return (
     <div

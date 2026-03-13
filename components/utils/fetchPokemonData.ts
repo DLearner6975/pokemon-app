@@ -47,21 +47,37 @@ async function getTypeData(url: string) {
   return res.json();
 }
 
+function unwrapSettled<T>(result: PromiseSettledResult<T>): T {
+  if (result.status === 'fulfilled') return result.value;
+  throw result.reason;
+}
+
 export async function fetchPokemonData(id: string) {
-  const [pokemon, species, pokemonList] = await Promise.all([
-    getPokemon(id),
-    getSpecies(id),
-    getPokemonList(),
-  ]);
+  const [pokemonResult, speciesResult, pokemonListResult] =
+    await Promise.allSettled([
+      getPokemon(id),
+      getSpecies(id),
+      getPokemonList(),
+    ]);
+
+  const pokemon = unwrapSettled(pokemonResult);
+  const species = unwrapSettled(speciesResult);
+  const pokemonList = unwrapSettled(pokemonListResult);
 
   // Evolution chain depends on species; type data depends on pokemon — fetch in parallel
-  const [evolutionChain, ...typeData] = await Promise.all([
+  const evolutionAndTypeResults = await Promise.allSettled([
     getEvolutionChain(species.evolution_chain.url),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...pokemon.types.map((type: any) => getTypeData(type.type.url)),
   ]);
 
+  const evolutionChain = unwrapSettled(evolutionAndTypeResults[0]);
+  const typeData = evolutionAndTypeResults
+    .slice(1)
+    .map((r) => unwrapSettled(r));
+
   const formattedPokemon = formatPokemonData(pokemon, species, typeData);
+  
   const evolutions = formatEvolutionData(evolutionChain).map((evolution) => ({
     ...evolution,
     // image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${evolution.id}.svg`,
@@ -72,6 +88,7 @@ export async function fetchPokemonData(id: string) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (p: any) => p.name === pokemon.name,
   );
+
   const headerData = formatHeaderData(
     formattedPokemon,
     pokemonList,

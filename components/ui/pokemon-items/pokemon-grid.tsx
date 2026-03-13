@@ -5,11 +5,13 @@ import { SimplePokemon, Pokemon } from '@/components/types';
 interface PokemonGridProps {
   currentPagePokemon: SimplePokemon[];
   detailsMap: Map<string, Pokemon>;
+  onFlip?: (name: string, id: number) => void;
 }
 
 export function PokemonGrid({
   currentPagePokemon,
   detailsMap,
+  onFlip,
 }: PokemonGridProps) {
   if (currentPagePokemon.length === 0) {
     return (
@@ -26,7 +28,11 @@ export function PokemonGrid({
           const details = detailsMap.get(pokemon.name);
 
           return details ? (
-            <PokemonCard key={details.id} details={details} />
+            <PokemonCard
+              key={details.id}
+              details={details}
+              onFlip={onFlip}
+            />
           ) : (
             <PokemonCardSkeleton key={pokemon.name} />
           );

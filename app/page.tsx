@@ -1,19 +1,17 @@
 import { Suspense } from 'react';
 import ProjectDashboard from '@/components/ui/project-dashboard';
-import { Pokemon, SimplePokemon } from '@/components/types';
+import { Pokemon } from '@/components/types';
 import { getPokemonList } from '@/components/utils/fetchPokemonData';
-
-async function fetchPokemonDetails(pokemon: SimplePokemon): Promise<Pokemon> {
-  const response = await fetch(pokemon.url);
-  return response.json();
-}
+import { fetchPokemonLight } from '@/components/utils/pokemon-utils';
 
 export default async function Page() {
   const allPokemon = await getPokemonList();
 
-  // Fetch details for the first 151 Pokemon (for performance reasons)
-  const initialPokemonDetails = await Promise.all(
-    allPokemon.slice(0, 12).map(fetchPokemonDetails),
+  const initialResults = await Promise.all(
+    allPokemon.slice(0, 8).map(fetchPokemonLight),
+  );
+  const initialPokemonDetails = initialResults.filter(
+    (p): p is Pokemon => p !== null,
   );
 
   return (

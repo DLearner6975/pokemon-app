@@ -4,7 +4,10 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { SearchBar } from './search-bar';
 import type { Pokemon, SimplePokemon } from '../types';
 import { filterPokemon } from '../utils/filter-utils';
-import { fetchPokemonDetails } from '../utils/pokemon-utils';
+import {
+  fetchPokemonLight,
+  fetchPokemonSpecies,
+} from '../utils/pokemon-utils';
 import { PokemonGrid } from './pokemon-items/pokemon-grid';
 import { PokemonPagination } from './pokemon-items/pokemon-pagination';
 import { useWindowSize } from '@/hooks/useWindow';
@@ -62,6 +65,8 @@ function DashboardContent({
     [allPokemon, detailsMap, debouncedQuery, filters],
   );
 
+  const speciesFetchedRef = useRef<Set<string>>(new Set());
+
   const fetchMissingDetails = useCallback(
     async (pokemonToFetch: SimplePokemon[]) => {
       const currentDetails = detailsRef.current;
@@ -70,7 +75,7 @@ function DashboardContent({
 
       if (missingPokemon.length > 0) {
         const newDetails = await Promise.all(
-          missingPokemon.map(fetchPokemonDetails),
+          missingPokemon.map(fetchPokemonLight),
         );
         const validDetails = newDetails.filter(
           (detail) => detail !== null,
@@ -79,6 +84,33 @@ function DashboardContent({
           setPokemonDetails((prev) => [...prev, ...validDetails]);
         }
       }
+    },
+    [],
+  );
+
+  const fetchSpeciesIfNeeded = useCallback(
+    async (name: string, id: number) => {
+      if (speciesFetchedRef.current.has(name)) return;
+      speciesFetchedRef.current.add(name);
+
+      const species = await fetchPokemonSpecies(id);
+      if (!species) return;
+
+      setPokemonDetails((prev) =>
+        prev.map((p) =>
+          p.name === name
+            ? {
+                ...p,
+                color: species.color,
+                habitat: species.habitat,
+                shape: species.shape,
+                generation: species.generation,
+                is_legendary: species.is_legendary,
+                is_mythical: species.is_mythical,
+              }
+            : p,
+        ),
+      );
     },
     [],
   );
@@ -167,6 +199,7 @@ function DashboardContent({
             <PokemonGrid
               currentPagePokemon={currentPagePokemon}
               detailsMap={detailsMap}
+              onFlip={fetchSpeciesIfNeeded}
             />
           </div>
           <PokemonPagination
