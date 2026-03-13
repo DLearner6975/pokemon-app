@@ -195,6 +195,7 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
               height={100}
               alt="Pokemon"
               className="h-10 sm:h-12 mx-auto mb-2 drop-shadow-md object-contain"
+              unoptimized
             />
             <Button
               onClick={() => {
@@ -215,6 +216,7 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
               height={100}
               alt="Pikachu"
               className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 sm:border-4 border-primary/30 bg-yellow-400 shadow-lg hover:scale-110 transition-all duration-300 cursor-pointer"
+              unoptimized
             />
             <Button
               onClick={() => setIsCollapsed(false)}

@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 //TODO: Look into  shadowColorMap for background image.
 import { PokemonCardProps } from '@/components/types';
 import PokemonBackCard from './pokemon-back-card';
 import { PokemonFrontCard } from './pokemon-front-card';
 
-export function PokemonCard({ details }: PokemonCardProps) {
-  const { id } = details;
+interface PokemonCardExtendedProps extends PokemonCardProps {
+  onFlip?: (name: string, id: number) => void;
+}
+
+export function PokemonCard({ details, onFlip }: PokemonCardExtendedProps) {
+  const { id, name } = details;
   const [isFlipped, setIsFlipped] = useState<boolean[]>([]);
+  const hasFlippedRef = useRef(false);
 
   const shouldIgnoreClick = (target: HTMLElement): boolean => {
     const isLink = target.closest('a') !== null;
@@ -20,14 +25,20 @@ export function PokemonCard({ details }: PokemonCardProps) {
     return isLink || isDialogOpen || isDialogElement;
   };
 
-  const handleCardClick = (e: React.MouseEvent, id: number) => {
+  const handleCardClick = (e: React.MouseEvent, cardId: number) => {
     const target = e.target as HTMLElement;
 
     if (shouldIgnoreClick(target)) return;
 
+    const isCurrentlyFlipped = isFlipped[cardId];
+    if (!isCurrentlyFlipped && !hasFlippedRef.current) {
+      hasFlippedRef.current = true;
+      onFlip?.(name, cardId);
+    }
+
     setIsFlipped((prev) => {
       const newFlipped = [...prev];
-      newFlipped[id] = !newFlipped[id];
+      newFlipped[cardId] = !newFlipped[cardId];
       return newFlipped;
     });
   };

@@ -8,7 +8,6 @@ import {
   useCallback,
   useEffect,
   useRef,
-  useTransition,
   type ReactNode,
 } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
@@ -19,7 +18,6 @@ interface FilterContextValue {
   filters: Filters;
   debouncedQuery: string;
   totalActiveFilters: number;
-  isPending: boolean;
   setFilter: <K extends keyof Filters>(category: K, value: Filters[K]) => void;
   clearFilters: () => void;
   setSearchQuery: (query: string) => void;
@@ -42,7 +40,6 @@ export function FilterProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname() || '/';
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
   const isInitialMount = useRef(true);
 
   const [filters, setFilters] = useState<Filters>(() =>
@@ -73,17 +70,13 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 
   const setFilter = useCallback(
     <K extends keyof Filters>(category: K, value: Filters[K]) => {
-      startTransition(() => {
-        setFilters((prev) => ({ ...prev, [category]: value }));
-      });
+      setFilters((prev) => ({ ...prev, [category]: value }));
     },
     [],
   );
 
   const clearFilters = useCallback(() => {
-    startTransition(() => {
-      setFilters(EMPTY_FILTERS);
-    });
+    setFilters(EMPTY_FILTERS);
   }, []);
 
   const setSearchQuery = useCallback((query: string) => {
@@ -111,7 +104,6 @@ export function FilterProvider({ children }: { children: ReactNode }) {
       filters,
       debouncedQuery,
       totalActiveFilters,
-      isPending,
       setFilter,
       clearFilters,
       setSearchQuery,
@@ -120,7 +112,6 @@ export function FilterProvider({ children }: { children: ReactNode }) {
       filters,
       debouncedQuery,
       totalActiveFilters,
-      isPending,
       setFilter,
       clearFilters,
       setSearchQuery,
