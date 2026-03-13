@@ -51,6 +51,7 @@ export function PokemonEvolution({
                     width={100}
                     height={100}
                     className="object-contain w-20 h-20 sm:w-24 sm:h-24"
+                    unoptimized
                   />
                 </div>
                 <p className="font-bold text-sm sm:text-base">

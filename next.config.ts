@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
         search: '',
       },
     ],
+    // Quality allowlist: fewer variants = less cache, smaller outputs (default quality is 75)
+    qualities: [70, 75, 85],
+    // Image sizes: match Pokemon app (cards ~150–400px; no 4K needs)
+    imageSizes: [64, 96, 128, 256, 384],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
   },
 };
 

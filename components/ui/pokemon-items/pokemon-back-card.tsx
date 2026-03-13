@@ -61,6 +61,7 @@ export default function PokemonBackCard({
             width={80}
             height={80}
             priority
+            unoptimized
           />
 
           <div className="flex items-start justify-between mb-4 sm:mb-6">
