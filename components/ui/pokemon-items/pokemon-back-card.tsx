@@ -1,10 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
-import { backgroundColorMap, PokemonCardProps } from '@/components/types';
+import { backgroundColorMap } from '@/components/types';
 import { ChevronsDown } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import type { PokemonListEntity } from '@/lib/pokemon/model/types';
 
 const typeToBackgroundColor: Record<string, string> = {
   fire: 'red',
@@ -30,21 +28,29 @@ const typeToBackgroundColor: Record<string, string> = {
 export default function PokemonBackCard({
   details,
   isFlipped,
-}: PokemonCardProps) {
-  const { id, name, base_experience, height, weight, color, types, stats, sprites } =
-    details;
-  const fallbackColor =
-    color?.name ??
-    (types?.[0]?.type?.name
-      ? typeToBackgroundColor[types[0].type.name] ?? 'gray'
-      : 'gray');
+}: {
+  details: PokemonListEntity;
+  isFlipped: boolean;
+}) {
+  const {
+    id,
+    name,
+    baseExperience,
+    height,
+    weight,
+    color,
+    types,
+    stats,
+    backImageUrl,
+  } = details;
+  const fallbackColor = color ?? (types[0] ? typeToBackgroundColor[types[0]] ?? 'gray' : 'gray');
   const backgroundColorClass =
     backgroundColorMap[fallbackColor] ?? 'bg-gray-500';
 
   return (
     <div
       className={`absolute inset-0 backface-hidden rotate-y-180 ${
-        isFlipped[id] ? 'pointer-events-auto' : 'pointer-events-none'
+        isFlipped ? 'pointer-events-auto' : 'pointer-events-none'
       }`}
       style={{
         willChange: 'transform',
@@ -55,7 +61,7 @@ export default function PokemonBackCard({
       >
         <div className="flex-1 relative z-10">
           <Image
-            src={sprites?.back_default || '/placeholder.svg'}
+            src={backImageUrl || '/placeholder.svg'}
             alt={`${name} back sprite`}
             className="absolute bottom-4 right-4 w-16 h-16 sm:w-20 sm:h-20 opacity-80"
             width={80}
@@ -96,7 +102,7 @@ export default function PokemonBackCard({
                   Base Exp
                 </p>
                 <p className="text-2xl sm:text-3xl font-super-adorable">
-                  {base_experience}
+                  {baseExperience}
                 </p>
               </div>
             </div>
@@ -109,8 +115,8 @@ export default function PokemonBackCard({
                 <div key={index}>
                   <div className="space-y-1 sm:space-y-1.5 text-xs sm:text-sm">
                     <div className="flex justify-between">
-                      <span className="opacity-90">{s.stat.name}</span>
-                      <span className="font-super-adorable">{s.base_stat}</span>
+                      <span className="opacity-90">{s.name}</span>
+                      <span className="font-super-adorable">{s.baseStat}</span>
                     </div>
                   </div>
                 </div>

@@ -1,19 +1,10 @@
 import { PokemonCard } from './pokemon-card';
-import { PokemonCardSkeleton } from './pokemon-card-skeleton';
-import { SimplePokemon, Pokemon } from '@/components/types';
+import { usePokemonResults } from '@/lib/pokemon/hooks/use-pokemon-results';
 
-interface PokemonGridProps {
-  currentPagePokemon: SimplePokemon[];
-  detailsMap: Map<string, Pokemon>;
-  onFlip?: (name: string, id: number) => void;
-}
+export function PokemonGrid() {
+  const { currentPageItems } = usePokemonResults();
 
-export function PokemonGrid({
-  currentPagePokemon,
-  detailsMap,
-  onFlip,
-}: PokemonGridProps) {
-  if (currentPagePokemon.length === 0) {
+  if (currentPageItems.length === 0) {
     return (
       <div className="col-span-full text-center py-8 text-gray-500">
         No Pokemon found matching your search and filters.
@@ -24,19 +15,9 @@ export function PokemonGrid({
   return (
     <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 sm:py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
-        {currentPagePokemon.map((pokemon) => {
-          const details = detailsMap.get(pokemon.name);
-
-          return details ? (
-            <PokemonCard
-              key={details.id}
-              details={details}
-              onFlip={onFlip}
-            />
-          ) : (
-            <PokemonCardSkeleton key={pokemon.name} />
-          );
-        })}
+        {currentPageItems.map((pokemon) => (
+          <PokemonCard key={pokemon.id} details={pokemon} />
+        ))}
       </div>
     </div>
   );

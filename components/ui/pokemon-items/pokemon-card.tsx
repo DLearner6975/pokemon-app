@@ -1,17 +1,10 @@
-import { useState, useRef } from 'react';
-//TODO: Look into  shadowColorMap for background image.
-import { PokemonCardProps } from '@/components/types';
+import { useState } from 'react';
 import PokemonBackCard from './pokemon-back-card';
 import { PokemonFrontCard } from './pokemon-front-card';
+import type { PokemonListEntity } from '@/lib/pokemon/model/types';
 
-interface PokemonCardExtendedProps extends PokemonCardProps {
-  onFlip?: (name: string, id: number) => void;
-}
-
-export function PokemonCard({ details, onFlip }: PokemonCardExtendedProps) {
-  const { id, name } = details;
-  const [isFlipped, setIsFlipped] = useState<boolean[]>([]);
-  const hasFlippedRef = useRef(false);
+export function PokemonCard({ details }: { details: PokemonListEntity }) {
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const shouldIgnoreClick = (target: HTMLElement): boolean => {
     const isLink = target.closest('a') !== null;
@@ -25,27 +18,16 @@ export function PokemonCard({ details, onFlip }: PokemonCardExtendedProps) {
     return isLink || isDialogOpen || isDialogElement;
   };
 
-  const handleCardClick = (e: React.MouseEvent, cardId: number) => {
+  const handleCardClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
 
     if (shouldIgnoreClick(target)) return;
-
-    const isCurrentlyFlipped = isFlipped[cardId];
-    if (!isCurrentlyFlipped && !hasFlippedRef.current) {
-      hasFlippedRef.current = true;
-      onFlip?.(name, cardId);
-    }
-
-    setIsFlipped((prev) => {
-      const newFlipped = [...prev];
-      newFlipped[cardId] = !newFlipped[cardId];
-      return newFlipped;
-    });
+    setIsFlipped((prev) => !prev);
   };
 
   return (
     <div
-      onClick={(e) => handleCardClick(e, id)}
+      onClick={handleCardClick}
       aria-label="Flip pokemon card"
       role="button"
       tabIndex={0}
@@ -53,7 +35,7 @@ export function PokemonCard({ details, onFlip }: PokemonCardExtendedProps) {
     >
       <div
         className={` transition-transform duration-500 transform-style-preserve-3d ${
-          isFlipped[id] ? 'rotate-y-180' : ''
+          isFlipped ? 'rotate-y-180' : ''
         }`}
       >
         <PokemonFrontCard details={details} isFlipped={isFlipped} />

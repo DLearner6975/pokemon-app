@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { fetchPokemonData } from "@/components/utils/fetchPokemonData";
 import PokemonById from "@/components/ui/pokemon-by-id/pokemon-by-id";
+import { getPokemonDetailPage } from "@/lib/pokemon/server/get-pokemon-detail-page";
 
 export default async function Page({
   params,
@@ -9,7 +9,7 @@ export default async function Page({
 }) {
   try {
     const { id } = await params;
-    const { formattedPokemon, evolutions, headerData } = await fetchPokemonData(
+    const { formattedPokemon, evolutions, headerData } = await getPokemonDetailPage(
       id
     );
     return (

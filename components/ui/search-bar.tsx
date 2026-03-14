@@ -1,19 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Pokeball } from './pokemon-items/pokeball';
 import { Button } from '@/components/ui/button';
 import { SearchIcon, Menu } from 'lucide-react';
-import { useFilterContext } from '@/components/context/filter-context';
+import { usePokemonFilters } from '@/lib/pokemon/hooks/use-pokemon-filters';
 
 interface SearchBarProps {
   onOpenSidebar?: () => void;
 }
 
 export function SearchBar({ onOpenSidebar }: SearchBarProps) {
-  const { setSearchQuery } = useFilterContext();
-  const [localQuery, setLocalQuery] = useState('');
+  const { searchQuery, setSearchQuery } = usePokemonFilters();
+  const [localQuery, setLocalQuery] = useState(searchQuery);
+
+  useEffect(() => {
+    setLocalQuery(searchQuery);
+  }, [searchQuery]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuery = e.target.value;

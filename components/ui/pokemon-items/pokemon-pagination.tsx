@@ -1,21 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Button } from '../button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useWindowSize } from '../../../hooks/useWindow';
+import { usePokemonResults } from '@/lib/pokemon/hooks/use-pokemon-results';
 
 interface PokemonPaginationProps {
   totalItems: number;
-  itemsPerPage: number;
-  onPageChange: (startIndex: number, endIndex: number) => void;
 }
 
-export function PokemonPagination({
-  totalItems,
-  itemsPerPage,
-  onPageChange,
-}: PokemonPaginationProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+export function PokemonPagination({ totalItems }: PokemonPaginationProps) {
+  const { currentPage, setPage, totalPages } = usePokemonResults();
   const { width } = useWindowSize();
 
   // Determine max pages to show based on screen size
@@ -31,19 +25,13 @@ export function PokemonPagination({
   useEffect(() => {
     if (prevTotalRef.current !== totalItems) {
       prevTotalRef.current = totalItems;
-      setCurrentPage(1);
+      setPage(1);
     }
-  }, [totalItems]);
-
-  useEffect(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
-    onPageChange(startIndex, endIndex);
-  }, [currentPage, itemsPerPage, onPageChange, totalItems]);
+  }, [setPage, totalItems]);
 
   const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+      setPage(page);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };

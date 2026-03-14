@@ -1,4 +1,4 @@
-import { PokemonFrontCardProps, typeColors } from '@/components/types';
+import { typeColors } from '@/components/types';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -11,18 +11,16 @@ import {
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
 import { useState } from 'react';
+import type { PokemonListEntity } from '@/lib/pokemon/model/types';
 
 export const PokemonFrontCard = ({
   details,
   isFlipped,
-}: PokemonFrontCardProps) => {
-  const { id, name, types, abilities, sprites } = details;
-  const displayImageUrl =
-    // @ts-expect-error The other property is not recognized by TypeScript
-    sprites?.other?.home?.front_default ||
-    // @ts-expect-error The other property is not recognized by TypeScript
-    sprites?.other?.dream_world?.front_default ||
-    sprites?.front_default;
+}: {
+  details: PokemonListEntity;
+  isFlipped: boolean;
+}) => {
+  const { name, types, abilities, artworkUrl } = details;
   const displayedAbilities = abilities.slice(0, 2);
   const hasMoreAbilities = abilities.length > 2;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -31,7 +29,7 @@ export const PokemonFrontCard = ({
   return (
     <div
       className={`backface-hidden ${
-        isFlipped[id] ? 'pointer-events-none' : 'pointer-events-auto'
+        isFlipped ? 'pointer-events-none' : 'pointer-events-auto'
       }`}
       style={{
         willChange: 'transform',
@@ -52,7 +50,7 @@ export const PokemonFrontCard = ({
 
           <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-3 sm:mb-4 border-2 border-primary/10 shadow-inner flex-shrink-0">
             <Image
-              src={displayImageUrl || '/placeholder.svg'}
+              src={artworkUrl || '/placeholder.svg'}
               alt={name}
               className="w-full h-32 sm:h-44 object-contain drop-shadow-2xl group-hover:scale-110 transition-transform duration-300"
               width={150}
@@ -71,10 +69,10 @@ export const PokemonFrontCard = ({
                   <Badge
                     key={index}
                     className={`${
-                      typeColors[type?.type?.name as keyof typeof typeColors]
+                      typeColors[type as keyof typeof typeColors]
                     } text-white font-bold px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm hover:scale-105 transition-transform duration-200 shadow-md`}
                   >
-                    {type?.type?.name}
+                    {type}
                   </Badge>
                 ))}
               </div>
@@ -88,7 +86,7 @@ export const PokemonFrontCard = ({
                     variant="outline"
                     className="text-purple-700 dark:text-purple-300 border-2 border-purple-400 dark:border-purple-600 font-semibold text-xs px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-950/50 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
                   >
-                    {ability?.ability?.name}
+                    {ability}
                   </Badge>
                 ))}
                 {hasMoreAbilities && (
@@ -135,7 +133,7 @@ export const PokemonFrontCard = ({
                             className="text-purple-700 dark:text-purple-300 border-2 border-purple-400 dark:border-purple-600 font-semibold text-sm px-4 py-2 rounded-full bg-purple-50 dark:bg-purple-950/50"
                             role="listitem"
                           >
-                            {ability?.ability?.name}
+                            {ability}
                           </Badge>
                         ))}
                       </div>

@@ -25,19 +25,14 @@ import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { SimpleTooltip } from '@/components/ui/simple-tooltip';
 import Image from 'next/image';
-import { useFilterContext } from '@/components/context/filter-context';
-import {
-  pokemonTypes,
-  generations,
-  habitats,
-  shapes,
-  colors,
-} from '@/components/utils/filter-types';
+import { usePokemonFilters } from '@/lib/pokemon/hooks/use-pokemon-filters';
+import { useFilterOptions } from '@/lib/pokemon/hooks/use-filter-options';
+import type { PokemonFilterOption } from '@/lib/pokemon/model/types';
 
 interface FilterSectionProps {
   title: string;
   icon?: React.ReactNode;
-  options: string[];
+  options: PokemonFilterOption[];
   selected: string[];
   onChange: (values: string[]) => void;
   defaultOpen?: boolean;
@@ -120,21 +115,24 @@ const FilterSection = React.memo(function FilterSection({
           <div className="space-y-4 pt-3">
             {options.map((option) => (
               <div
-                key={option}
+                key={option.value}
                 className="flex items-center gap-3 group hover:bg-muted/50 p-2 rounded-lg transition-all duration-200 hover:scale-[1.02] cursor-pointer"
               >
                 <Checkbox
-                  id={`${title}-${option}`}
-                  checked={selected.includes(option)}
-                  onCheckedChange={() => handleToggle(option)}
+                  id={`${title}-${option.value}`}
+                  checked={selected.includes(option.value)}
+                  onCheckedChange={() => handleToggle(option.value)}
                   className="h-5 w-5 border-2 border-primary/40 data-[state=checked]:bg-gradient-to-br data-[state=checked]:from-primary data-[state=checked]:to-secondary data-[state=checked]:border-primary shadow-sm"
                 />
                 <Label
-                  htmlFor={`${title}-${option}`}
+                  htmlFor={`${title}-${option.value}`}
                   className="text-base font-medium cursor-pointer capitalize text-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-200 leading-none flex-1"
                 >
-                  {option}
+                  {option.label}
                 </Label>
+                <span className="text-xs text-muted-foreground">
+                  {option.count}
+                </span>
               </div>
             ))}
           </div>
@@ -149,8 +147,14 @@ interface PokemonFilterProps {
 }
 
 export function PokemonFilter({ onClose }: PokemonFilterProps) {
-  const { filters, totalActiveFilters, clearFilters, setFilter } =
-    useFilterContext();
+  const {
+    filters,
+    totalActiveFilters,
+    clearFilters,
+    setFilter,
+    setBooleanFilter,
+  } = usePokemonFilters();
+  const filterOptions = useFilterOptions();
   const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   const handleTypesChange = React.useCallback(
@@ -263,7 +267,7 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
         <FilterSection
           title="Type"
           icon={<Flame className="h-6 w-6 text-white md:text-primary" />}
-          options={pokemonTypes}
+          options={filterOptions.types}
           selected={filters.types}
           onChange={handleTypesChange}
           isCollapsed={isCollapsed}
@@ -271,7 +275,7 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
         <FilterSection
           title="Generation"
           icon={<Hash className="h-6 w-6 text-white md:text-secondary" />}
-          options={generations}
+          options={filterOptions.generation}
           selected={filters.generation}
           onChange={handleGenerationsChange}
           isCollapsed={isCollapsed}
@@ -279,7 +283,7 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
         <FilterSection
           title="Habitat"
           icon={<Home className="h-6 w-6 text-white md:text-accent" />}
-          options={habitats}
+          options={filterOptions.habitat}
           selected={filters.habitat}
           onChange={handleHabitatsChange}
           isCollapsed={isCollapsed}
@@ -287,7 +291,7 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
         <FilterSection
           title="Shape"
           icon={<Shapes className="h-6 w-6 text-white md:text-primary" />}
-          options={shapes}
+          options={filterOptions.shape}
           selected={filters.shape}
           onChange={handleShapesChange}
           isCollapsed={isCollapsed}
@@ -295,11 +299,39 @@ export function PokemonFilter({ onClose }: PokemonFilterProps) {
         <FilterSection
           title="Color"
           icon={<Palette className="h-6 w-6 text-white md:text-secondary" />}
-          options={colors}
+          options={filterOptions.color}
           selected={filters.color}
           onChange={handleColorsChange}
           isCollapsed={isCollapsed}
         />
+        {!isCollapsed && (
+          <div className="p-5 space-y-4">
+            <div className="flex items-center gap-3">
+              <Checkbox
+                id="filter-legendary"
+                checked={filters.legendary}
+                onCheckedChange={(checked) =>
+                  setBooleanFilter('legendary', checked === true)
+                }
+              />
+              <Label htmlFor="filter-legendary" className="cursor-pointer">
+                Legendary
+              </Label>
+            </div>
+            <div className="flex items-center gap-3">
+              <Checkbox
+                id="filter-mythical"
+                checked={filters.mythical}
+                onCheckedChange={(checked) =>
+                  setBooleanFilter('mythical', checked === true)
+                }
+              />
+              <Label htmlFor="filter-mythical" className="cursor-pointer">
+                Mythical
+              </Label>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
