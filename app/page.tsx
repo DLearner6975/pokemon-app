@@ -1,25 +1,18 @@
-import { Suspense } from 'react';
 import ProjectDashboard from '@/components/ui/project-dashboard';
-import { Pokemon } from '@/components/types';
-import { getPokemonList } from '@/components/utils/fetchPokemonData';
-import { fetchPokemonLight } from '@/components/utils/pokemon-utils';
+import { PokemonStoreProvider } from '@/components/providers/pokemon-store-provider';
+import { getPokemonCatalog } from '@/lib/pokemon/server/get-pokemon-catalog';
 
-export default async function Page() {
-  const allPokemon = await getPokemonList();
-
-  const initialResults = await Promise.all(
-    allPokemon.slice(0, 8).map(fetchPokemonLight),
-  );
-  const initialPokemonDetails = initialResults.filter(
-    (p): p is Pokemon => p !== null,
-  );
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const initialState = await getPokemonCatalog(resolvedSearchParams);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ProjectDashboard
-        initialPokemon={initialPokemonDetails}
-        allPokemon={allPokemon}
-      />
-    </Suspense>
+    <PokemonStoreProvider initialState={initialState}>
+      <ProjectDashboard />
+    </PokemonStoreProvider>
   );
 }
