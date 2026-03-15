@@ -2,6 +2,7 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
+    unoptimized: true,
     // Remote allowlist: only PokeAPI sprites are optimized (limits transformations & cache writes)
     remotePatterns: [
       {
